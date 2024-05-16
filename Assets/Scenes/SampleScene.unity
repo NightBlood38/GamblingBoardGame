@@ -2374,6 +2374,7 @@ GameObject:
   - component: {fileID: 407131466}
   - component: {fileID: 407131465}
   - component: {fileID: 407131464}
+  - component: {fileID: 407131467}
   - component: {fileID: 407131463}
   m_Layer: 0
   m_Name: Money_Tile_500
@@ -2469,6 +2470,19 @@ Transform:
   - {fileID: 80191202}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &407131467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407131462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89f122c44543def43947d5d61bdd8877, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waypoints: []
 --- !u!1 &408907409
 GameObject:
   m_ObjectHideFlags: 0
@@ -7888,6 +7902,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: gold
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -9074,11 +9092,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89f122c44543def43947d5d61bdd8877, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDistance: 2
-  xMin: -7
-  xMax: 7
-  zMin: -10
-  zMax: 4
+  waypoints: []
 --- !u!65 &1895555066
 BoxCollider:
   m_ObjectHideFlags: 0
