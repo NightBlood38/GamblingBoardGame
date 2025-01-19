@@ -1,125 +1,201 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
     private float moveDistance = 2.0f;
-    private float xMin = -7.0f;
-    private float xMax = 7.0f;
-    private float zMin = -10.0f;
-    private float zMax = 4.0f;
-
-    private int moveCount = 0;
-    private int currentPlayerNumber = 0;
-    private GameObject[] players;
-
     private int currentPlayerIndex = 0;
-    private bool isCurrentPlayerTurnOver;
-    public Transform[] waypoints;
-    
+    private int diceRoll = 0;
+    private GameObject[] players;
+    private Transform[] waypoints;
+    private int[] playerWaypointIndices; // Track each player's current waypoint index
+    private bool isCurrentPlayerTurnOver = false;
+    private float moveSpeed = 3.0f; // Speed of movement
+
+    private bool waypointsInitialized = false; // Flag to ensure initialization happens only once
+
     void Start()
     {
-        Awake();
-        MovePlayerToWaypoint(currentPlayerIndex);
-        players = FindAllPlayers();
+        Debug.Log("Start() called");
+        // Initialize players and waypoints only if they haven't been initialized yet
+        if (!waypointsInitialized)
+        {
+            players = FindAllPlayers();
+            InitializeWaypoints();
+            waypointsInitialized = true; // Set the flag to true to prevent reinitialization
+        }
+
+        playerWaypointIndices = new int[players.Length]; // Initialize waypoint indices for all players
+        Debug.Log($"Found {players.Length} players.");
+
+        // Move all players to the starting waypoint (index 0)
+        for (int i = 0; i < players.Length; i++)
+        {
+            MovePlayerToWaypoint(i, 0, instant: true);
+        }
+
+        // Start the first turn
         SwitchTurn();
     }
+
+
     void Update()
     {
-        
-        
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            diceRoll = ThrowDice();
+            Debug.Log($"Dice rolled: {diceRoll}");
+
+            // Move the current player
+            MovePlayerByDiceRoll(currentPlayerIndex, diceRoll);
+
+            // End the turn
+            isCurrentPlayerTurnOver = true;
+        }
+
         if (isCurrentPlayerTurnOver)
         {
             SwitchTurn();
-            
         }
-        Vector3 movement = Vector3.zero;
-
-        for(int i = 0; i < waypoints.Length; i++){
-            MovePlayerToWaypoint(i);
-        }
-
-        if(Input.GetKeyDown(KeyCode.H)){
-            currentPlayerNumber = ThrowDice();
-            Debug.Log(currentPlayerNumber);
-        }
-        
     }
 
-    int ThrowDice(){
-        int num = Random.Range(1,9);
-        isCurrentPlayerTurnOver = true;
-        return num;
+    int ThrowDice()
+    {
+        return Random.Range(1, 5); // Simulate a dice roll (1-3)
     }
+
     void SwitchTurn()
     {
         isCurrentPlayerTurnOver = false;
+        currentPlayerIndex = (currentPlayerIndex + 1) % players.Length;
+        Debug.Log($"Player {currentPlayerIndex + 1}'s turn.");
+    }
 
-    // Switch to the next player's turn
-        currentPlayerIndex = (currentPlayerIndex + 1) % waypoints.Length;
+    void MovePlayerByDiceRoll(int playerIndex, int roll)
+    {
+        if (playerIndex < 0 || playerIndex >= players.Length) return;
 
-        // Check if currentPlayerIndex is within bounds
-        if (currentPlayerIndex < waypoints.Length)
+        // Get the current waypoint index
+        int currentWaypointIndex = playerWaypointIndices[playerIndex];
+
+        // Start moving to the next waypoint one by one
+        StartCoroutine(SmoothMovePlayerThroughWaypoints(playerIndex, currentWaypointIndex, roll));
+    }
+
+    IEnumerator SmoothMovePlayerThroughWaypoints(int playerIndex, int startWaypointIndex, int roll)
+    {
+        if (playerIndex < 0 || playerIndex >= players.Length) yield break;
+
+        Transform playerTransform = players[playerIndex].transform;
+        int currentWaypointIndex = startWaypointIndex;
+
+        // Move one waypoint at a time based on the dice roll
+        for (int i = 0; i < roll; i++)
         {
-            MovePlayerToWaypoint(currentPlayerIndex);
-            Debug.Log("Player " + (currentPlayerIndex + 1) + "'s turn");
+            int nextWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
+
+            // Smoothly move to the next waypoint
+            yield return StartCoroutine(SmoothMoveBetweenTwoWaypoints(
+                playerTransform,
+                waypoints[currentWaypointIndex].position,
+                waypoints[nextWaypointIndex].position
+            ));
+
+            // Update the current waypoint index
+            currentWaypointIndex = nextWaypointIndex;
         }
-        else
+
+        // Final position correction
+        playerWaypointIndices[playerIndex] = currentWaypointIndex;
+
+        Debug.Log($"Player {playerIndex + 1} moved to Waypoint {currentWaypointIndex + 1}.");
+    }
+
+    IEnumerator SmoothMoveBetweenTwoWaypoints(Transform playerTransform, Vector3 start, Vector3 end)
+    {
+        float elapsedTime = 0f;
+        float journeyLength = Vector3.Distance(start, end);
+
+        while (elapsedTime < journeyLength / moveSpeed)
         {
-            Debug.LogError("Error: currentPlayerIndex out of bounds");
+            playerTransform.position = Vector3.Lerp(start, end, (elapsedTime * moveSpeed) / journeyLength);
+            elapsedTime += Time.deltaTime;
+            yield return null; // Wait for the next frame
+        }
+
+        // Snap to the final position
+        playerTransform.position = end;
+    }
+
+    void MovePlayerToWaypoint(int playerIndex, int waypointIndex, bool instant = false)
+    {
+        if (instant)
+        {
+            players[playerIndex].transform.position = waypoints[waypointIndex].position;
+            playerWaypointIndices[playerIndex] = waypointIndex;
         }
     }
+
     GameObject[] FindAllPlayers()
     {
-        //Összes player megtalálása a player taggel
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        Debug.Log(players.Length);
-
-        // DEBUG
-        foreach (GameObject player in players)
-        {
-            Debug.Log("Found Player: " + player.name);
-        }
-        return players;
-    }
-    void MovePlayerToWaypoint(int index)
-    {
-        // Ensure the index is within the bounds of the waypoints array
-        if (index >= 0 && index < waypoints.Length)
-        {
-            // Move the current player to the specified waypoint position
-            Transform playerTransform = GetCurrentPlayerTransform();
-            playerTransform.position = waypoints[index].position;
-            // Update the currentPlayerIndex to reflect the new position
-            currentPlayerIndex = index;
-        }
+        return GameObject.FindGameObjectsWithTag("Player");
     }
 
-    Transform GetCurrentPlayerTransform()
-    {
-        // Example: You might have a separate script or component that manages players
-        // In this example, we'll just find the player GameObject by tag
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        return player != null ? player.transform : null;
-    }
-    void Awake()
-    {
-        waypoints = new Transform[28];
+    void InitializeWaypoints()
+{
+    // Log to check if it's being called multiple times
+    Debug.Log("Initializing Waypoints...");
 
-    // Create GameObjects for each waypoint
-        for (int i = 0; i < waypoints.Length; i++)
-        {
-            GameObject waypointObject = new GameObject("Waypoint" + (i + 1)); // Create a new empty GameObject
-            waypointObject.transform.position = GetWaypointPosition(i); // Set its position based on the index
-            waypoints[i] = waypointObject.transform; // Assign its transform to the waypoints array
-        }          
-                
-    }
+    waypoints = new Transform[28]; // Only create 28 waypoints
 
-    Vector3 GetWaypointPosition(int index)
+    // Starting position (use the first player's position as the reference)
+    Vector3 startPosition = players[0].transform.position;
+
+    // Current position for placing waypoints
+    Vector3 currentPosition = startPosition;
+
+    // Generate waypoints with the specified pattern
+    for (int i = 0; i < waypoints.Length; i++)
     {
-        float x = (index % 7) * 2 - 7; // X position alternates between -7 and 7
-        float z = -10 + (index / 14) * 2; // Z position increases by 2 every 14 waypoints
-        return new Vector3(x, 15.52f, z);
+        GameObject waypointObject = new GameObject($"Waypoint {i + 1}");
+
+        // Assign the position based on the current waypoint index
+        waypointObject.transform.position = GetWaypointPosition(i, ref currentPosition);
+
+        waypoints[i] = waypointObject.transform; // Store the waypoint in the array
     }
 }
 
+
+
+    Vector3 GetWaypointPosition(int index, ref Vector3 currentPosition)
+    {
+        // Determine the movement pattern
+        if (index == 0)
+        {
+        }
+        else if (index < 8)
+        {
+            // First 7 waypoints: Move -2 on the X-axis
+            currentPosition.x -= 2;
+        }
+        else if (index < 15)
+        {
+            // Next 7 waypoints: Move +2 on the Z-axis
+            currentPosition.z += 2;
+        }
+        else if (index < 22)
+        {
+            // Next 7 waypoints: Move +2 on the X-axis
+            currentPosition.x += 2;
+        }
+        else if (index < 28)
+        {
+            // Final 6 waypoints: Move -2 on the Z-axis
+            currentPosition.z -= 2;
+        }
+
+        // Return the updated position
+        return new Vector3(currentPosition.x, 15.75f, currentPosition.z); // Adjust Y as needed
+    }
+}
