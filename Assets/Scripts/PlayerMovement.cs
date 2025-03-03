@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Blackjack;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     private float moveSpeed = 3.0f; // Speed of movement
 
     private bool waypointsInitialized = false; // Flag to ensure initialization happens only once
+
+    public string[] tileNames = {"start", "money500", "blackjack", "lucky card", "wheel of fortune", "money1000", "roulette", "shop", "money1000", "blackjack", "lucky card", "wheel of fortune", "money2000", "roulette", "shop", "money2000", "blackjack", "lucky card", "wheel of fortune", "money4000", "roulette", "shop", "money3000", "blackjack", "lucky card", "wheel of fortune", "money5000", "roulette"};
 
     void Start()
     {
@@ -103,10 +106,17 @@ public class PlayerMovement : MonoBehaviour
 
             // Update the current waypoint index
             currentWaypointIndex = nextWaypointIndex;
+            if (tileNames[nextWaypointIndex] == "blackjack")
+            {
+                Blackjack.Blackjack.ActivateBlackjack(); // Call the function
+            }
         }
+        
 
         // Final position correction
         playerWaypointIndices[playerIndex] = currentWaypointIndex;
+
+        
 
         Debug.Log($"Player {playerIndex + 1} moved to Waypoint {currentWaypointIndex + 1}.");
     }
@@ -155,9 +165,10 @@ public class PlayerMovement : MonoBehaviour
     Vector3 currentPosition = startPosition;
 
     // Generate waypoints with the specified pattern
+
     for (int i = 0; i < waypoints.Length; i++)
     {
-        GameObject waypointObject = new GameObject($"Waypoint {i + 1}");
+        GameObject waypointObject = new GameObject($"{tileNames[i]}");
 
         // Assign the position based on the current waypoint index
         waypointObject.transform.position = GetWaypointPosition(i, ref currentPosition);
@@ -165,6 +176,16 @@ public class PlayerMovement : MonoBehaviour
         waypoints[i] = waypointObject.transform; // Store the waypoint in the array
     }
 }
+    public Transform GetPlayerCurrentWaypoint(int playerIndex)
+    {
+        if (playerIndex >= 0 && playerIndex < players.Length)
+        {
+            int waypointIndex = playerWaypointIndices[playerIndex]; // Get player's waypoint index
+            return waypoints[waypointIndex]; // Return the corresponding waypoint
+        }
+        return null;
+    }
+
 
 
 

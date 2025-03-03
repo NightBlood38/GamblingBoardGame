@@ -2482,6 +2482,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89f122c44543def43947d5d61bdd8877, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileNames:
+  - start
+  - money500
+  - blackjack
+  - lucky card
+  - wheel of fortune
+  - money1000
+  - roulette
+  - shop
+  - money1000
+  - blackjack
+  - lucky card
+  - wheel of fortune
+  - money2000
+  - roulette
+  - shop
+  - money2000
+  - blackjack
+  - lucky card
+  - wheel of fortune
+  - money4000
+  - roulette
+  - shop
+  - money3000
+  - blackjack
+  - lucky card
+  - wheel of fortune
+  - money5000
+  - roulette
 --- !u!1 &408907409
 GameObject:
   m_ObjectHideFlags: 0
@@ -10059,6 +10088,7 @@ GameObject:
   - component: {fileID: 2138058518}
   - component: {fileID: 2138058517}
   - component: {fileID: 2138058516}
+  - component: {fileID: 2138058520}
   m_Layer: 0
   m_Name: BlackJack_Tile
   m_TagString: Untagged
@@ -10154,6 +10184,18 @@ Transform:
   - {fileID: 340201001}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2138058520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138058515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f5f87bd889fc4e44bdbabd7daa4efe0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
