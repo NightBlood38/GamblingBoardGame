@@ -1,10 +1,9 @@
 using UnityEngine;
 using System.Collections;
-using Blackjack;
+//using Blackjack;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private float moveDistance = 2.0f;
     private int currentPlayerIndex = 0;
     private int diceRoll = 0;
     private GameObject[] players;
@@ -106,19 +105,58 @@ public class PlayerMovement : MonoBehaviour
 
             // Update the current waypoint index
             currentWaypointIndex = nextWaypointIndex;
-            if (tileNames[nextWaypointIndex] == "blackjack")
-            {
-                Blackjack.Blackjack.ActivateBlackjack(); // Call the function
-            }
+            
         }
         
 
         // Final position correction
         playerWaypointIndices[playerIndex] = currentWaypointIndex;
 
-        
-
-        Debug.Log($"Player {playerIndex + 1} moved to Waypoint {currentWaypointIndex + 1}.");
+        if (tileNames[currentWaypointIndex] == "blackjack")
+            {
+                //Blackjack.Blackjack.ActivateBlackjack();
+                Debug.Log("bj");
+            }
+            if (tileNames[currentWaypointIndex] == "money500")
+            {
+                Debug.Log("500");
+            }
+            if (tileNames[currentWaypointIndex] == "money1000")
+            {
+                Debug.Log("1000");
+            }
+            if (tileNames[currentWaypointIndex] == "money2000")
+            {
+                Debug.Log("2000");
+            }
+            if (tileNames[currentWaypointIndex] == "money3000")
+            {
+                Debug.Log("3000");
+            }
+            if (tileNames[currentWaypointIndex] == "money5000")
+            {
+                Debug.Log("5000");
+            }
+            if (tileNames[currentWaypointIndex] == "lucky card")
+            {
+               Debug.Log("lc");
+            }
+            if (tileNames[currentWaypointIndex] == "wheel of fortune")
+            {
+               Debug.Log("wof");
+            }
+            if (tileNames[currentWaypointIndex] == "shop")
+            {
+               Debug.Log("shop");
+            }
+            if (tileNames[currentWaypointIndex] == "start")
+            {
+                Debug.Log("start");
+            }
+            if (tileNames[currentWaypointIndex] == "roulette")
+            {
+               Debug.Log("roulette");
+            }
     }
 
     IEnumerator SmoothMoveBetweenTwoWaypoints(Transform playerTransform, Vector3 start, Vector3 end)
