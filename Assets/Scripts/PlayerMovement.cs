@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-//using Blackjack;
+//using Blackjack; 
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private int[] playerWaypointIndices; // Track each player's current waypoint index
     private bool isCurrentPlayerTurnOver = false;
     private float moveSpeed = 3.0f; // Speed of movement
-
+    private int[] money;
     private bool waypointsInitialized = false; // Flag to ensure initialization happens only once
 
     public string[] tileNames = {"start", "money500", "blackjack", "lucky card", "wheel of fortune", "money1000", "roulette", "shop", "money1000", "blackjack", "lucky card", "wheel of fortune", "money2000", "roulette", "shop", "money2000", "blackjack", "lucky card", "wheel of fortune", "money4000", "roulette", "shop", "money3000", "blackjack", "lucky card", "wheel of fortune", "money5000", "roulette"};
@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
         if (!waypointsInitialized)
         {
             players = FindAllPlayers();
+            money = new int[players.Length];
             InitializeWaypoints();
             waypointsInitialized = true; // Set the flag to true to prevent reinitialization
         }
@@ -108,40 +109,48 @@ public class PlayerMovement : MonoBehaviour
             // Update the current waypoint index
             currentWaypointIndex = nextWaypointIndex;
             Debug.Log(startCheck+1);
-            if (currentWaypointIndex < startCheck){
-            Debug.Log("megyen");
-        }
+            if (currentWaypointIndex < startCheck)
+            {
+                money[currentPlayerIndex] += 2000;
+                Debug.Log($"+2000, current money: ${money[currentPlayerIndex]}");
+            }
             
         }
         
-        
+        //git config --global core.autocrlf false
+
         // Final position correction
         playerWaypointIndices[playerIndex] = currentWaypointIndex;
 
         if (tileNames[currentWaypointIndex] == "blackjack")
-            {
+        {
                 //Blackjack.Blackjack.ActivateBlackjack();
                 Debug.Log("bj");
-            }
+           }
         if (tileNames[currentWaypointIndex] == "money500")
         {
-            Debug.Log("500");
+            money[currentPlayerIndex] += 500;
+            Debug.Log($"+500, current money: ${money[currentPlayerIndex]}");
         }
         if (tileNames[currentWaypointIndex] == "money1000")
         {
-            Debug.Log("1000");
+            money[currentPlayerIndex] += 1000;
+            Debug.Log($"+1000, current money: ${money[currentPlayerIndex]}");
         }
         if (tileNames[currentWaypointIndex] == "money2000")
         {
-            Debug.Log("2000");
+            money[currentPlayerIndex] += 2000;
+            Debug.Log($"+2000, current money: ${money[currentPlayerIndex]}");
         }
         if (tileNames[currentWaypointIndex] == "money3000")
         {
-            Debug.Log("3000");
+            money[currentPlayerIndex] += 3000;
+            Debug.Log($"+3000, current money: ${money[currentPlayerIndex]}");
         }
         if (tileNames[currentWaypointIndex] == "money5000")
         {
-            Debug.Log("5000");
+            money[currentPlayerIndex] += 5000;
+            Debug.Log($"+5000, current money: ${money[currentPlayerIndex]}");
         }
         if (tileNames[currentWaypointIndex] == "lucky card")
         {
@@ -157,7 +166,8 @@ public class PlayerMovement : MonoBehaviour
         }
         if (tileNames[currentWaypointIndex] == "start")
         {
-            Debug.Log("start");
+            money[currentPlayerIndex] += 2000;
+            Debug.Log($"+2000, current money: ${money[currentPlayerIndex]}");
         }
         if (tileNames[currentWaypointIndex] == "roulette")
         {
