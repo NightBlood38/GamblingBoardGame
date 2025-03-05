@@ -1,0 +1,17 @@
+# Unity által generált fájlok, amiket nem kell verziókezelni
+Temp/
+Obj/
+Build/
+Builds/
+MemoryCaptures/
+
+# IDE specifikus fájlok
+.vscode/
+*.sln
+*.csproj
+*.pidb
+*.userprefs
+
+# OS-specifikus fájlok
+.DS_Store
+Thumbs.db
