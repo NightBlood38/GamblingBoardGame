@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
 
     int ThrowDice()
     {
-        return Random.Range(1, 5); // Simulate a dice roll (1-3)
+        return Random.Range(1, 5); // Simulate a dice roll (1-4)
     }
 
     void SwitchTurn()
@@ -92,6 +92,8 @@ public class PlayerMovement : MonoBehaviour
         int currentWaypointIndex = startWaypointIndex;
 
         // Move one waypoint at a time based on the dice roll
+        int startCheck = 1;
+
         for (int i = 0; i < roll; i++)
         {
             int nextWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
@@ -102,13 +104,17 @@ public class PlayerMovement : MonoBehaviour
                 waypoints[currentWaypointIndex].position,
                 waypoints[nextWaypointIndex].position
             ));
-
+            startCheck = currentWaypointIndex;
             // Update the current waypoint index
             currentWaypointIndex = nextWaypointIndex;
+            Debug.Log(startCheck+1);
+            if (currentWaypointIndex < startCheck){
+            Debug.Log("megyen");
+        }
             
         }
         
-
+        
         // Final position correction
         playerWaypointIndices[playerIndex] = currentWaypointIndex;
 
@@ -117,46 +123,46 @@ public class PlayerMovement : MonoBehaviour
                 //Blackjack.Blackjack.ActivateBlackjack();
                 Debug.Log("bj");
             }
-            if (tileNames[currentWaypointIndex] == "money500")
-            {
-                Debug.Log("500");
-            }
-            if (tileNames[currentWaypointIndex] == "money1000")
-            {
-                Debug.Log("1000");
-            }
-            if (tileNames[currentWaypointIndex] == "money2000")
-            {
-                Debug.Log("2000");
-            }
-            if (tileNames[currentWaypointIndex] == "money3000")
-            {
-                Debug.Log("3000");
-            }
-            if (tileNames[currentWaypointIndex] == "money5000")
-            {
-                Debug.Log("5000");
-            }
-            if (tileNames[currentWaypointIndex] == "lucky card")
-            {
-               Debug.Log("lc");
-            }
-            if (tileNames[currentWaypointIndex] == "wheel of fortune")
-            {
-               Debug.Log("wof");
-            }
-            if (tileNames[currentWaypointIndex] == "shop")
-            {
-               Debug.Log("shop");
-            }
-            if (tileNames[currentWaypointIndex] == "start")
-            {
-                Debug.Log("start");
-            }
-            if (tileNames[currentWaypointIndex] == "roulette")
-            {
-               Debug.Log("roulette");
-            }
+        if (tileNames[currentWaypointIndex] == "money500")
+        {
+            Debug.Log("500");
+        }
+        if (tileNames[currentWaypointIndex] == "money1000")
+        {
+            Debug.Log("1000");
+        }
+        if (tileNames[currentWaypointIndex] == "money2000")
+        {
+            Debug.Log("2000");
+        }
+        if (tileNames[currentWaypointIndex] == "money3000")
+        {
+            Debug.Log("3000");
+        }
+        if (tileNames[currentWaypointIndex] == "money5000")
+        {
+            Debug.Log("5000");
+        }
+        if (tileNames[currentWaypointIndex] == "lucky card")
+        {
+        Debug.Log("lc");
+        }
+        if (tileNames[currentWaypointIndex] == "wheel of fortune")
+        {
+        Debug.Log("wof");
+        }
+        if (tileNames[currentWaypointIndex] == "shop")
+        {
+        Debug.Log("shop");
+        }
+        if (tileNames[currentWaypointIndex] == "start")
+        {
+            Debug.Log("start");
+        }
+        if (tileNames[currentWaypointIndex] == "roulette")
+        {
+        Debug.Log("roulette");
+        }
     }
 
     IEnumerator SmoothMoveBetweenTwoWaypoints(Transform playerTransform, Vector3 start, Vector3 end)
