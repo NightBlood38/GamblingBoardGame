@@ -1,178 +1,94 @@
 using UnityEngine;
 using System.Collections;
-//using Blackjack; 
 
 public class PlayerMovement : MonoBehaviour
 {
-    private int currentPlayerIndex = 0;
     private int diceRoll = 0;
-    private GameObject[] players;
     private Transform[] waypoints;
-    private int[] playerWaypointIndices; // Track each player's current waypoint index
-    private bool isCurrentPlayerTurnOver = false;
-    private float moveSpeed = 3.0f; // Speed of movement
-    private int[] money;
-    private bool waypointsInitialized = false; // Flag to ensure initialization happens only once
-
-    public string[] tileNames = {"start", "money500", "blackjack", "lucky card", "wheel of fortune", "money1000", "roulette", "shop", "money1000", "blackjack", "lucky card", "wheel of fortune", "money2000", "roulette", "shop", "money2000", "blackjack", "lucky card", "wheel of fortune", "money4000", "roulette", "shop", "money3000", "blackjack", "lucky card", "wheel of fortune", "money5000", "roulette"};
+    private int currentWaypointIndex = 0;
+    private bool isTurn = false;
+    private float moveSpeed = 3.0f;
+    private int money = 0;
+    public ShopManager shopManager;
+    
+    public string[] tileNames = {
+        "start", "money500", "blackjack", "lucky card", "wheel of fortune", 
+        "money1000", "roulette", "shop", "money1000", "blackjack", 
+        "lucky card", "wheel of fortune", "money2000", "roulette", "shop", 
+        "money2000", "blackjack", "lucky card", "wheel of fortune", 
+        "money4000", "roulette", "shop", "money3000", "blackjack", 
+        "lucky card", "wheel of fortune", "money5000", "roulette"
+    };
 
     void Start()
     {
-        Debug.Log("Start() called");
-        // Initialize players and waypoints only if they haven't been initialized yet
-        if (!waypointsInitialized)
-        {
-            players = FindAllPlayers();
-            money = new int[players.Length];
-            InitializeWaypoints();
-            waypointsInitialized = true; // Set the flag to true to prevent reinitialization
-        }
-
-        playerWaypointIndices = new int[players.Length]; // Initialize waypoint indices for all players
-        Debug.Log($"Found {players.Length} players.");
-
-        // Move all players to the starting waypoint (index 0)
-        for (int i = 0; i < players.Length; i++)
-        {
-            MovePlayerToWaypoint(i, 0, instant: true);
-        }
-
-        // Start the first turn
-        SwitchTurn();
+        InitializeWaypoints();
+        MovePlayerToWaypoint(0, instant: true);
     }
 
-
-    void Update()
+    public void StartTurn()
     {
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            diceRoll = ThrowDice();
-            Debug.Log($"Dice rolled: {diceRoll}");
-
-            // Move the current player
-            MovePlayerByDiceRoll(currentPlayerIndex, diceRoll);
-
-            // End the turn
-            isCurrentPlayerTurnOver = true;
-        }
-
-        if (isCurrentPlayerTurnOver)
-        {
-            SwitchTurn();
-        }
+        isTurn = true;
+        Debug.Log($"{gameObject.name} körön van.");
     }
 
-    int ThrowDice()
+    public void EndTurn()
     {
-        return Random.Range(1, 5); // Simulate a dice roll (1-4)
+        isTurn = false;
     }
 
-    void SwitchTurn()
+    public void MovePlayerByDiceRoll(int roll)
     {
-        isCurrentPlayerTurnOver = false;
-        currentPlayerIndex = (currentPlayerIndex + 1) % players.Length;
-        Debug.Log($"Player {currentPlayerIndex + 1}'s turn.");
+        if (!isTurn) return;
+
+        StartCoroutine(SmoothMovePlayerThroughWaypoints(roll));
     }
 
-    void MovePlayerByDiceRoll(int playerIndex, int roll)
+    IEnumerator SmoothMovePlayerThroughWaypoints(int roll)
     {
-        if (playerIndex < 0 || playerIndex >= players.Length) return;
-
-        // Get the current waypoint index
-        int currentWaypointIndex = playerWaypointIndices[playerIndex];
-
-        // Start moving to the next waypoint one by one
-        StartCoroutine(SmoothMovePlayerThroughWaypoints(playerIndex, currentWaypointIndex, roll));
-    }
-
-    IEnumerator SmoothMovePlayerThroughWaypoints(int playerIndex, int startWaypointIndex, int roll)
-    {
-        if (playerIndex < 0 || playerIndex >= players.Length) yield break;
-
-        Transform playerTransform = players[playerIndex].transform;
-        int currentWaypointIndex = startWaypointIndex;
-
-        // Move one waypoint at a time based on the dice roll
-        int startCheck = 1;
+        Transform playerTransform = transform;
+        int startWaypointIndex = currentWaypointIndex;
 
         for (int i = 0; i < roll; i++)
         {
             int nextWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
 
-            // Smoothly move to the next waypoint
             yield return StartCoroutine(SmoothMoveBetweenTwoWaypoints(
                 playerTransform,
                 waypoints[currentWaypointIndex].position,
                 waypoints[nextWaypointIndex].position
             ));
-            startCheck = currentWaypointIndex;
-            // Update the current waypoint index
+
             currentWaypointIndex = nextWaypointIndex;
-            Debug.Log(startCheck+1);
-            if (currentWaypointIndex < startCheck)
+
+            if (currentWaypointIndex < startWaypointIndex)
             {
-                money[currentPlayerIndex] += 2000;
-                Debug.Log($"+2000, current money: ${money[currentPlayerIndex]}");
+                money += 2000;
+                Debug.Log($"{gameObject.name} kapott +2000 pénzt! Jelenlegi pénz: {money}");
             }
-            
+        }
+
+        HandleTileEffects();
+        GameManager.Instance.EndTurn();
+    }
+
+    void HandleTileEffects()
+    {
+        string tile = tileNames[currentWaypointIndex];
+        
+        switch (tile)
+        {
+            case "money500": money += 500; Debug.Log($"{gameObject.name} kapott +500 pénzt! Jelenlegi pénz: {money}"); break;
+            case "money1000": money += 1000; Debug.Log($"{gameObject.name} kapott +1000 pénzt! Jelenlegi pénz: {money}"); break;
+            case "money2000": money += 2000; Debug.Log($"{gameObject.name} kapott +2000 pénzt! Jelenlegi pénz: {money}"); break;
+            case "money3000": money += 3000; Debug.Log($"{gameObject.name} kapott +3000 pénzt! Jelenlegi pénz: {money}"); break;
+            case "money5000": money += 5000; Debug.Log($"{gameObject.name} kapott +5000 pénzt! Jelenlegi pénz: {money}"); break;
+            case "start": money += 2000; Debug.Log($"{gameObject.name} kapott +2000 pénzt! Jelenlegi pénz: {money}"); break;
+            case "blackjack": Debug.Log($"{gameObject.name} blackjackra lépett!"); break;
+            case "shop": GameManager.isShopOpen = true; shopManager.OpenShop(); break;
         }
         
-        //git config --global core.autocrlf false
-
-        // Final position correction
-        playerWaypointIndices[playerIndex] = currentWaypointIndex;
-
-        if (tileNames[currentWaypointIndex] == "blackjack")
-        {
-                //Blackjack.Blackjack.ActivateBlackjack();
-                Debug.Log("bj");
-           }
-        if (tileNames[currentWaypointIndex] == "money500")
-        {
-            money[currentPlayerIndex] += 500;
-            Debug.Log($"+500, current money: ${money[currentPlayerIndex]}");
-        }
-        if (tileNames[currentWaypointIndex] == "money1000")
-        {
-            money[currentPlayerIndex] += 1000;
-            Debug.Log($"+1000, current money: ${money[currentPlayerIndex]}");
-        }
-        if (tileNames[currentWaypointIndex] == "money2000")
-        {
-            money[currentPlayerIndex] += 2000;
-            Debug.Log($"+2000, current money: ${money[currentPlayerIndex]}");
-        }
-        if (tileNames[currentWaypointIndex] == "money3000")
-        {
-            money[currentPlayerIndex] += 3000;
-            Debug.Log($"+3000, current money: ${money[currentPlayerIndex]}");
-        }
-        if (tileNames[currentWaypointIndex] == "money5000")
-        {
-            money[currentPlayerIndex] += 5000;
-            Debug.Log($"+5000, current money: ${money[currentPlayerIndex]}");
-        }
-        if (tileNames[currentWaypointIndex] == "lucky card")
-        {
-        Debug.Log("lc");
-        }
-        if (tileNames[currentWaypointIndex] == "wheel of fortune")
-        {
-        Debug.Log("wof");
-        }
-        if (tileNames[currentWaypointIndex] == "shop")
-        {
-        Debug.Log("shop");
-        }
-        if (tileNames[currentWaypointIndex] == "start")
-        {
-            money[currentPlayerIndex] += 2000;
-            Debug.Log($"+2000, current money: ${money[currentPlayerIndex]}");
-        }
-        if (tileNames[currentWaypointIndex] == "roulette")
-        {
-        Debug.Log("roulette");
-        }
+        Debug.Log($"{gameObject.name} lépett a(z) {tile} mezőre.");
     }
 
     IEnumerator SmoothMoveBetweenTwoWaypoints(Transform playerTransform, Vector3 start, Vector3 end)
@@ -184,93 +100,44 @@ public class PlayerMovement : MonoBehaviour
         {
             playerTransform.position = Vector3.Lerp(start, end, (elapsedTime * moveSpeed) / journeyLength);
             elapsedTime += Time.deltaTime;
-            yield return null; // Wait for the next frame
+            yield return null;
         }
 
-        // Snap to the final position
         playerTransform.position = end;
     }
 
-    void MovePlayerToWaypoint(int playerIndex, int waypointIndex, bool instant = false)
+    void MovePlayerToWaypoint(int waypointIndex, bool instant = false)
     {
         if (instant)
         {
-            players[playerIndex].transform.position = waypoints[waypointIndex].position;
-            playerWaypointIndices[playerIndex] = waypointIndex;
+            transform.position = waypoints[waypointIndex].position;
+            currentWaypointIndex = waypointIndex;
         }
-    }
-
-    GameObject[] FindAllPlayers()
-    {
-        return GameObject.FindGameObjectsWithTag("Player");
     }
 
     void InitializeWaypoints()
-{
-    // Log to check if it's being called multiple times
-    Debug.Log("Initializing Waypoints...");
-
-    waypoints = new Transform[28]; // Only create 28 waypoints
-
-    // Starting position (use the first player's position as the reference)
-    Vector3 startPosition = players[0].transform.position;
-
-    // Current position for placing waypoints
-    Vector3 currentPosition = startPosition;
-
-    // Generate waypoints with the specified pattern
-
-    for (int i = 0; i < waypoints.Length; i++)
     {
-        GameObject waypointObject = new GameObject($"{tileNames[i]}");
+        waypoints = new Transform[28];
+        Vector3 currentPosition = transform.position;
 
-        // Assign the position based on the current waypoint index
-        waypointObject.transform.position = GetWaypointPosition(i, ref currentPosition);
-
-        waypoints[i] = waypointObject.transform; // Store the waypoint in the array
-    }
-}
-    public Transform GetPlayerCurrentWaypoint(int playerIndex)
-    {
-        if (playerIndex >= 0 && playerIndex < players.Length)
+        for (int i = 0; i < waypoints.Length; i++)
         {
-            int waypointIndex = playerWaypointIndices[playerIndex]; // Get player's waypoint index
-            return waypoints[waypointIndex]; // Return the corresponding waypoint
+            GameObject waypointObject = new GameObject($"{tileNames[i]}");
+            waypointObject.transform.position = GetWaypointPosition(i, ref currentPosition);
+            waypoints[i] = waypointObject.transform;
         }
-        return null;
     }
-
-
-
 
     Vector3 GetWaypointPosition(int index, ref Vector3 currentPosition)
     {
-        // Determine the movement pattern
-        if (index == 0)
+        if (index > 0)
         {
-        }
-        else if (index < 8)
-        {
-            // First 7 waypoints: Move -2 on the X-axis
-            currentPosition.x -= 2;
-        }
-        else if (index < 15)
-        {
-            // Next 7 waypoints: Move +2 on the Z-axis
-            currentPosition.z += 2;
-        }
-        else if (index < 22)
-        {
-            // Next 7 waypoints: Move +2 on the X-axis
-            currentPosition.x += 2;
-        }
-        else if (index < 28)
-        {
-            // Final 6 waypoints: Move -2 on the Z-axis
-            currentPosition.z -= 2;
+            if (index < 8) currentPosition.x -= 2;
+            else if (index < 15) currentPosition.z += 2;
+            else if (index < 22) currentPosition.x += 2;
+            else currentPosition.z -= 2;
         }
 
-        // Return the updated position
-        return new Vector3(currentPosition.x, 15.75f, currentPosition.z); // Adjust Y as needed
+        return new Vector3(currentPosition.x, 15.75f, currentPosition.z);
     }
 }
