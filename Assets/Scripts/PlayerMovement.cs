@@ -3,7 +3,6 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private int diceRoll = 0;
     private Transform[] waypoints;
     private int currentWaypointIndex = 0;
     private bool isTurn = false;
