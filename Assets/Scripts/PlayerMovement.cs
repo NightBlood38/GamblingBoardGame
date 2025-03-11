@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private int currentWaypointIndex = 0;
     private bool isTurn = false;
     private float moveSpeed = 3.0f;
-    private int money = 0;
+    private PlayerData playerData;
     public ShopManager shopManager;
     
     public string[] tileNames = {
@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        playerData = GetComponent<PlayerData>();
         InitializeWaypoints();
         MovePlayerToWaypoint(0, instant: true);
     }
@@ -40,6 +41,12 @@ public class PlayerMovement : MonoBehaviour
     public void MovePlayerByDiceRoll(int roll)
     {
         if (!isTurn) return;
+        
+        if (waypoints == null || waypoints.Length == 0)
+        {
+            Debug.LogError("HIBA: A waypoints tömb nincs inicializálva!");
+            return;
+        }
 
         StartCoroutine(SmoothMovePlayerThroughWaypoints(roll));
     }
@@ -63,8 +70,8 @@ public class PlayerMovement : MonoBehaviour
 
             if (currentWaypointIndex < startWaypointIndex)
             {
-                money += 2000;
-                Debug.Log($"{gameObject.name} kapott +2000 pénzt! Jelenlegi pénz: {money}");
+                playerData.money += 2000;
+                Debug.Log($"{gameObject.name} kapott +2000 pénzt! Jelenlegi pénz: {playerData.money}");
             }
         }
 
@@ -78,12 +85,12 @@ public class PlayerMovement : MonoBehaviour
         
         switch (tile)
         {
-            case "money500": money += 500; Debug.Log($"{gameObject.name} kapott +500 pénzt! Jelenlegi pénz: {money}"); break;
-            case "money1000": money += 1000; Debug.Log($"{gameObject.name} kapott +1000 pénzt! Jelenlegi pénz: {money}"); break;
-            case "money2000": money += 2000; Debug.Log($"{gameObject.name} kapott +2000 pénzt! Jelenlegi pénz: {money}"); break;
-            case "money3000": money += 3000; Debug.Log($"{gameObject.name} kapott +3000 pénzt! Jelenlegi pénz: {money}"); break;
-            case "money5000": money += 5000; Debug.Log($"{gameObject.name} kapott +5000 pénzt! Jelenlegi pénz: {money}"); break;
-            case "start": money += 2000; Debug.Log($"{gameObject.name} kapott +2000 pénzt! Jelenlegi pénz: {money}"); break;
+            case "money500": playerData.money += 500; Debug.Log($"{gameObject.name} kapott +500 pénzt! Jelenlegi pénz: {playerData.money}"); break;
+            case "money1000": playerData.money += 1000; Debug.Log($"{gameObject.name} kapott +1000 pénzt! Jelenlegi pénz: {playerData.money}"); break;
+            case "money2000": playerData.money += 2000; Debug.Log($"{gameObject.name} kapott +2000 pénzt! Jelenlegi pénz: {playerData.money}"); break;
+            case "money3000": playerData.money += 3000; Debug.Log($"{gameObject.name} kapott +3000 pénzt! Jelenlegi pénz: {playerData.money}"); break;
+            case "money5000": playerData.money += 5000; Debug.Log($"{gameObject.name} kapott +5000 pénzt! Jelenlegi pénz: {playerData.money}"); break;
+            case "start": playerData.money += 2000; Debug.Log($"{gameObject.name} kapott +2000 pénzt! Jelenlegi pénz: {playerData.money}"); break;
             case "blackjack": Debug.Log($"{gameObject.name} blackjackra lépett!"); break;
             case "shop": GameManager.isShopOpen = true; shopManager.OpenShop(); break;
         }
@@ -126,6 +133,10 @@ public class PlayerMovement : MonoBehaviour
             waypointObject.transform.position = GetWaypointPosition(i, ref currentPosition);
             waypoints[i] = waypointObject.transform;
         }
+        if (waypoints.Length > 0 && waypoints[0] != null)
+        Debug.Log($"Waypoints inicializálva, első waypoint: {waypoints[0].position}");
+    else
+        Debug.LogError("HIBA: waypoints tömb üres vagy nem inicializálódott megfelelően!");
     }
 
     Vector3 GetWaypointPosition(int index, ref Vector3 currentPosition)

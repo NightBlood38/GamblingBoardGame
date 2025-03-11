@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
             Debug.LogError($"A(z) {i}. játékosnak nincs PlayerData komponense!");
         }
     }
+    players[0].StartTurn();
 }
 
     void Update()
@@ -88,7 +89,7 @@ public class GameManager : MonoBehaviour
     public PlayerData GetCurrentPlayer()
     {
         Debug.Log($"Current player index: {currentPlayerIndex}");
-    Debug.Log($"Current player money: {playerData[currentPlayerIndex].money}");
+        Debug.Log($"Current player money: {playerData[currentPlayerIndex].money}");
         return playerData[currentPlayerIndex];
     }
 
