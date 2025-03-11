@@ -1,0 +1,58 @@
+# Unity generált fájlok és mappák
+Library/
+Temp/
+Obj/
+Build/
+Builds/
+Logs/
+UserSettings/
+
+# VS és Rider szerkesztők által generált fájlok
+.vs/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+
+# Cache és metadata
+/Assets/Plugins/*.meta
+/Assets/StreamingAssets/*.meta
+/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/
+
+# IDE és operációs rendszer specifikus fájlok
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.bak
+
+# Log fájlok és crash dumpok
+*.log
+*.stacktrace
+
+# Shader cache
+/[Aa]ssets/[Ss]haders/[Cc]ache/
+
+# Unity Package Manager fájlok
+/Packages/*
+!Packages/manifest.json
+!Packages/packages-lock.json
+
+# PlayerPrefs és egyéb helyi konfigurációk
+/ProjectSettings/EditorBuildSettings.asset
+/ProjectSettings/ProjectSettings.asset
+
+# TextMesh Pro generált fájlok
+/Assets/TextMesh Pro/
+
+# Unity Collaborate
+/Collab/
+
+# Unity Cloud Build
+/[Cc]loud[Bb]uild/
