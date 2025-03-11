@@ -1,12 +1,19 @@
 using UnityEngine;
 using System.Collections;
 using TMPro;
+using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
 {
     public GameObject shopUI;
     private GameManager gameManager;
     public TextMeshProUGUI moneyText;
+    public Button diademButton;
+    public Button ringButton;
+    public Button shoeButton;
+    public Button dressButton;
+    public Button monocleButton;
+    
 
     private void Start()
     {
@@ -29,7 +36,7 @@ public class ShopManager : MonoBehaviour
 
     public void OpenShop()
     {
-        UpdateMoneyText();
+        UpdateShopUI();
         shopUI.SetActive(true);
         GameManager.cannotThrowDice = true;
         GameManager.isShopOpen = true;
@@ -43,7 +50,7 @@ public class ShopManager : MonoBehaviour
         GameManager.Instance.EndTurn();
     }
 
-    public void BuyItem(int cost, string itemName)
+    public void BuyItem(int cost, string itemName, int index)
     {
         if (gameManager == null)
         {
@@ -63,8 +70,10 @@ public class ShopManager : MonoBehaviour
 
         if (currentPlayer.SpendMoney(cost))
         {
-            UpdateMoneyText();
+            currentPlayer.haveItems[index] = true;
+            UpdateShopUI();
             Debug.Log($"Successfully bought {itemName} for {cost}!");
+            gameManager.Win();
         }
         else
         {
@@ -72,14 +81,13 @@ public class ShopManager : MonoBehaviour
         }
     }
 
+    public void BuyDiadem() { BuyItem(5000, "Diadem",0); }
+    public void BuyRing() { BuyItem(12000, "Ring",1); }
+    public void BuyDress() { BuyItem(20000, "Dress",2); }
+    public void BuyShoes() { BuyItem(30000, "Shoes",3); }
+    public void BuyMonocle() { BuyItem(50000, "Monocle",4); }
 
-    public void BuyDiadem() { BuyItem(5000, "Diadem"); }
-    public void BuyRing() { BuyItem(12000, "Ring"); }
-    public void BuyDress() { BuyItem(20000, "Dress"); }
-    public void BuyShoes() { BuyItem(30000, "Shoes"); }
-    public void BuyMonocle() { BuyItem(50000, "Monocle"); }
-
-    public void UpdateMoneyText()
+    public void UpdateShopUI()
     {
         if (GameManager.Instance != null)
         {
@@ -87,6 +95,73 @@ public class ShopManager : MonoBehaviour
             if (currentPlayer != null)
             {
                 moneyText.text = $"${currentPlayer.money}"; // Kiírja a játékos pénzét
+            }
+
+            if(currentPlayer.haveItems[0])
+            {
+                diademButton.interactable = false;
+            }
+            if(currentPlayer.haveItems[1])
+            {
+                ringButton.interactable = false;
+            }
+            if(currentPlayer.haveItems[2])
+            {
+                dressButton.interactable = false;
+            }
+            if(currentPlayer.haveItems[3])
+            {
+                shoeButton.interactable = false;
+            }
+            if(currentPlayer.haveItems[4])
+            {
+                monocleButton.interactable = false;
+            }
+            Image diademButtonImage = diademButton.GetComponent<Image>();
+            Image ringButtonImage = ringButton.GetComponent<Image>();
+            Image dressButtonImage = dressButton.GetComponent<Image>();
+            Image shoeButtonImage = shoeButton.GetComponent<Image>();
+            Image monocleButtonImage = monocleButton.GetComponent<Image>();
+            
+            if(currentPlayer.money < 5000 && !currentPlayer.haveItems[0])
+            {
+                diademButtonImage.color = Color.red;
+            }
+            else
+            {
+                diademButtonImage.color = Color.green;
+            }
+            if(currentPlayer.money < 12000 && !currentPlayer.haveItems[1])
+            {
+                ringButtonImage.color = Color.red;
+            }
+            else
+            {
+                ringButtonImage.color = Color.green;
+            }
+            if(currentPlayer.money < 20000 && !currentPlayer.haveItems[2])
+            {
+                dressButtonImage.color = Color.red;
+            }
+            else
+            {
+                dressButtonImage.color = Color.green;
+            }
+            if(currentPlayer.money < 30000 && !currentPlayer.haveItems[3])
+            {
+                shoeButtonImage.color = Color.red;
+            }
+            else
+            {
+                shoeButtonImage.color = Color.green;
+            }
+            if(currentPlayer.money < 50000 && !currentPlayer.haveItems[4])
+            {
+                monocleButtonImage.color = Color.red;
+            }
+            else
+            {
+                monocleButtonImage.color = Color.green;
             }
         }
     }

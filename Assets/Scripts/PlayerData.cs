@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerData : MonoBehaviour
 {
     public int money = 0; // Játékos pénze
+    public bool[] haveItems = {false,false,false,false,false};
 
     public bool SpendMoney(int amount)
     {

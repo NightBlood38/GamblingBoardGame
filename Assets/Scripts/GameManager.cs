@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     private PlayerMovement[] players;
     private int currentPlayerIndex = 0;
     private PlayerData[] playerData;
+    private bool isGameOver = false;
     public static bool cannotThrowDice = false;
     public static bool isShopOpen = false;
 
@@ -98,6 +99,20 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Current player index: {currentPlayerIndex}");
         Debug.Log($"Current player money: {playerData[currentPlayerIndex].money}");
         return playerData[currentPlayerIndex];
+    }
+
+    public void Win(){
+        for(int i = 0; i < 5; i++){
+            if(playerData[currentPlayerIndex].haveItems[i])
+            {
+                isGameOver = true;
+            }
+            else
+            {
+                isGameOver = false;
+            }
+        }
+        Debug.Log(isGameOver);
     }
 
     //Megkeresi az összes játékost a jelenetben
