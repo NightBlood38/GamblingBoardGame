@@ -31,13 +31,16 @@ public class ShopManager : MonoBehaviour
     {
         UpdateMoneyText();
         shopUI.SetActive(true);
+        GameManager.cannotThrowDice = true;
         GameManager.isShopOpen = true;
     }
 
     public void CloseShop()
     {
         shopUI.SetActive(false);
+        GameManager.cannotThrowDice = false;
         GameManager.isShopOpen = false;
+        GameManager.Instance.EndTurn();
     }
 
     public void BuyItem(int cost, string itemName)

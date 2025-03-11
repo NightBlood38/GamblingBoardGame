@@ -52,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator SmoothMovePlayerThroughWaypoints(int roll)
     {
+        GameManager.cannotThrowDice = true;
         Transform playerTransform = transform;
         int startWaypointIndex = currentWaypointIndex;
 
@@ -75,7 +76,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
         HandleTileEffects();
-        GameManager.Instance.EndTurn();
+        GameManager.cannotThrowDice = false;
+        if(!GameManager.isShopOpen)
+        {
+            GameManager.Instance.EndTurn();
+        }
+        
+        
     }
 
     void HandleTileEffects()
@@ -91,7 +98,7 @@ public class PlayerMovement : MonoBehaviour
             case "money5000": playerData.money += 5000; Debug.Log($"{gameObject.name} kapott +5000 pénzt! Jelenlegi pénz: {playerData.money}"); break;
             case "start": playerData.money += 2000; Debug.Log($"{gameObject.name} kapott +2000 pénzt! Jelenlegi pénz: {playerData.money}"); break;
             case "blackjack": Debug.Log($"{gameObject.name} blackjackra lépett!"); break;
-            case "shop": GameManager.isShopOpen = true; shopManager.OpenShop(); break;
+            case "shop": shopManager.OpenShop(); break;
         }
         
         Debug.Log($"{gameObject.name} lépett a(z) {tile} mezőre.");
