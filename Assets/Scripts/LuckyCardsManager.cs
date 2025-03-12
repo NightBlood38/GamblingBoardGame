@@ -17,7 +17,10 @@ public class LuckyCardsManager : MonoBehaviour
     "You went to the casino, but it backfired. You lost $2000",
     "Your luck has run out. You will now lose $1000",
     "Your gambling dept catches up with you! Pay $500 to the bank",
-    "The government collaped, money lost its value, set your money to $0"
+    "The government collaped, money lost its value, set your money to $0",
+    "The fate is a curious thing. Set your money to $10000",
+    "You've got THE GOLDEN TICKET. You're guaranteed to win BIG",
+    "Your good fortune is rewarded. Enjoy a little refund from the taxman"
     };
     private byte currentLuckyCardIndex;
 
@@ -79,8 +82,17 @@ public class LuckyCardsManager : MonoBehaviour
             case 9:
                 currentPlayer.money = 0;
                 break;
+            case 10:
+                currentPlayer.money = 10000;
+                break;
+            case 11:
+                currentPlayer.goldenTicketAmount += 1;
+                break;
+            case 12:
+                currentPlayer.money = currentPlayer.money + Convert.ToInt32(currentPlayer.previousBetSum*0.1);
+                break;
         }
-        Debug.Log(currentPlayer.money);
+        Debug.Log($"The current player has ${currentPlayer.money}");
     }
 
     private void UpdateLuckyCardText()

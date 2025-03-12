@@ -119,48 +119,89 @@ public class PlayerMovement : MonoBehaviour
                 Debug.Log($"{gameObject.name} kapott +2000 pénzt! Jelenlegi pénz: {playerData.money}");
                 break;
             case "blackjack2000": 
-                if(playerData.money < 2000)
+                if(playerData.goldenTicketAmount == 0)
                 {
-                    blackjackManager.NotEnoughMoney();
+                    if(playerData.money < 2000)
+                    {
+                        blackjackManager.NotEnoughMoney();
+                    }
+                    else
+                    {
+                        playerData.previousBetSum += 2000;
+                        blackjackBetAmount = 2000;
+                        blackjackManager.StartNewGame();
+                    }
                 }
                 else
                 {
-                    blackjackBetAmount = 2000;
-                    blackjackManager.StartNewGame();
-                };
+                    playerData.previousBetSum += 2000;
+                    playerData.money += 2000;
+                    playerData.goldenTicketAmount -= 1;
+                }
+                
                 break;
             case "blackjack3000": 
-                if(playerData.money < 3000)
+                if(playerData.goldenTicketAmount == 0)
                 {
-                    blackjackManager.NotEnoughMoney();
+                    if(playerData.money < 3000)
+                    {
+                        blackjackManager.NotEnoughMoney();
+                    }
+                    else
+                    {
+                        playerData.previousBetSum += 3000;
+                        blackjackBetAmount = 3000;
+                        blackjackManager.StartNewGame();
+                    }
                 }
                 else
                 {
-                    blackjackBetAmount = 3000;
-                    blackjackManager.StartNewGame();
-                };
+                    playerData.previousBetSum += 3000;
+                    playerData.money += 3000;
+                    playerData.goldenTicketAmount -= 1;
+                }
                 break;
             case "blackjack4000": 
-                if(playerData.money < 4000)
+                if(playerData.goldenTicketAmount == 0)
                 {
-                    blackjackManager.NotEnoughMoney();
+                    if(playerData.money < 4000)
+                    {
+                        blackjackManager.NotEnoughMoney();
+                    }
+                    else
+                    {
+                        playerData.previousBetSum += 4000;
+                        blackjackBetAmount = 4000;
+                        blackjackManager.StartNewGame();
+                    }
                 }
                 else
                 {
-                    blackjackBetAmount = 4000;
-                    blackjackManager.StartNewGame();
-                };
+                    playerData.previousBetSum += 4000;
+                    playerData.money += 4000;
+                    playerData.goldenTicketAmount -= 1;
+                }
                 break;
             case "blackjack5000": 
-                if(playerData.money < 5000)
+                if(playerData.goldenTicketAmount == 0)
                 {
-                    blackjackManager.NotEnoughMoney();
+                    if(playerData.money < 5000)
+                    {
+                        blackjackManager.NotEnoughMoney();
+                    }
+                    else
+                    {
+                        playerData.previousBetSum += 5000;
+                        blackjackBetAmount = 5000;
+                        blackjackManager.StartNewGame();
+                    }
                 }
                 else
                 {
-                    blackjackBetAmount = 5000;
-                    blackjackManager.StartNewGame();
-                };
+                    playerData.previousBetSum += 5000;
+                    playerData.money += 5000;
+                    playerData.goldenTicketAmount -= 1;
+                }
                 break;
             case "lucky card":
                 luckyCardsManager.DrawLuckyCard();

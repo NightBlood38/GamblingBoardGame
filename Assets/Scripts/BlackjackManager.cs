@@ -129,10 +129,17 @@ public class BlackjackManager : MonoBehaviour
 
     void EndGame(bool playerWon)
     {
+        PlayerData currentPlayer = gameManager.GetCurrentPlayer();
         gameOver = true;
         hitButton.interactable = false;
         standButton.interactable = false;
         GameManager.isUIOpen = false;
+        int goldenTicketLuckyNumber = Random.Range(0, 100);
+
+        if(goldenTicketLuckyNumber < 4)
+        {
+            currentPlayer.goldenTicketAmount += 1;
+        }
 
         UpdateMoneyUI();
         blackjackUI.SetActive(false);
