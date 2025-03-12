@@ -91,7 +91,7 @@ public class ShopManager : MonoBehaviour
     {
         if (GameManager.Instance != null)
         {
-            PlayerData currentPlayer = GameManager.Instance.GetCurrentPlayer();
+            PlayerData currentPlayer = gameManager.GetCurrentPlayer();
             if (currentPlayer != null)
             {
                 moneyText.text = $"${currentPlayer.money}"; // Kiírja a játékos pénzét
@@ -101,21 +101,41 @@ public class ShopManager : MonoBehaviour
             {
                 diademButton.interactable = false;
             }
+            else
+            {
+                diademButton.interactable = true;
+            }
             if(currentPlayer.haveItems[1])
             {
                 ringButton.interactable = false;
+            }
+            else
+            {
+                ringButton.interactable = true;
             }
             if(currentPlayer.haveItems[2])
             {
                 dressButton.interactable = false;
             }
+            else
+            {
+                dressButton.interactable = true;
+            }
             if(currentPlayer.haveItems[3])
             {
                 shoeButton.interactable = false;
             }
+            else
+            {
+                shoeButton.interactable = true;
+            }
             if(currentPlayer.haveItems[4])
             {
                 monocleButton.interactable = false;
+            }
+            else
+            {
+                monocleButton.interactable = true;
             }
             Image diademButtonImage = diademButton.GetComponent<Image>();
             Image ringButtonImage = ringButton.GetComponent<Image>();

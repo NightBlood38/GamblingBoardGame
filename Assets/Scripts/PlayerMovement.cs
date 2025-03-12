@@ -9,13 +9,15 @@ public class PlayerMovement : MonoBehaviour
     private float moveSpeed = 3.0f;
     private PlayerData playerData;
     public ShopManager shopManager;
+    public BlackjackManager blackjackManager;
+    public static int blackjackBetAmount;
     
     public string[] tileNames = {
-        "start", "money500", "blackjack", "lucky card", "wheel of fortune", 
-        "money1000", "roulette", "shop", "money1000", "blackjack", 
+        "start", "money500", "blackjack2000", "lucky card", "wheel of fortune", 
+        "money1000", "roulette", "shop", "money1000", "blackjack3000", 
         "lucky card", "wheel of fortune", "money2000", "roulette", "shop", 
-        "money2000", "blackjack", "lucky card", "wheel of fortune", 
-        "money4000", "roulette", "shop", "money3000", "blackjack", 
+        "money2000", "blackjack4000", "lucky card", "wheel of fortune", 
+        "money3000", "roulette", "shop", "money3000", "blackjack5000", 
         "lucky card", "wheel of fortune", "money5000", "roulette"
     };
 
@@ -91,14 +93,77 @@ public class PlayerMovement : MonoBehaviour
         
         switch (tile)
         {
-            case "money500": playerData.money += 500; Debug.Log($"{gameObject.name} kapott +500 pénzt! Jelenlegi pénz: {playerData.money}"); break;
-            case "money1000": playerData.money += 1000; Debug.Log($"{gameObject.name} kapott +1000 pénzt! Jelenlegi pénz: {playerData.money}"); break;
-            case "money2000": playerData.money += 2000; Debug.Log($"{gameObject.name} kapott +2000 pénzt! Jelenlegi pénz: {playerData.money}"); break;
-            case "money3000": playerData.money += 3000; Debug.Log($"{gameObject.name} kapott +3000 pénzt! Jelenlegi pénz: {playerData.money}"); break;
-            case "money5000": playerData.money += 5000; Debug.Log($"{gameObject.name} kapott +5000 pénzt! Jelenlegi pénz: {playerData.money}"); break;
-            case "start": playerData.money += 2000; Debug.Log($"{gameObject.name} kapott +2000 pénzt! Jelenlegi pénz: {playerData.money}"); break;
-            case "blackjack": Debug.Log($"{gameObject.name} blackjackra lépett!"); break;
-            case "shop": shopManager.OpenShop(); break;
+            case "money500":
+                playerData.money += 500;
+                Debug.Log($"{gameObject.name} kapott +500 pénzt! Jelenlegi pénz: {playerData.money}");
+                break;
+            case "money1000":
+                playerData.money += 1000;
+                Debug.Log($"{gameObject.name} kapott +1000 pénzt! Jelenlegi pénz: {playerData.money}");
+                break;
+            case "money2000":
+                playerData.money += 2000;
+                Debug.Log($"{gameObject.name} kapott +2000 pénzt! Jelenlegi pénz: {playerData.money}");
+                break;
+            case "money3000":
+                playerData.money += 3000;
+                Debug.Log($"{gameObject.name} kapott +3000 pénzt! Jelenlegi pénz: {playerData.money}");
+                break;
+            case "money5000":
+                playerData.money += 5000;
+                Debug.Log($"{gameObject.name} kapott +5000 pénzt! Jelenlegi pénz: {playerData.money}");
+                break;
+            case "start":
+                playerData.money += 2000; 
+                Debug.Log($"{gameObject.name} kapott +2000 pénzt! Jelenlegi pénz: {playerData.money}");
+                break;
+            case "blackjack2000": 
+                if(playerData.money < 2000)
+                {
+                    blackjackManager.NotEnoughMoney();
+                }
+                else
+                {
+                    blackjackBetAmount = 2000;
+                    blackjackManager.StartNewGame();
+                };
+                break;
+            case "blackjack3000": 
+                if(playerData.money < 3000)
+                {
+                    blackjackManager.NotEnoughMoney();
+                }
+                else
+                {
+                    blackjackBetAmount = 3000;
+                    blackjackManager.StartNewGame();
+                };
+                break;
+            case "blackjack4000": 
+                if(playerData.money < 4000)
+                {
+                    blackjackManager.NotEnoughMoney();
+                }
+                else
+                {
+                    blackjackBetAmount = 4000;
+                    blackjackManager.StartNewGame();
+                };
+                break;
+            case "blackjack5000": 
+                if(playerData.money < 5000)
+                {
+                    blackjackManager.NotEnoughMoney();
+                }
+                else
+                {
+                    blackjackBetAmount = 5000;
+                    blackjackManager.StartNewGame();
+                };
+                break;
+            case "shop":
+                shopManager.OpenShop();
+                break;
         }
         
         Debug.Log($"{gameObject.name} lépett a(z) {tile} mezőre.");
@@ -135,6 +200,7 @@ public class PlayerMovement : MonoBehaviour
 
         for (int i = 0; i < waypoints.Length; i++)
         {
+            Debug.Log(tileNames[i]);
             GameObject waypointObject = new GameObject($"{tileNames[i]}");
             waypointObject.transform.position = GetWaypointPosition(i, ref currentPosition);
             waypoints[i] = waypointObject.transform;
