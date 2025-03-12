@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     private PlayerData[] playerData;
     private bool isGameOver = false;
     public static bool cannotThrowDice = false;
-    public static bool isShopOpen = false;
+    public static bool isUIOpen = false;
 
     void Awake()
     {
@@ -59,11 +59,11 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
-        if (Input.GetKeyDown(KeyCode.H) && !cannotThrowDice && !isShopOpen)
+        if (Input.GetKeyDown(KeyCode.H) && !cannotThrowDice && !isUIOpen)
         {
             RollDiceForCurrentPlayer();
         }
-        else if(Input.GetKeyDown(KeyCode.H) && cannotThrowDice && isShopOpen)
+        else if(Input.GetKeyDown(KeyCode.H) && cannotThrowDice && isUIOpen)
         {
             Debug.Log("nem tudsz dobni a kockával");
         }

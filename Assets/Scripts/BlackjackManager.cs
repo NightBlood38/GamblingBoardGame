@@ -25,15 +25,19 @@ public class BlackjackManager : MonoBehaviour
     public void NotEnoughMoney()
     {
         notEnoughMoneyUI.SetActive(true);
+        GameManager.isUIOpen = true;
     }
     public void CloseNotEnoughMoneyUI()
     {
         notEnoughMoneyUI.SetActive(false);
+        GameManager.isUIOpen = false;
+        GameManager.Instance.EndTurn();
     }
 
     public void StartNewGame()
     {
         blackjackUI.SetActive(true);
+        GameManager.isUIOpen = true;
         playerHand.Clear();
         dealerHand.Clear();
         gameOver = false;
@@ -128,9 +132,11 @@ public class BlackjackManager : MonoBehaviour
         gameOver = true;
         hitButton.interactable = false;
         standButton.interactable = false;
+        GameManager.isUIOpen = false;
 
         UpdateMoneyUI();
         blackjackUI.SetActive(false);
+        GameManager.Instance.EndTurn();
     }
 
     void UpdateMoneyUI()

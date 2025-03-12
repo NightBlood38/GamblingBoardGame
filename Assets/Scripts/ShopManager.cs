@@ -39,14 +39,14 @@ public class ShopManager : MonoBehaviour
         UpdateShopUI();
         shopUI.SetActive(true);
         GameManager.cannotThrowDice = true;
-        GameManager.isShopOpen = true;
+        GameManager.isUIOpen = true;
     }
 
     public void CloseShop()
     {
         shopUI.SetActive(false);
         GameManager.cannotThrowDice = false;
-        GameManager.isShopOpen = false;
+        GameManager.isUIOpen = false;
         GameManager.Instance.EndTurn();
     }
 

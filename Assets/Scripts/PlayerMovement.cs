@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerData playerData;
     public ShopManager shopManager;
     public BlackjackManager blackjackManager;
+    public LuckyCardsManager luckyCardsManager;
     public static int blackjackBetAmount;
     
     public string[] tileNames = {
@@ -79,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
 
         HandleTileEffects();
         GameManager.cannotThrowDice = false;
-        if(!GameManager.isShopOpen)
+        if(!GameManager.isUIOpen)
         {
             GameManager.Instance.EndTurn();
         }
@@ -160,6 +161,9 @@ public class PlayerMovement : MonoBehaviour
                     blackjackBetAmount = 5000;
                     blackjackManager.StartNewGame();
                 };
+                break;
+            case "lucky card":
+                luckyCardsManager.DrawLuckyCard();
                 break;
             case "shop":
                 shopManager.OpenShop();
