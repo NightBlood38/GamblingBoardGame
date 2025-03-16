@@ -54,31 +54,31 @@ public class LuckyCardsManager : MonoBehaviour
         switch(currentLuckyCardIndex)
         {
             case 0:
-                currentPlayer.money +=500;
+                gameManager.addMoneyToCurrentPlayer(500);
                 break;
             case 1:
-                currentPlayer.money += 2000;
+                gameManager.addMoneyToCurrentPlayer(2000);
                 break;
             case 2:
-                currentPlayer.money += 1000;
+                gameManager.addMoneyToCurrentPlayer(1000);
                 break;
             case 3:
-                currentPlayer.money += 1000;
+                gameManager.addMoneyToCurrentPlayer(1000);
                 break;
             case 4:
-                currentPlayer.money += 2000;
+                gameManager.addMoneyToCurrentPlayer(2000);
                 break;
             case 5:
-                currentPlayer.money += 4000;
+                gameManager.addMoneyToCurrentPlayer(4000);
                 break;
             case 6:
-                currentPlayer.money -= 2000;
+                gameManager.removeMoneyFromCurrentPlayer(2000);
                 break;
             case 7:
-                currentPlayer.money -= 1000;
+                gameManager.removeMoneyFromCurrentPlayer(1000);
                 break;
             case 8:
-                currentPlayer.money -= 500;
+                gameManager.removeMoneyFromCurrentPlayer(500);
                 break;
             case 9:
                 currentPlayer.money = 0;
@@ -87,10 +87,10 @@ public class LuckyCardsManager : MonoBehaviour
                 currentPlayer.money = 10000;
                 break;
             case 11:
-                currentPlayer.goldenTicketAmount += 1;
+                gameManager.addGoldenTicketToCurrentPlayer();
                 break;
             case 12:
-                currentPlayer.money = currentPlayer.money + Convert.ToInt32(currentPlayer.previousBetSum*0.1);
+                gameManager.addMoneyToCurrentPlayer(Convert.ToInt32(currentPlayer.previousBetSum*0.1));
                 break;
         }
         Debug.Log($"The current player has ${currentPlayer.money}");

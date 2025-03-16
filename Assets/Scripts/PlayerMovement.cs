@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public BlackjackManager blackjackManager;
     public LuckyCardsManager luckyCardsManager;
     public static int blackjackBetAmount;
+    public GameManager gameManager;
     
     public string[] tileNames = {
         "start", "money500", "blackjack2000", "lucky card", "wheel of fortune", 
@@ -76,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
             if (currentWaypointIndex < startWaypointIndex && !addedMoneyOnce)
             {
                 addedMoneyOnce = true;
-                playerData.money += 2000;
+                gameManager.addMoneyToCurrentPlayer(2000);
                 Debug.Log($"{gameObject.name} kapott +2000 pénzt! Jelenlegi pénz: {playerData.money}");
             }
         }
@@ -98,27 +99,27 @@ public class PlayerMovement : MonoBehaviour
         switch (tile)
         {
             case "money500":
-                playerData.money += 500;
+                gameManager.addMoneyToCurrentPlayer(500);
                 Debug.Log($"{gameObject.name} kapott +500 pénzt! Jelenlegi pénz: {playerData.money}");
                 break;
             case "money1000":
-                playerData.money += 1000;
+                gameManager.addMoneyToCurrentPlayer(1000);
                 Debug.Log($"{gameObject.name} kapott +1000 pénzt! Jelenlegi pénz: {playerData.money}");
                 break;
             case "money2000":
-                playerData.money += 2000;
+                gameManager.addMoneyToCurrentPlayer(2000);
                 Debug.Log($"{gameObject.name} kapott +2000 pénzt! Jelenlegi pénz: {playerData.money}");
                 break;
             case "money3000":
-                playerData.money += 3000;
+                gameManager.addMoneyToCurrentPlayer(3000);
                 Debug.Log($"{gameObject.name} kapott +3000 pénzt! Jelenlegi pénz: {playerData.money}");
                 break;
             case "money5000":
-                playerData.money += 5000;
+                gameManager.addMoneyToCurrentPlayer(5000);
                 Debug.Log($"{gameObject.name} kapott +5000 pénzt! Jelenlegi pénz: {playerData.money}");
                 break;
             case "start":
-                playerData.money += 2000; 
+                gameManager.addMoneyToCurrentPlayer(2000);
                 Debug.Log($"{gameObject.name} kapott +2000 pénzt! Jelenlegi pénz: {playerData.money}");
                 break;
             case "blackjack2000": 
@@ -138,8 +139,8 @@ public class PlayerMovement : MonoBehaviour
                 else
                 {
                     playerData.previousBetSum += 2000;
-                    playerData.money += 2000;
-                    playerData.goldenTicketAmount -= 1;
+                    gameManager.addMoneyToCurrentPlayer(2000);
+                    gameManager.removeGoldenTicketFromCurrentPlayer();
                 }
                 
                 break;
@@ -160,8 +161,8 @@ public class PlayerMovement : MonoBehaviour
                 else
                 {
                     playerData.previousBetSum += 3000;
-                    playerData.money += 3000;
-                    playerData.goldenTicketAmount -= 1;
+                    gameManager.addMoneyToCurrentPlayer(3000);
+                    gameManager.removeGoldenTicketFromCurrentPlayer();
                 }
                 break;
             case "blackjack4000": 
@@ -181,8 +182,8 @@ public class PlayerMovement : MonoBehaviour
                 else
                 {
                     playerData.previousBetSum += 4000;
-                    playerData.money += 4000;
-                    playerData.goldenTicketAmount -= 1;
+                    gameManager.addMoneyToCurrentPlayer(4000);
+                    gameManager.removeGoldenTicketFromCurrentPlayer();
                 }
                 break;
             case "blackjack5000": 
@@ -202,8 +203,8 @@ public class PlayerMovement : MonoBehaviour
                 else
                 {
                     playerData.previousBetSum += 5000;
-                    playerData.money += 5000;
-                    playerData.goldenTicketAmount -= 1;
+                    gameManager.addMoneyToCurrentPlayer(5000);
+                    gameManager.removeGoldenTicketFromCurrentPlayer();
                 }
                 break;
             case "lucky card":

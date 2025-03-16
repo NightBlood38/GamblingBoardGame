@@ -1,17 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public static bool cannotThrowDice = false;
+    public static bool isUIOpen = false;
+    public TextMeshProUGUI moneyText;
+    public TextMeshProUGUI goldenTicketText;
 
     private PlayerMovement[] players;
     private int currentPlayerIndex = 0;
     private PlayerData[] playerData;
     private bool isGameOver = false;
-    public static bool cannotThrowDice = false;
-    public static bool isUIOpen = false;
+
 
     void Awake()
     {
@@ -58,7 +62,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        
+        updatePlayerUI();
         if (Input.GetKeyDown(KeyCode.H) && !cannotThrowDice && !isUIOpen)
         {
             RollDiceForCurrentPlayer();
@@ -113,6 +117,28 @@ public class GameManager : MonoBehaviour
             }
         }
         Debug.Log(isGameOver);
+    }
+    public void updatePlayerUI()
+    {
+        moneyText.text = $"${playerData[currentPlayerIndex].money}";
+        goldenTicketText.text = $"Golden tickets: {playerData[currentPlayerIndex].goldenTicketAmount}";
+    }
+    
+    public void addMoneyToCurrentPlayer(int amount)
+    {
+        playerData[currentPlayerIndex].money += amount;
+    }
+    public void addGoldenTicketToCurrentPlayer()
+    {
+        playerData[currentPlayerIndex].goldenTicketAmount++;
+    }
+    public void removeGoldenTicketFromCurrentPlayer()
+    {
+        playerData[currentPlayerIndex].goldenTicketAmount++;
+    }
+    public void removeMoneyFromCurrentPlayer(int amount)
+    {
+        playerData[currentPlayerIndex].money -= amount;
     }
 
     //Megkeresi az összes játékost a jelenetben
