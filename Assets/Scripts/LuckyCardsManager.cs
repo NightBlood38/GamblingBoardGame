@@ -45,6 +45,7 @@ public class LuckyCardsManager : MonoBehaviour
     {
         luckyCardsUI.SetActive(false);
         GameManager.isUIOpen = false;
+        GameManager.Instance.EndTurn();
     }
 
     public void TriggerLuckyCardEffect()
