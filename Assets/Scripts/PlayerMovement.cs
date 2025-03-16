@@ -58,6 +58,8 @@ public class PlayerMovement : MonoBehaviour
         GameManager.cannotThrowDice = true;
         Transform playerTransform = transform;
         int startWaypointIndex = currentWaypointIndex;
+        bool addedMoneyOnce = false;
+
 
         for (int i = 0; i < roll; i++)
         {
@@ -71,8 +73,9 @@ public class PlayerMovement : MonoBehaviour
 
             currentWaypointIndex = nextWaypointIndex;
 
-            if (currentWaypointIndex < startWaypointIndex)
+            if (currentWaypointIndex < startWaypointIndex && !addedMoneyOnce)
             {
+                addedMoneyOnce = true;
                 playerData.money += 2000;
                 Debug.Log($"{gameObject.name} kapott +2000 pénzt! Jelenlegi pénz: {playerData.money}");
             }
