@@ -6,16 +6,22 @@ using TMPro;
 public class BlackjackManager : MonoBehaviour
 {
     public TextMeshProUGUI moneyText;
-    public Button hitButton, standButton;
+    public Button hitButton, standButton, closeButton;
     public GameObject cardPrefab;
     public Transform playerCardHolder, dealerCardHolder;
     public GameObject blackjackUI;
     public GameObject notEnoughMoneyUI;
     public GameManager gameManager;
+    public CardManager cardManager;
+    public TextMeshProUGUI playerCardSumText, dealerCardSumText, resultTextLeft, resultTextRight;
+
 
     private List<int> playerHand = new List<int>();
     private List<int> dealerHand = new List<int>();
     private bool gameOver = false;
+    private int playerCardSum;
+    private int dealerCardSum;
+    private int bet;
 
     void Start()
     {
@@ -34,13 +40,20 @@ public class BlackjackManager : MonoBehaviour
         GameManager.Instance.EndTurn();
     }
 
-    public void StartNewGame()
+    public void StartNewGame(int betAmount)
     {
+        playerCardSum = 0;
+        dealerCardSum = 0;
+        bet = betAmount;
+        gameManager.removeMoneyFromCurrentPlayer(bet);
         blackjackUI.SetActive(true);
         GameManager.isUIOpen = true;
         playerHand.Clear();
         dealerHand.Clear();
         gameOver = false;
+        closeButton.gameObject.SetActive(false);
+        resultTextLeft.gameObject.SetActive(false);
+        resultTextRight.gameObject.SetActive(false);
 
         hitButton.interactable = true;
         standButton.interactable = true;
@@ -55,30 +68,56 @@ public class BlackjackManager : MonoBehaviour
 
     void DrawCardForPlayer()
     {
-        int cardValue = Random.Range(1, 11); // Véletlenszerű kártya (1-10 között)
-        playerHand.Add(cardValue); // Hozzáadjuk a játékos kezéhez
+        int randomCard = Random.Range(0, 52); 
+
+        playerHand.Add(randomCard);
+        playerCardSum = CalculateHandValue(playerHand);
+        playerCardSumText.text = $"{playerCardSum}";
 
         GameObject newCard = Instantiate(cardPrefab, playerCardHolder);
-        newCard.GetComponentInChildren<TextMeshProUGUI>().text = cardValue.ToString();
+        Sprite cardSprite = cardManager.GetCardSprite(randomCard);
+        newCard.GetComponent<Image>().sprite = cardSprite;
     }
+
 
     void DrawCardForDealer()
     {
-        int cardValue = Random.Range(1, 11); // Véletlenszerű kártya (1-10 között)
-        dealerHand.Add(cardValue); // Hozzáadjuk az osztó kezéhez
+        int randomCard = Random.Range(0, 52);
+
+        dealerHand.Add(randomCard);
+        dealerCardSum = CalculateHandValue(dealerHand);
+        dealerCardSumText.text = $"{dealerCardSum}";
 
         GameObject newCard = Instantiate(cardPrefab, dealerCardHolder);
-        newCard.GetComponentInChildren<TextMeshProUGUI>().text = cardValue.ToString();
+        Sprite cardSprite = cardManager.GetCardSprite(randomCard);
+        newCard.GetComponent<Image>().sprite = cardSprite;
     }
+
 
     int CalculateHandValue(List<int> hand)
     {
         int sum = 0;
         int aceCount = 0;
+        int cardRank = 0;
+        int cardValue = 0;
+
         foreach (int card in hand)
         {
-            sum += card;
-            if (card == 1) aceCount++;
+            cardRank = (card % 13) + 2;
+            if(cardRank > 10 && cardRank != 14){
+                cardValue = 10;
+            }
+            else if(cardRank == 14)
+            {
+                cardValue = 1;
+                aceCount++;
+            }
+            else
+            {
+                cardValue = cardRank;
+            }
+            sum += cardValue;
+            if (cardRank == 14) aceCount++;
         }
 
         while (aceCount > 0 && sum + 10 <= 21)
@@ -133,8 +172,26 @@ public class BlackjackManager : MonoBehaviour
         gameOver = true;
         hitButton.interactable = false;
         standButton.interactable = false;
-        GameManager.isUIOpen = false;
+        closeButton.gameObject.SetActive(true);
         int goldenTicketLuckyNumber = Random.Range(0, 100);
+
+        if(playerWon)
+        {
+            resultTextLeft.color = Color.green;
+            resultTextLeft.text = "WON";
+            resultTextRight.color = Color.green;
+            resultTextRight.text = "WON";
+            gameManager.addMoneyToCurrentPlayer(2*bet);
+        }
+        else
+        {
+            resultTextLeft.color = Color.red;
+            resultTextLeft.text = "LOST";
+            resultTextRight.color = Color.red;
+            resultTextRight.text = "LOST";
+        }
+        resultTextLeft.gameObject.SetActive(true);
+        resultTextRight.gameObject.SetActive(true);
 
         if(goldenTicketLuckyNumber < 4)
         {
@@ -142,7 +199,20 @@ public class BlackjackManager : MonoBehaviour
         }
 
         UpdateMoneyUI();
+    }
+
+    public void CloseBlackjackUI()
+    {
+        GameManager.isUIOpen = false;
         blackjackUI.SetActive(false);
+        foreach (Transform child in playerCardHolder)
+        {
+            Destroy(child.gameObject);
+        }
+        foreach (Transform child in dealerCardHolder)
+        {
+            Destroy(child.gameObject);
+        }
         GameManager.Instance.EndTurn();
     }
 
