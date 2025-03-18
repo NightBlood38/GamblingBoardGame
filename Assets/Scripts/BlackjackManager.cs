@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class BlackjackManager : MonoBehaviour
 {
@@ -62,7 +63,7 @@ public class BlackjackManager : MonoBehaviour
         GameManager.isUIOpen = false;
     }
 
-    public void StartNewGame(int betAmount)
+    public IEnumerator StartNewGame(int betAmount)
     {
         playerCardSum = 0;
         dealerCardSum = 0;
@@ -82,8 +83,11 @@ public class BlackjackManager : MonoBehaviour
         standButton.interactable = true;
 
         // Kezdő lapok húzása (véletlenszám generálással)
+        yield return new WaitForSeconds(1);
         DrawCardForPlayer();
+        yield return new WaitForSeconds(1);
         DrawCardForPlayer();
+        yield return new WaitForSeconds(1);
         DrawCardForDealer();
 
         UpdateMoneyUI();
@@ -114,6 +118,7 @@ public class BlackjackManager : MonoBehaviour
         GameObject newCard = Instantiate(cardPrefab, dealerCardHolder);
         Sprite cardSprite = GetCardSprite(randomCard);
         newCard.GetComponent<Image>().sprite = cardSprite;
+        
     }
 
 
@@ -163,13 +168,21 @@ public class BlackjackManager : MonoBehaviour
         }
     }
 
-    public void OnStand()
+    public void OnStandButtonPressed()
     {
-        if (gameOver) return;
+        StartCoroutine(OnStand());
+    }
+
+    IEnumerator OnStand()
+    {
+        standButton.interactable = false;
+        hitButton.interactable = false;
+        if (gameOver) yield break;
 
         // Dealer húz, amíg el nem éri a 17-et
         while (CalculateHandValue(dealerHand) < 17)
         {
+            yield return new WaitForSeconds(1);
             DrawCardForDealer();
         }
 
@@ -193,8 +206,6 @@ public class BlackjackManager : MonoBehaviour
     {
         PlayerData currentPlayer = gameManager.GetCurrentPlayer();
         gameOver = true;
-        hitButton.interactable = false;
-        standButton.interactable = false;
         closeButton.gameObject.SetActive(true);
         int goldenTicketLuckyNumber = Random.Range(0, 100);
 

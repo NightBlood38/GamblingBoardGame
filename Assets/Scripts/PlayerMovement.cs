@@ -121,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
                     else
                     {
                         playerData.previousBetSum += 2000;
-                        blackjackManager.StartNewGame(2000);
+                        StartCoroutine(blackjackManager.StartNewGame(2000));
                     }
                 }
                 else
@@ -142,7 +142,7 @@ public class PlayerMovement : MonoBehaviour
                     else
                     {
                         playerData.previousBetSum += 3000;
-                        blackjackManager.StartNewGame(3000);
+                        StartCoroutine(blackjackManager.StartNewGame(3000));
                     }
                 }
                 else
@@ -162,7 +162,7 @@ public class PlayerMovement : MonoBehaviour
                     else
                     {
                         playerData.previousBetSum += 4000;
-                        blackjackManager.StartNewGame(4000);
+                        StartCoroutine(blackjackManager.StartNewGame(4000));
                     }
                 }
                 else
@@ -182,7 +182,7 @@ public class PlayerMovement : MonoBehaviour
                     else
                     {
                         playerData.previousBetSum += 5000;
-                        blackjackManager.StartNewGame(5000);
+                        StartCoroutine(blackjackManager.StartNewGame(5000));
                     }
                 }
                 else
