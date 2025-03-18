@@ -360,6 +360,7 @@
 "Assets/Scripts/LuckyCardsManager.cs"
 "Assets/Scripts/PlayerData.cs"
 "Assets/Scripts/PlayerMovement.cs"
+"Assets/Scripts/RouletteManager.cs"
 "Assets/Scripts/ShopManager.cs"
 -langversion:9.0
 
