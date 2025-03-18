@@ -9,9 +9,12 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public static bool cannotThrowDice = false;
     public static bool isUIOpen = false;
+    public static bool canStartMoving = false;
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI goldenTicketText;
     public Button rollDiceButton, useGoldenTicketButton;
+    public GameObject rollDiceUI;
+    public TextMeshProUGUI rollDiceNumber;
 
     private PlayerMovement[] players;
     private int currentPlayerIndex = 0;
@@ -61,6 +64,7 @@ public class GameManager : MonoBehaviour
         }
         players[0].StartTurn();
         useGoldenTicketButton.interactable = false;
+        rollDiceUI.SetActive(false);
     }
 
     void Update()
@@ -69,25 +73,53 @@ public class GameManager : MonoBehaviour
         
     }
 
+    IEnumerator changeNumbersFast(int rollAmount)
+{
+        for (float i = 0; i < Random.Range(0f, 1f); i += 0.01f)
+        {
+            rollDiceNumber.text = $"{Random.Range(1, 5)}";
+            yield return new WaitForSeconds(i);
+        }
+
+        rollDiceNumber.text = $"{rollAmount}";
+        canStartMoving = true;
+    }
+
+
     public void RollDiceForCurrentPlayer()
     {
+        rollDiceUI.SetActive(true);
         int diceRoll = Random.Range(1, 5);
-        Debug.Log($"Player {currentPlayerIndex + 1} dobott: {diceRoll}");
 
+        // Elindítjuk a Coroutine-t, és várunk, amíg befejeződik
+        StartCoroutine(HandleDiceRoll(diceRoll));
+    }
+
+    IEnumerator HandleDiceRoll(int rollAmount)
+    {
+        // A számokat gyorsan dobáljuk
+        yield return StartCoroutine(changeNumbersFast(rollAmount));
+
+        // Miután a Coroutine befejeződött, engedélyezzük a mozgást
         if (players[currentPlayerIndex] != null)
         {
-            players[currentPlayerIndex].MovePlayerByDiceRoll(diceRoll);
+            players[currentPlayerIndex].MovePlayerByDiceRoll(rollAmount);
         }
         else
         {
             Debug.LogError("HIBA: currentPlayerIndex nem létező játékosra mutat!");
         }
+
+        // Visszaállítjuk a gombot
         rollDiceButton.interactable = false;
-        if(CurrentPlayerDoesHaveGoldenTicket())
+
+        // Ha van aranyjegy, engedélyezzük a gombot
+        if (CurrentPlayerDoesHaveGoldenTicket())
         {
             useGoldenTicketButton.interactable = true;
         }
     }
+
 
 
     public void EndTurn()

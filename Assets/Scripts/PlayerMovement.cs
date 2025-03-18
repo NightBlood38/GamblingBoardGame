@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public static int blackjackBetAmount;
     public GameManager gameManager;
     public Button endTurnButton;
+    public GameObject rollDiceUI;
     
     public string[] tileNames = {
         "start", "money500", "blackjack2000", "lucky card", "wheel of fortune", 
@@ -84,7 +85,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         HandleTileEffects();
-        endTurnButton.interactable = true;  
+        endTurnButton.interactable = true;
+        rollDiceUI.SetActive(false);
     }
 
     public void HandleTileEffects()
