@@ -87,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
         endTurnButton.interactable = true;  
     }
 
-    void HandleTileEffects()
+    public void HandleTileEffects()
     {
         string tile = tileNames[currentWaypointIndex];
         
@@ -112,84 +112,47 @@ public class PlayerMovement : MonoBehaviour
                 gameManager.AddMoneyToCurrentPlayer(2000);
                 break;
             case "blackjack2000": 
-                if(!gameManager.CurrentPlayerDoesHaveGoldenTicket())
+                if(playerData.money < 2000)
                 {
-                    if(playerData.money < 2000)
-                    {
-                        blackjackManager.NotEnoughMoney();
-                    }
-                    else
-                    {
-                        playerData.previousBetSum += 2000;
-                        StartCoroutine(blackjackManager.StartNewGame(2000));
-                    }
+                    blackjackManager.NotEnoughMoney();
                 }
                 else
                 {
                     playerData.previousBetSum += 2000;
-                    gameManager.AddMoneyToCurrentPlayer(2000);
-                    gameManager.RemoveGoldenTicketFromCurrentPlayer();
-                }
-                
+                    StartCoroutine(blackjackManager.StartNewGame(2000));
+                }                
                 break;
             case "blackjack3000": 
-                if(!gameManager.CurrentPlayerDoesHaveGoldenTicket())
+                if(playerData.money < 3000)
                 {
-                    if(playerData.money < 3000)
-                    {
-                        blackjackManager.NotEnoughMoney();
-                    }
-                    else
-                    {
-                        playerData.previousBetSum += 3000;
-                        StartCoroutine(blackjackManager.StartNewGame(3000));
-                    }
+                    blackjackManager.NotEnoughMoney();
                 }
                 else
                 {
                     playerData.previousBetSum += 3000;
-                    gameManager.AddMoneyToCurrentPlayer(3000);
-                    gameManager.RemoveGoldenTicketFromCurrentPlayer();
+                    StartCoroutine(blackjackManager.StartNewGame(3000));
                 }
                 break;
             case "blackjack4000": 
-                if(!gameManager.CurrentPlayerDoesHaveGoldenTicket())
+                if(playerData.money < 4000)
                 {
-                    if(playerData.money < 4000)
-                    {
-                        blackjackManager.NotEnoughMoney();
-                    }
-                    else
-                    {
-                        playerData.previousBetSum += 4000;
-                        StartCoroutine(blackjackManager.StartNewGame(4000));
-                    }
+                    blackjackManager.NotEnoughMoney();
                 }
                 else
                 {
                     playerData.previousBetSum += 4000;
-                    gameManager.AddMoneyToCurrentPlayer(4000);
-                    gameManager.RemoveGoldenTicketFromCurrentPlayer();
+                    StartCoroutine(blackjackManager.StartNewGame(4000));
                 }
                 break;
             case "blackjack5000": 
-                if(!gameManager.CurrentPlayerDoesHaveGoldenTicket())
+                if(playerData.money < 5000)
                 {
-                    if(playerData.money < 5000)
-                    {
-                        blackjackManager.NotEnoughMoney();
-                    }
-                    else
-                    {
-                        playerData.previousBetSum += 5000;
-                        StartCoroutine(blackjackManager.StartNewGame(5000));
-                    }
+                    blackjackManager.NotEnoughMoney();
                 }
                 else
                 {
                     playerData.previousBetSum += 5000;
-                    gameManager.AddMoneyToCurrentPlayer(5000);
-                    gameManager.RemoveGoldenTicketFromCurrentPlayer();
+                    StartCoroutine(blackjackManager.StartNewGame(5000));
                 }
                 break;
             case "lucky card":

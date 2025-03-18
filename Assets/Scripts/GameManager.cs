@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public static bool isUIOpen = false;
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI goldenTicketText;
-    public Button rollDiceButton;
+    public Button rollDiceButton, useGoldenTicketButton;
 
     private PlayerMovement[] players;
     private int currentPlayerIndex = 0;
@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
             }
         }
         players[0].StartTurn();
+        useGoldenTicketButton.interactable = false;
     }
 
     void Update()
@@ -82,6 +83,10 @@ public class GameManager : MonoBehaviour
             Debug.LogError("HIBA: currentPlayerIndex nem létező játékosra mutat!");
         }
         rollDiceButton.interactable = false;
+        if(CurrentPlayerDoesHaveGoldenTicket())
+        {
+            useGoldenTicketButton.interactable = true;
+        }
     }
 
 
@@ -117,6 +122,10 @@ public class GameManager : MonoBehaviour
     {
         moneyText.text = $"${playerData[currentPlayerIndex].money}";
         goldenTicketText.text = $"Golden tickets: {playerData[currentPlayerIndex].goldenTicketAmount}";
+        if(!CurrentPlayerDoesHaveGoldenTicket())
+        {
+            useGoldenTicketButton.interactable = false;
+        }
     }
     
     public void AddMoneyToCurrentPlayer(int amount)
@@ -133,7 +142,7 @@ public class GameManager : MonoBehaviour
     }
     public void RemoveGoldenTicketFromCurrentPlayer()
     {
-        playerData[currentPlayerIndex].goldenTicketAmount++;
+        playerData[currentPlayerIndex].goldenTicketAmount--;
     }
     public int GetCurrentPlayerMoney()
     {
@@ -153,6 +162,15 @@ public class GameManager : MonoBehaviour
     public void RemoveMoneyFromCurrentPlayer(int amount)
     {
         playerData[currentPlayerIndex].money -= amount;
+    }
+
+    public void TriggerTileEffectWithGoldenTicket()
+    {
+        if(playerData[currentPlayerIndex].goldenTicketAmount > 0)
+        {
+            RemoveGoldenTicketFromCurrentPlayer();
+            players[currentPlayerIndex].HandleTileEffects();
+        }
     }
 
     //Megkeresi az összes játékost a jelenetben

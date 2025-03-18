@@ -65,6 +65,8 @@ public class BlackjackManager : MonoBehaviour
 
     public IEnumerator StartNewGame(int betAmount)
     {
+        hitButton.interactable = false;
+        standButton.interactable = false;
         playerCardSum = 0;
         dealerCardSum = 0;
         bet = betAmount;
@@ -82,9 +84,6 @@ public class BlackjackManager : MonoBehaviour
         playerCardSumText.text = "0";
         dealerCardSumText.text = "0";
 
-        hitButton.interactable = true;
-        standButton.interactable = true;
-
         // Kezdő lapok húzása (véletlenszám generálással)
         yield return new WaitForSeconds(1);
         DrawCardForPlayer();
@@ -92,6 +91,8 @@ public class BlackjackManager : MonoBehaviour
         DrawCardForPlayer();
         yield return new WaitForSeconds(1);
         DrawCardForDealer();
+        hitButton.interactable = true;
+        standButton.interactable = true;
     }
 
     void DrawCardForPlayer()
