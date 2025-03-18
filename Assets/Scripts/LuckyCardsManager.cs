@@ -41,6 +41,7 @@ public class LuckyCardsManager : MonoBehaviour
         luckyCardsUI.SetActive(true);
         playerUI.SetActive(false);
         GameManager.isUIOpen = true;
+        TriggerLuckyCardEffect();
     }
 
     public void CloseLuckyCardsUI()
@@ -52,50 +53,48 @@ public class LuckyCardsManager : MonoBehaviour
 
     public void TriggerLuckyCardEffect()
     {
-        PlayerData currentPlayer = gameManager.GetCurrentPlayer();
         switch(currentLuckyCardIndex)
         {
             case 0:
-                gameManager.addMoneyToCurrentPlayer(500);
+                gameManager.AddMoneyToCurrentPlayer(500);
                 break;
             case 1:
-                gameManager.addMoneyToCurrentPlayer(2000);
+                gameManager.AddMoneyToCurrentPlayer(2000);
                 break;
             case 2:
-                gameManager.addMoneyToCurrentPlayer(1000);
+                gameManager.AddMoneyToCurrentPlayer(1000);
                 break;
             case 3:
-                gameManager.addMoneyToCurrentPlayer(1000);
+                gameManager.AddMoneyToCurrentPlayer(1000);
                 break;
             case 4:
-                gameManager.addMoneyToCurrentPlayer(2000);
+                gameManager.AddMoneyToCurrentPlayer(2000);
                 break;
             case 5:
-                gameManager.addMoneyToCurrentPlayer(4000);
+                gameManager.AddMoneyToCurrentPlayer(4000);
                 break;
             case 6:
-                gameManager.removeMoneyFromCurrentPlayer(2000);
+                gameManager.RemoveMoneyFromCurrentPlayer(2000);
                 break;
             case 7:
-                gameManager.removeMoneyFromCurrentPlayer(1000);
+                gameManager.RemoveMoneyFromCurrentPlayer(1000);
                 break;
             case 8:
-                gameManager.removeMoneyFromCurrentPlayer(500);
+                gameManager.RemoveMoneyFromCurrentPlayer(500);
                 break;
             case 9:
-                currentPlayer.money = 0;
+                gameManager.SetCurrentPlayerMoney(0);
                 break;
             case 10:
-                currentPlayer.money = 10000;
+                gameManager.SetCurrentPlayerMoney(10000);
                 break;
             case 11:
-                gameManager.addGoldenTicketToCurrentPlayer();
+                gameManager.AddGoldenTicketToCurrentPlayer();
                 break;
             case 12:
-                gameManager.addMoneyToCurrentPlayer(Convert.ToInt32(currentPlayer.previousBetSum*0.1));
+                gameManager.AddMoneyToCurrentPlayer(Convert.ToInt32(gameManager.GetCurrentPlayerMoney()*0.1));
                 break;
         }
-        Debug.Log($"The current player has ${currentPlayer.money}");
     }
 
     private void UpdateLuckyCardText()

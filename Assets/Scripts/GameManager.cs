@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        updatePlayerUI();
+        UpdatePlayerUI();
         
     }
 
@@ -113,25 +113,44 @@ public class GameManager : MonoBehaviour
         }
         Debug.Log(isGameOver);
     }
-    public void updatePlayerUI()
+    public void UpdatePlayerUI()
     {
         moneyText.text = $"${playerData[currentPlayerIndex].money}";
         goldenTicketText.text = $"Golden tickets: {playerData[currentPlayerIndex].goldenTicketAmount}";
     }
     
-    public void addMoneyToCurrentPlayer(int amount)
+    public void AddMoneyToCurrentPlayer(int amount)
     {
         playerData[currentPlayerIndex].money += amount;
     }
-    public void addGoldenTicketToCurrentPlayer()
+    public void AddGoldenTicketToCurrentPlayer()
     {
         playerData[currentPlayerIndex].goldenTicketAmount++;
     }
-    public void removeGoldenTicketFromCurrentPlayer()
+    public void SetCurrentPlayerMoney(int amount)
+    {
+        playerData[currentPlayerIndex].money = amount;
+    }
+    public void RemoveGoldenTicketFromCurrentPlayer()
     {
         playerData[currentPlayerIndex].goldenTicketAmount++;
     }
-    public void removeMoneyFromCurrentPlayer(int amount)
+    public int GetCurrentPlayerMoney()
+    {
+        return playerData[currentPlayerIndex].money;
+    }
+    public bool CurrentPlayerDoesHaveGoldenTicket()
+    {
+        if(playerData[currentPlayerIndex].goldenTicketAmount > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public void RemoveMoneyFromCurrentPlayer(int amount)
     {
         playerData[currentPlayerIndex].money -= amount;
     }

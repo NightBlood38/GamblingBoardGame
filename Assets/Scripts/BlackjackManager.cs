@@ -68,7 +68,7 @@ public class BlackjackManager : MonoBehaviour
         playerCardSum = 0;
         dealerCardSum = 0;
         bet = betAmount;
-        gameManager.removeMoneyFromCurrentPlayer(bet);
+        gameManager.RemoveMoneyFromCurrentPlayer(bet);
         blackjackUI.SetActive(true);
         playerUI.SetActive(false);
         GameManager.isUIOpen = true;
@@ -78,6 +78,9 @@ public class BlackjackManager : MonoBehaviour
         closeButton.gameObject.SetActive(false);
         resultTextLeft.gameObject.SetActive(false);
         resultTextRight.gameObject.SetActive(false);
+        UpdateMoneyUI();
+        playerCardSumText.text = "0";
+        dealerCardSumText.text = "0";
 
         hitButton.interactable = true;
         standButton.interactable = true;
@@ -89,8 +92,6 @@ public class BlackjackManager : MonoBehaviour
         DrawCardForPlayer();
         yield return new WaitForSeconds(1);
         DrawCardForDealer();
-
-        UpdateMoneyUI();
     }
 
     void DrawCardForPlayer()
@@ -164,7 +165,7 @@ public class BlackjackManager : MonoBehaviour
 
         if (CalculateHandValue(playerHand) > 21)
         {
-            EndGame(false);
+            EndGame("lost");
         }
     }
 
@@ -189,35 +190,35 @@ public class BlackjackManager : MonoBehaviour
         int playerScore = CalculateHandValue(playerHand);
         int dealerScore = CalculateHandValue(dealerHand);
 
-        PlayerData currentPlayer = gameManager.GetCurrentPlayer();
         if (dealerScore > 21 || playerScore > dealerScore)
         {
-            EndGame(true);
-            currentPlayer.money += PlayerMovement.blackjackBetAmount;
+            EndGame("won");
+        }
+        else if (dealerScore == playerScore)
+        {
+            EndGame("push");
         }
         else
         {
-            EndGame(false);
-            currentPlayer.money -= PlayerMovement.blackjackBetAmount;
+            EndGame("lost");
         }
     }
 
-    void EndGame(bool playerWon)
+    void EndGame(string playerWon)
     {
-        PlayerData currentPlayer = gameManager.GetCurrentPlayer();
         gameOver = true;
         closeButton.gameObject.SetActive(true);
         int goldenTicketLuckyNumber = Random.Range(0, 100);
 
-        if(playerWon)
+        if(playerWon == "won")
         {
             resultTextLeft.color = Color.green;
             resultTextLeft.text = "WON";
             resultTextRight.color = Color.green;
             resultTextRight.text = "WON";
-            gameManager.addMoneyToCurrentPlayer(2*bet);
+            gameManager.AddMoneyToCurrentPlayer(2*bet);
         }
-        else
+        else if (playerWon == "lost")
         {
             resultTextLeft.color = Color.red;
             resultTextLeft.text = "LOST";
@@ -229,7 +230,7 @@ public class BlackjackManager : MonoBehaviour
 
         if(goldenTicketLuckyNumber < 4)
         {
-            currentPlayer.goldenTicketAmount += 1;
+            gameManager.AddGoldenTicketToCurrentPlayer();
         }
 
         UpdateMoneyUI();
