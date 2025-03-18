@@ -12,9 +12,9 @@ public class BlackjackManager : MonoBehaviour
     public GameObject blackjackUI;
     public GameObject notEnoughMoneyUI;
     public GameManager gameManager;
-    public CardManager cardManager;
     public TextMeshProUGUI playerCardSumText, dealerCardSumText, resultTextLeft, resultTextRight;
-
+    public GameObject playerUI;
+    public Sprite[] cardSprites;
 
     private List<int> playerHand = new List<int>();
     private List<int> dealerHand = new List<int>();
@@ -22,6 +22,27 @@ public class BlackjackManager : MonoBehaviour
     private int playerCardSum;
     private int dealerCardSum;
     private int bet;
+
+    void Awake()
+    {
+        // Betölti az összes kártya sprite-ot a mappából
+        cardSprites = Resources.LoadAll<Sprite>("Standard 52 Cards/Standard Rounded Cards/Cards");
+        
+        if (cardSprites.Length == 0)
+        {
+            Debug.LogError("Nem találhatóak a kártyák! Ellenőrizd az elérési utat.");
+        }
+    }
+
+    public Sprite GetCardSprite(int index)
+    {
+        if (index < 0 || index >= cardSprites.Length)
+        {
+            Debug.LogError("Érvénytelen kártya index: " + index);
+            return null;
+        }
+        return cardSprites[index];
+    }
 
     void Start()
     {
@@ -31,13 +52,14 @@ public class BlackjackManager : MonoBehaviour
     public void NotEnoughMoney()
     {
         notEnoughMoneyUI.SetActive(true);
+        playerUI.SetActive(false);
         GameManager.isUIOpen = true;
     }
     public void CloseNotEnoughMoneyUI()
     {
         notEnoughMoneyUI.SetActive(false);
+        playerUI.SetActive(true);
         GameManager.isUIOpen = false;
-        GameManager.Instance.EndTurn();
     }
 
     public void StartNewGame(int betAmount)
@@ -47,6 +69,7 @@ public class BlackjackManager : MonoBehaviour
         bet = betAmount;
         gameManager.removeMoneyFromCurrentPlayer(bet);
         blackjackUI.SetActive(true);
+        playerUI.SetActive(false);
         GameManager.isUIOpen = true;
         playerHand.Clear();
         dealerHand.Clear();
@@ -75,7 +98,7 @@ public class BlackjackManager : MonoBehaviour
         playerCardSumText.text = $"{playerCardSum}";
 
         GameObject newCard = Instantiate(cardPrefab, playerCardHolder);
-        Sprite cardSprite = cardManager.GetCardSprite(randomCard);
+        Sprite cardSprite = GetCardSprite(randomCard);
         newCard.GetComponent<Image>().sprite = cardSprite;
     }
 
@@ -89,7 +112,7 @@ public class BlackjackManager : MonoBehaviour
         dealerCardSumText.text = $"{dealerCardSum}";
 
         GameObject newCard = Instantiate(cardPrefab, dealerCardHolder);
-        Sprite cardSprite = cardManager.GetCardSprite(randomCard);
+        Sprite cardSprite = GetCardSprite(randomCard);
         newCard.GetComponent<Image>().sprite = cardSprite;
     }
 
@@ -205,6 +228,7 @@ public class BlackjackManager : MonoBehaviour
     {
         GameManager.isUIOpen = false;
         blackjackUI.SetActive(false);
+        playerUI.SetActive(true);
         foreach (Transform child in playerCardHolder)
         {
             Destroy(child.gameObject);
@@ -213,7 +237,6 @@ public class BlackjackManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        GameManager.Instance.EndTurn();
     }
 
     void UpdateMoneyUI()

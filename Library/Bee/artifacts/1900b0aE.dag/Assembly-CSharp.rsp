@@ -356,7 +356,6 @@
 "Assets/player.cs"
 "Assets/scr.cs"
 "Assets/Scripts/BlackjackManager.cs"
-"Assets/Scripts/CardManager.cs"
 "Assets/Scripts/GameManager.cs"
 "Assets/Scripts/LuckyCardsManager.cs"
 "Assets/Scripts/PlayerData.cs"

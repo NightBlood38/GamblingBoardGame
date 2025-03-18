@@ -27,6 +27,7 @@ public class LuckyCardsManager : MonoBehaviour
     public TextMeshProUGUI luckyCardText;
     public GameManager gameManager;
     public GameObject luckyCardsUI;
+    public GameObject playerUI;
 
     void Start()
     {
@@ -38,14 +39,15 @@ public class LuckyCardsManager : MonoBehaviour
         currentLuckyCardIndex = Convert.ToByte(UnityEngine.Random.Range(0, luckyCardEffects.Length));
         UpdateLuckyCardText();
         luckyCardsUI.SetActive(true);
+        playerUI.SetActive(false);
         GameManager.isUIOpen = true;
     }
 
     public void CloseLuckyCardsUI()
     {
         luckyCardsUI.SetActive(false);
+        playerUI.SetActive(true);
         GameManager.isUIOpen = false;
-        GameManager.Instance.EndTurn();
     }
 
     public void TriggerLuckyCardEffect()

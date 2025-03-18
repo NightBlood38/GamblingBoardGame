@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
@@ -8,11 +9,13 @@ public class PlayerMovement : MonoBehaviour
     private bool isTurn = false;
     private float moveSpeed = 3.0f;
     private PlayerData playerData;
+
     public ShopManager shopManager;
     public BlackjackManager blackjackManager;
     public LuckyCardsManager luckyCardsManager;
     public static int blackjackBetAmount;
     public GameManager gameManager;
+    public Button endTurnButton;
     
     public string[] tileNames = {
         "start", "money500", "blackjack2000", "lucky card", "wheel of fortune", 
@@ -56,11 +59,10 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator SmoothMovePlayerThroughWaypoints(int roll)
     {
-        GameManager.cannotThrowDice = true;
         Transform playerTransform = transform;
         int startWaypointIndex = currentWaypointIndex;
         bool addedMoneyOnce = false;
-
+        endTurnButton.interactable = false;
 
         for (int i = 0; i < roll; i++)
         {
@@ -78,18 +80,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 addedMoneyOnce = true;
                 gameManager.addMoneyToCurrentPlayer(2000);
-                Debug.Log($"{gameObject.name} kapott +2000 pénzt! Jelenlegi pénz: {playerData.money}");
             }
         }
 
         HandleTileEffects();
-        GameManager.cannotThrowDice = false;
-        if(!GameManager.isUIOpen)
-        {
-            GameManager.Instance.EndTurn();
-        }
-        
-        
+        endTurnButton.interactable = true;  
     }
 
     void HandleTileEffects()
@@ -100,27 +95,21 @@ public class PlayerMovement : MonoBehaviour
         {
             case "money500":
                 gameManager.addMoneyToCurrentPlayer(500);
-                Debug.Log($"{gameObject.name} kapott +500 pénzt! Jelenlegi pénz: {playerData.money}");
                 break;
             case "money1000":
                 gameManager.addMoneyToCurrentPlayer(1000);
-                Debug.Log($"{gameObject.name} kapott +1000 pénzt! Jelenlegi pénz: {playerData.money}");
                 break;
             case "money2000":
                 gameManager.addMoneyToCurrentPlayer(2000);
-                Debug.Log($"{gameObject.name} kapott +2000 pénzt! Jelenlegi pénz: {playerData.money}");
                 break;
             case "money3000":
                 gameManager.addMoneyToCurrentPlayer(3000);
-                Debug.Log($"{gameObject.name} kapott +3000 pénzt! Jelenlegi pénz: {playerData.money}");
                 break;
             case "money5000":
                 gameManager.addMoneyToCurrentPlayer(5000);
-                Debug.Log($"{gameObject.name} kapott +5000 pénzt! Jelenlegi pénz: {playerData.money}");
                 break;
             case "start":
                 gameManager.addMoneyToCurrentPlayer(2000);
-                Debug.Log($"{gameObject.name} kapott +2000 pénzt! Jelenlegi pénz: {playerData.money}");
                 break;
             case "blackjack2000": 
                 if(playerData.goldenTicketAmount == 0)
@@ -245,15 +234,10 @@ public class PlayerMovement : MonoBehaviour
 
         for (int i = 0; i < waypoints.Length; i++)
         {
-            Debug.Log(tileNames[i]);
             GameObject waypointObject = new GameObject($"{tileNames[i]}");
             waypointObject.transform.position = GetWaypointPosition(i, ref currentPosition);
             waypoints[i] = waypointObject.transform;
         }
-        if (waypoints.Length > 0 && waypoints[0] != null)
-        Debug.Log($"Waypoints inicializálva, első waypoint: {waypoints[0].position}");
-    else
-        Debug.LogError("HIBA: waypoints tömb üres vagy nem inicializálódott megfelelően!");
     }
 
     Vector3 GetWaypointPosition(int index, ref Vector3 currentPosition)

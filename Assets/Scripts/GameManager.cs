@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -10,6 +11,7 @@ public class GameManager : MonoBehaviour
     public static bool isUIOpen = false;
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI goldenTicketText;
+    public Button rollDiceButton;
 
     private PlayerMovement[] players;
     private int currentPlayerIndex = 0;
@@ -63,36 +65,29 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         updatePlayerUI();
-        if (Input.GetKeyDown(KeyCode.H) && !cannotThrowDice && !isUIOpen)
-        {
-            RollDiceForCurrentPlayer();
-        }
-        else if(Input.GetKeyDown(KeyCode.H) && cannotThrowDice && isUIOpen)
-        {
-            Debug.Log("nem tudsz dobni a kockával");
-        }
         
     }
 
-    void RollDiceForCurrentPlayer()
+    public void RollDiceForCurrentPlayer()
     {
         int diceRoll = Random.Range(1, 5);
         Debug.Log($"Player {currentPlayerIndex + 1} dobott: {diceRoll}");
 
         if (players[currentPlayerIndex] != null)
         {
-            Debug.Log("A MovePlayerByDiceRoll meghívása...");
             players[currentPlayerIndex].MovePlayerByDiceRoll(diceRoll);
         }
         else
         {
             Debug.LogError("HIBA: currentPlayerIndex nem létező játékosra mutat!");
         }
+        rollDiceButton.interactable = false;
     }
 
 
     public void EndTurn()
     {
+        rollDiceButton.interactable = true;
         players[currentPlayerIndex].EndTurn();
         currentPlayerIndex = (currentPlayerIndex + 1) % players.Length;
         players[currentPlayerIndex].StartTurn();

@@ -13,6 +13,7 @@ public class ShopManager : MonoBehaviour
     public Button shoeButton;
     public Button dressButton;
     public Button monocleButton;
+    public GameObject playerUI;
     
 
     private void Start()
@@ -38,6 +39,7 @@ public class ShopManager : MonoBehaviour
     {
         UpdateShopUI();
         shopUI.SetActive(true);
+        playerUI.SetActive(false);
         GameManager.cannotThrowDice = true;
         GameManager.isUIOpen = true;
     }
@@ -45,9 +47,9 @@ public class ShopManager : MonoBehaviour
     public void CloseShop()
     {
         shopUI.SetActive(false);
+        playerUI.SetActive(true);
         GameManager.cannotThrowDice = false;
         GameManager.isUIOpen = false;
-        GameManager.Instance.EndTurn();
     }
 
     public void BuyItem(int cost, string itemName, int index)
