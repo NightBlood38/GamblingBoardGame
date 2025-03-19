@@ -144,10 +144,17 @@ public class BlackjackManager : MonoBehaviour
             if (cardRank == 14) aceCount++;
         }
 
-        while (aceCount > 0 && sum + 10 <= 21 && hand.Count != 1)
+        if(hand.Count != 1 && aceCount > 0)
         {
-            sum += 10;
-            aceCount--;
+            while (sum + 10 <= 21)
+            {
+                sum += 10;
+                aceCount--;
+            }
+        }
+        else if (hand.Count == 1 && aceCount > 0)
+        {
+            sum = 11;
         }
         return sum;
     }
@@ -219,6 +226,14 @@ public class BlackjackManager : MonoBehaviour
             resultTextLeft.text = "LOST";
             resultTextRight.color = Color.red;
             resultTextRight.text = "LOST";
+        }
+        else if ( playerWon == "push")
+        {
+            resultTextLeft.color = Color.white;
+            resultTextLeft.text = "PUSH";
+            resultTextRight.color = Color.white;
+            resultTextRight.text = "PUSH";
+            gameManager.AddMoneyToCurrentPlayer(bet);
         }
         resultTextLeft.gameObject.SetActive(true);
         resultTextRight.gameObject.SetActive(true);
