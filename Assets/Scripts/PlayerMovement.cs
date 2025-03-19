@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public BlackjackManager blackjackManager;
     public LuckyCardsManager luckyCardsManager;
     public static int blackjackBetAmount;
+    public RouletteManager rouletteManager;
     public GameManager gameManager;
     public Button endTurnButton;
     public GameObject rollDiceUI;
@@ -116,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
             case "blackjack2000": 
                 if(playerData.money < 2000)
                 {
-                    blackjackManager.NotEnoughMoney();
+                    gameManager.NotEnoughMoney();
                 }
                 else
                 {
@@ -127,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
             case "blackjack3000": 
                 if(playerData.money < 3000)
                 {
-                    blackjackManager.NotEnoughMoney();
+                    gameManager.NotEnoughMoney();
                 }
                 else
                 {
@@ -138,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
             case "blackjack4000": 
                 if(playerData.money < 4000)
                 {
-                    blackjackManager.NotEnoughMoney();
+                    gameManager.NotEnoughMoney();
                 }
                 else
                 {
@@ -149,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
             case "blackjack5000": 
                 if(playerData.money < 5000)
                 {
-                    blackjackManager.NotEnoughMoney();
+                    gameManager.NotEnoughMoney();
                 }
                 else
                 {
@@ -159,6 +160,17 @@ public class PlayerMovement : MonoBehaviour
                 break;
             case "lucky card":
                 luckyCardsManager.DrawLuckyCard();
+                break;
+            case "roulette":
+                if(playerData.money < 500)
+                {
+                    gameManager.NotEnoughMoney();
+                }
+                else
+                {
+                    playerData.previousBetSum += 500;
+                    rouletteManager.StartRouletteGame(500);
+                }
                 break;
             case "shop":
                 shopManager.OpenShop();

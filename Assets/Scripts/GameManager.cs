@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI goldenTicketText;
     public Button rollDiceButton, useGoldenTicketButton;
     public GameObject rollDiceUI;
+    public GameObject playerUI;
+    public GameObject notEnoughMoneyUI;
     public TextMeshProUGUI rollDiceNumber;
 
     private PlayerMovement[] players;
@@ -71,6 +73,13 @@ public class GameManager : MonoBehaviour
     {
         UpdatePlayerUI();
         
+    }
+
+    public void NotEnoughMoney()
+    {
+        notEnoughMoneyUI.SetActive(true);
+        playerUI.SetActive(false);
+        GameManager.isUIOpen = true;
     }
 
     IEnumerator changeNumbersFast(int rollAmount)
