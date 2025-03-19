@@ -13,12 +13,17 @@ public class RouletteManager : MonoBehaviour
     private string betNumber;
     private int betAmount;
     private string[] blackNumbers = {"2","4","6","8","10","11","13","15","17","20","22","24","26","28","29","31","33","35"};
+    private Color currentNumberColor;
+    private string chosenNumber;
 
 
     public GameObject rouletteUI;
     public GameObject roulettePanel;
     public GameObject playerUI;
     public GameManager gameManager;
+    public Button rouletteCloseButton;
+    public TextMeshProUGUI yourBetText;
+    public TextMeshProUGUI winningNumberText;
 
     void Start()
     {
@@ -36,23 +41,28 @@ public class RouletteManager : MonoBehaviour
         }
 
         rouletteNumbers = texts.ToArray();
-
-        Debug.Log($"Talált közvetlen TextMeshProUGUI elemek száma: {rouletteNumbers.Length}");
     }
 
     public void StartRouletteGame(int playerBet)
     {
         rouletteUI.SetActive(true);
         playerUI.SetActive(false);
+        rouletteCloseButton.gameObject.SetActive(false);
+        yourBetText.text = "";
+        winningNumberText.text = "";
         betNumber = "";
         betAmount = playerBet;
     }
 
+
     void RouletteGame(string bet)
     {
-        string chosenNumber = Convert.ToString(UnityEngine.Random.Range(0,37));
+        yourBetText.text = $"Your bet: {bet}";
+        chosenNumber = Convert.ToString(UnityEngine.Random.Range(0,37));
         Debug.Log($"RulettGame meghívása... {chosenNumber}, {chosenNumber.GetType()}, {bet}");
-        
+
+        StartCoroutine(StartRouletteBall());
+
         if(bet == "0")
         {
             gameManager.AddMoneyToCurrentPlayer(betAmount*100);
@@ -82,6 +92,39 @@ public class RouletteManager : MonoBehaviour
             gameManager.AddMoneyToCurrentPlayer(betAmount*2);
             Debug.Log($"nyertél! Te a {bet} számra kattintottál és a nyerőszám is {chosenNumber} volt");
         }
+    }
+
+    private IEnumerator StartRouletteBall()
+    {
+        for (float i = 0; i < UnityEngine.Random.Range(0.5f, 0.6f); i += 0.01f)
+        {
+            int currentlyWhiteNumber = UnityEngine.Random.Range(0,36);
+            currentNumberColor = rouletteNumbers[currentlyWhiteNumber].color;
+            rouletteNumbers[currentlyWhiteNumber].color = Color.white;
+            yield return new WaitForSeconds(i);
+            rouletteNumbers[currentlyWhiteNumber].color = currentNumberColor;
+        }
+        foreach(TextMeshProUGUI number in rouletteNumbers)
+        {
+            if(number.text == chosenNumber)
+            {
+                currentNumberColor = number.color;
+                number.color = Color.white;
+            }
+        }
+        winningNumberText.text = $"Winning number {chosenNumber}";
+    }
+    public void CloseRouletteUI()
+    {
+        rouletteUI.SetActive(false);
+        foreach(TextMeshProUGUI number in rouletteNumbers)
+        {
+            if(number.text == chosenNumber)
+            {
+                number.color = currentNumberColor;
+            }
+        }
+        rouletteCloseButton.gameObject.SetActive(false);
     }
     
     public string CheckWhichHalf(string number)

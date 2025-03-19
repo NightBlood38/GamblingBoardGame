@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
     }
 
     IEnumerator changeNumbersFast(int rollAmount)
-{
+    {
         for (float i = 0; i < Random.Range(0f, 1f); i += 0.01f)
         {
             rollDiceNumber.text = $"{Random.Range(1, 5)}";

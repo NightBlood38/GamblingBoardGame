@@ -50,12 +50,6 @@ public class BlackjackManager : MonoBehaviour
         blackjackUI.SetActive(false);
     }
 
-    public void NotEnoughMoney()
-    {
-        notEnoughMoneyUI.SetActive(true);
-        playerUI.SetActive(false);
-        GameManager.isUIOpen = true;
-    }
     public void CloseNotEnoughMoneyUI()
     {
         notEnoughMoneyUI.SetActive(false);
@@ -88,9 +82,9 @@ public class BlackjackManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         DrawCardForPlayer();
         yield return new WaitForSeconds(1);
-        DrawCardForPlayer();
-        yield return new WaitForSeconds(1);
         DrawCardForDealer();
+        yield return new WaitForSeconds(1);
+        DrawCardForPlayer();
         hitButton.interactable = true;
         standButton.interactable = true;
     }
