@@ -11872,6 +11872,7 @@ MonoBehaviour:
   gameManager: {fileID: 1876968076}
   endTurnButton: {fileID: 899010197}
   rollDiceUI: {fileID: 211838287}
+  goldenTicketButton: {fileID: 137792412}
   tileNames:
   - start
   - money500
@@ -18677,7 +18678,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1059891441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30842,6 +30843,7 @@ MonoBehaviour:
   goldenTicketText: {fileID: 977779278}
   rollDiceButton: {fileID: 259531471}
   useGoldenTicketButton: {fileID: 137792412}
+  endTurnButton: {fileID: 899010197}
   rollDiceUI: {fileID: 211838287}
   playerUI: {fileID: 1395577369}
   notEnoughMoneyUI: {fileID: 1108191915}
@@ -31210,6 +31212,7 @@ MonoBehaviour:
   gameManager: {fileID: 1876968076}
   endTurnButton: {fileID: 899010197}
   rollDiceUI: {fileID: 211838287}
+  goldenTicketButton: {fileID: 137792412}
   tileNames:
   - start
   - money500

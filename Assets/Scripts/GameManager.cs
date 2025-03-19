@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public static bool canStartMoving = false;
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI goldenTicketText;
-    public Button rollDiceButton, useGoldenTicketButton;
+    public Button rollDiceButton, useGoldenTicketButton, endTurnButton;
     public GameObject rollDiceUI;
     public GameObject playerUI;
     public GameObject notEnoughMoneyUI;
@@ -84,6 +84,9 @@ public class GameManager : MonoBehaviour
 
     IEnumerator changeNumbersFast(int rollAmount)
     {
+        endTurnButton.interactable = false;
+        rollDiceButton.interactable = false;
+        useGoldenTicketButton.interactable = false;
         for (float i = 0; i < Random.Range(0f, 1f); i += 0.01f)
         {
             rollDiceNumber.text = $"{Random.Range(1, 5)}";
@@ -121,12 +124,6 @@ public class GameManager : MonoBehaviour
 
         // Visszaállítjuk a gombot
         rollDiceButton.interactable = false;
-
-        // Ha van aranyjegy, engedélyezzük a gombot
-        if (CurrentPlayerDoesHaveGoldenTicket())
-        {
-            useGoldenTicketButton.interactable = true;
-        }
     }
 
 

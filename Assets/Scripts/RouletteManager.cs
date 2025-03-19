@@ -63,7 +63,7 @@ public class RouletteManager : MonoBehaviour
 
         StartCoroutine(StartRouletteBall());
 
-        if(bet == "0")
+        if(chosenNumber == "0")
         {
             gameManager.AddMoneyToCurrentPlayer(betAmount*100);
             Debug.Log($"nyertél! Te a {bet} számra kattintottál és a nyerőszám is {chosenNumber} volt");
@@ -96,7 +96,7 @@ public class RouletteManager : MonoBehaviour
 
     private IEnumerator StartRouletteBall()
     {
-        for (float i = 0; i < UnityEngine.Random.Range(0.5f, 0.6f); i += 0.01f)
+        for (float i = 0; i < UnityEngine.Random.Range(0.4f, 0.5f); i += 0.01f)
         {
             int currentlyWhiteNumber = UnityEngine.Random.Range(0,36);
             currentNumberColor = rouletteNumbers[currentlyWhiteNumber].color;
@@ -113,6 +113,8 @@ public class RouletteManager : MonoBehaviour
             }
         }
         winningNumberText.text = $"Winning number {chosenNumber}";
+        rouletteCloseButton.gameObject.SetActive(true);
+        rouletteCloseButton.interactable = true;
     }
     public void CloseRouletteUI()
     {
@@ -124,7 +126,12 @@ public class RouletteManager : MonoBehaviour
                 number.color = currentNumberColor;
             }
         }
+        foreach(Button button in betButtons)
+        {
+            button.interactable = true;
+        }
         rouletteCloseButton.gameObject.SetActive(false);
+        playerUI.SetActive(true);
     }
     
     public string CheckWhichHalf(string number)

@@ -144,7 +144,7 @@ public class BlackjackManager : MonoBehaviour
             if (cardRank == 14) aceCount++;
         }
 
-        while (aceCount > 0 && sum + 10 <= 21)
+        while (aceCount > 0 && sum + 10 <= 21 && hand.Count != 1)
         {
             sum += 10;
             aceCount--;
@@ -189,13 +189,13 @@ public class BlackjackManager : MonoBehaviour
         {
             EndGame("won");
         }
-        else if (dealerScore == playerScore)
+        else if (dealerScore > playerScore || playerScore > 21)
         {
-            EndGame("push");
+            EndGame("lost");
         }
         else
         {
-            EndGame("lost");
+            EndGame("push");
         }
     }
 

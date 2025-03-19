@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     public GameManager gameManager;
     public Button endTurnButton;
     public GameObject rollDiceUI;
+    public Button goldenTicketButton;
     
     public string[] tileNames = {
         "start", "money500", "blackjack2000", "lucky card", "wheel of fortune", 
@@ -65,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
         int startWaypointIndex = currentWaypointIndex;
         bool addedMoneyOnce = false;
         endTurnButton.interactable = false;
+        goldenTicketButton.interactable = false;
 
         for (int i = 0; i < roll; i++)
         {
@@ -87,6 +89,10 @@ public class PlayerMovement : MonoBehaviour
 
         HandleTileEffects();
         endTurnButton.interactable = true;
+        if(gameManager.GetCurrentPlayer().goldenTicketAmount > 0)
+        {
+            goldenTicketButton.interactable = true;
+        }
         rollDiceUI.SetActive(false);
     }
 
