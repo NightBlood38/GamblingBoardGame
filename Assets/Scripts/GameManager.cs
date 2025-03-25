@@ -17,8 +17,11 @@ public class GameManager : MonoBehaviour
     public GameObject playerUI;
     public GameObject notEnoughMoneyUI;
     public GameObject escMenuUI;
+    public GameObject shopUI;
+    public GameObject winnerUI;
     public TextMeshProUGUI rollDiceNumber, resumeButtonText, exitButtonText;
     public GameObject[] cameras = new GameObject[4];
+    public TextMeshProUGUI winnerText;
 
     private PlayerMovement[] players;
     private int currentPlayerIndex = 0;
@@ -166,17 +169,26 @@ public class GameManager : MonoBehaviour
 
     //determine winner
     public void Win(){
+        int itemCount = 0;
         for(int i = 0; i < 5; i++){
             if(playerData[currentPlayerIndex].haveItems[i])
             {
-                isGameOver = true;
-            }
-            else
-            {
-                isGameOver = false;
+                itemCount++;
             }
         }
+        if(itemCount == 5)
+        {
+            shopUI.SetActive(false);
+            playerUI.SetActive(false);
+            winnerUI.SetActive(true);
+            winnerText.text = GetCurrentPlayer().playerName + " WINS!";
+        }
         Debug.Log(isGameOver);
+    }
+    public void DisplayWinner(string playerName)
+    {
+        
+        winnerText.gameObject.SetActive(true);
     }
 
     //updates the player UI

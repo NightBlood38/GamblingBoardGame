@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class PlayerData : MonoBehaviour
 {
-    public int money = 0; // Játékos pénze
+    public int money = 0;
     public bool[] haveItems = {false,false,false,false,false};
     public int goldenTicketAmount = 0;
     public int previousBetSum = 0;
+    public string playerName = "PlaceHolder";
 
     public bool SpendMoney(int amount)
     {
