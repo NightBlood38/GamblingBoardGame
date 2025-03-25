@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 115
+  controlID: 114
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -68,8 +68,8 @@ MonoBehaviour:
     y: 0
     width: 311.19995
     height: 722.8
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -94,8 +94,8 @@ MonoBehaviour:
     y: 0
     width: 225.6
     height: 408
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 49
+  controlID: 17
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -248,7 +248,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 50
+  controlID: 18
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -321,7 +321,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Resources/Standard 52 Cards/Standard Rounded Cards/Card Back
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -329,16 +329,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Resources/Standard 52 Cards/Standard Rounded Cards/Card Back
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\tozse\Desktop\GamblingBoardGame
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 79}
-    m_SelectedIDs: 20600000
-    m_LastClickedID: 24608
-    m_ExpandedIDs: 000000009464000096640000986400009a6400009c6400009e640000
+    m_SelectedIDs: 1c090100
+    m_LastClickedID: 67868
+    m_ExpandedIDs: 00000000926400009464000096640000986400009a6400009c64000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -366,7 +366,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000009464000096640000986400009a6400009c6400009e640000
+    m_ExpandedIDs: 00000000926400009464000096640000986400009a6400009c640000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -391,8 +391,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 34f9ffff
-    m_LastClickedInstanceID: -1740
+    m_SelectedInstanceIDs: 7c630000
+    m_LastClickedInstanceID: 25468
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000505c000000000000b85c0000
     m_RenameOverlay:
@@ -505,10 +505,10 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 250}
-      m_SelectedIDs: f4610000
-      m_LastClickedID: 25076
-      m_ExpandedIDs: 24fbffff
+      scrollPos: {x: 0, y: 482}
+      m_SelectedIDs: 305f0000
+      m_LastClickedID: 24368
+      m_ExpandedIDs: 5ef2ffff0ef4ffffcef7ffff4af8ffff8cf8ffff30fbffff3a5d00005c5f0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

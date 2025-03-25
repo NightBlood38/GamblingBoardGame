@@ -16,7 +16,8 @@ public class BlackjackManager : MonoBehaviour
     public TextMeshProUGUI playerCardSumText, dealerCardSumText, resultTextLeft, resultTextRight;
     public GameObject playerUI;
     public Sprite[] cardSprites;
-
+    
+    private Sprite cardBack;
     private List<int> playerHand = new List<int>();
     private List<int> dealerHand = new List<int>();
     private bool gameOver = false;
@@ -28,6 +29,7 @@ public class BlackjackManager : MonoBehaviour
     {
         // Betölti az összes kártya sprite-ot a mappából
         cardSprites = Resources.LoadAll<Sprite>("Standard 52 Cards/Standard Rounded Cards/Cards");
+        cardBack = Resources.Load<Sprite>("Standard 52 Cards/Standard Rounded Cards/Card Back/cardBackBlue");
         
         if (cardSprites.Length == 0)
         {
@@ -35,6 +37,7 @@ public class BlackjackManager : MonoBehaviour
         }
     }
 
+    //getting card images
     public Sprite GetCardSprite(int index)
     {
         if (index < 0 || index >= cardSprites.Length)
@@ -50,6 +53,7 @@ public class BlackjackManager : MonoBehaviour
         blackjackUI.SetActive(false);
     }
 
+    //close NEM UI
     public void CloseNotEnoughMoneyUI()
     {
         notEnoughMoneyUI.SetActive(false);
@@ -57,6 +61,7 @@ public class BlackjackManager : MonoBehaviour
         GameManager.isUIOpen = false;
     }
 
+    //start blackjack game
     public IEnumerator StartNewGame(int betAmount)
     {
         hitButton.interactable = false;
@@ -85,81 +90,14 @@ public class BlackjackManager : MonoBehaviour
         DrawCardForDealer();
         yield return new WaitForSeconds(1);
         DrawCardForPlayer();
+        yield return new WaitForSeconds(1);
+        DrawCardFaceDownForDealer();
         hitButton.interactable = true;
         standButton.interactable = true;
     }
 
-    void DrawCardForPlayer()
-    {
-        int randomCard = Random.Range(0, 52); 
-
-        playerHand.Add(randomCard);
-        playerCardSum = CalculateHandValue(playerHand);
-        playerCardSumText.text = $"{playerCardSum}";
-
-        GameObject newCard = Instantiate(cardPrefab, playerCardHolder);
-        Sprite cardSprite = GetCardSprite(randomCard);
-        newCard.GetComponent<Image>().sprite = cardSprite;
-    }
-
-
-    void DrawCardForDealer()
-    {
-        int randomCard = Random.Range(0, 52);
-
-        dealerHand.Add(randomCard);
-        dealerCardSum = CalculateHandValue(dealerHand);
-        dealerCardSumText.text = $"{dealerCardSum}";
-
-        GameObject newCard = Instantiate(cardPrefab, dealerCardHolder);
-        Sprite cardSprite = GetCardSprite(randomCard);
-        newCard.GetComponent<Image>().sprite = cardSprite;
-        
-    }
-
-
-    int CalculateHandValue(List<int> hand)
-    {
-        int sum = 0;
-        int aceCount = 0;
-        int cardRank = 0;
-        int cardValue = 0;
-
-        foreach (int card in hand)
-        {
-            cardRank = (card % 13) + 2;
-            if(cardRank > 10 && cardRank != 14){
-                cardValue = 10;
-            }
-            else if(cardRank == 14)
-            {
-                cardValue = 1;
-                aceCount++;
-            }
-            else
-            {
-                cardValue = cardRank;
-            }
-            sum += cardValue;
-            if (cardRank == 14) aceCount++;
-        }
-
-        if(hand.Count != 1 && aceCount > 0)
-        {
-            while (sum + 10 <= 21)
-            {
-                sum += 10;
-                aceCount--;
-            }
-        }
-        else if (hand.Count == 1 && aceCount > 0)
-        {
-            sum = 11;
-        }
-        return sum;
-    }
-
-    public void OnHit()
+    //handling button presses in bj UI
+    public void OnHitButtonPressed()
     {
         if (gameOver) return;
 
@@ -173,16 +111,20 @@ public class BlackjackManager : MonoBehaviour
 
     public void OnStandButtonPressed()
     {
+        Destroy(dealerCardHolder.transform.GetChild(1).gameObject);
         StartCoroutine(OnStand());
     }
 
+    //IEnumerator so I can use StartCoroutine()
     IEnumerator OnStand()
     {
         standButton.interactable = false;
         hitButton.interactable = false;
+
         if (gameOver) yield break;
 
-        // Dealer húz, amíg el nem éri a 17-et
+        DrawCardForDealer();
+
         while (CalculateHandValue(dealerHand) < 17)
         {
             yield return new WaitForSeconds(1);
@@ -206,6 +148,65 @@ public class BlackjackManager : MonoBehaviour
         }
     }
 
+    //closing bj UI
+    public void CloseBlackjackUI()
+    {
+        GameManager.isUIOpen = false;
+        blackjackUI.SetActive(false);
+        playerUI.SetActive(true);
+        foreach (Transform child in playerCardHolder)
+        {
+            Destroy(child.gameObject);
+        }
+        foreach (Transform child in dealerCardHolder)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+    //updating money on the bj UI
+    void UpdateMoneyUI()
+    {
+        PlayerData currentPlayer = gameManager.GetCurrentPlayer();
+        moneyText.text = $"${currentPlayer.money}";
+    }
+
+    //draw card for player
+    void DrawCardForPlayer()
+    {
+        int randomCard = Random.Range(0, 52); 
+
+        playerHand.Add(randomCard);
+        playerCardSum = CalculateHandValue(playerHand);
+        playerCardSumText.text = $"{playerCardSum}";
+
+        GameObject newCard = Instantiate(cardPrefab, playerCardHolder);
+        Sprite cardSprite = GetCardSprite(randomCard);
+        newCard.GetComponent<Image>().sprite = cardSprite;
+    }
+
+    //draw card for dealer
+    void DrawCardForDealer()
+    {
+        int randomCard = Random.Range(0, 52);
+
+        dealerHand.Add(randomCard);
+        dealerCardSum = CalculateHandValue(dealerHand);
+        dealerCardSumText.text = $"{dealerCardSum}";
+
+        GameObject newCard = Instantiate(cardPrefab, dealerCardHolder);
+        Sprite cardSprite = GetCardSprite(randomCard);
+        newCard.GetComponent<Image>().sprite = cardSprite;
+    }
+
+    //draw a face down card for dealer
+    void DrawCardFaceDownForDealer()
+    {
+        GameObject newCard = Instantiate(cardPrefab, dealerCardHolder);
+        newCard.GetComponent<Image>().sprite = cardBack;
+    }
+
+    //ending current bj game
     void EndGame(string playerWon)
     {
         gameOver = true;
@@ -246,24 +247,45 @@ public class BlackjackManager : MonoBehaviour
         UpdateMoneyUI();
     }
 
-    public void CloseBlackjackUI()
+    //calculate the value of cards held in hand
+    int CalculateHandValue(List<int> hand)
     {
-        GameManager.isUIOpen = false;
-        blackjackUI.SetActive(false);
-        playerUI.SetActive(true);
-        foreach (Transform child in playerCardHolder)
-        {
-            Destroy(child.gameObject);
-        }
-        foreach (Transform child in dealerCardHolder)
-        {
-            Destroy(child.gameObject);
-        }
-    }
+        int sum = 0;
+        int aceCount = 0;
+        int cardRank = 0;
+        int cardValue = 0;
 
-    void UpdateMoneyUI()
-    {
-        PlayerData currentPlayer = gameManager.GetCurrentPlayer();
-        moneyText.text = $"${currentPlayer.money}";
+        foreach (int card in hand)
+        {
+            cardRank = (card % 13) + 2;
+            if(cardRank > 10 && cardRank != 14){
+                cardValue = 10;
+            }
+            else if(cardRank == 14)
+            {
+                cardValue = 1;
+                aceCount++;
+            }
+            else
+            {
+                cardValue = cardRank;
+            }
+            sum += cardValue;
+            if (cardRank == 14) aceCount++;
+        }
+
+        if(hand.Count != 1 && aceCount > 0)
+        {
+            while (sum + 10 <= 21)
+            {
+                sum += 10;
+                aceCount--;
+            }
+        }
+        else if (hand.Count == 1 && aceCount > 0)
+        {
+            sum = 11;
+        }
+        return sum;
     }
 }

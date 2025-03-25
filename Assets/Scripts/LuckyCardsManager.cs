@@ -34,6 +34,7 @@ public class LuckyCardsManager : MonoBehaviour
         luckyCardsUI.SetActive(false);
     }
 
+    //draw a card
     public void DrawLuckyCard()
     {
         currentLuckyCardIndex = Convert.ToByte(UnityEngine.Random.Range(0, luckyCardEffects.Length));
@@ -44,6 +45,7 @@ public class LuckyCardsManager : MonoBehaviour
         TriggerLuckyCardEffect();
     }
 
+    //close lucky card UI
     public void CloseLuckyCardsUI()
     {
         luckyCardsUI.SetActive(false);
@@ -51,6 +53,7 @@ public class LuckyCardsManager : MonoBehaviour
         GameManager.isUIOpen = false;
     }
 
+    //handling the effects of lucky cards
     public void TriggerLuckyCardEffect()
     {
         switch(currentLuckyCardIndex)
@@ -97,6 +100,7 @@ public class LuckyCardsManager : MonoBehaviour
         }
     }
 
+    //updating lucky cards UI based on which cards is drawn
     private void UpdateLuckyCardText()
     {
         PlayerData currentPlayer = gameManager.GetCurrentPlayer();

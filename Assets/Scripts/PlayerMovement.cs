@@ -47,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
         isTurn = false;
     }
 
+    //move player using dice roll
     public void MovePlayerByDiceRoll(int roll)
     {
         if (!isTurn) return;
@@ -95,7 +96,31 @@ public class PlayerMovement : MonoBehaviour
         }
         rollDiceUI.SetActive(false);
     }
+    IEnumerator SmoothMoveBetweenTwoWaypoints(Transform playerTransform, Vector3 start, Vector3 end)
+    {
+        float elapsedTime = 0f;
+        float journeyLength = Vector3.Distance(start, end);
 
+        while (elapsedTime < journeyLength / moveSpeed)
+        {
+            playerTransform.position = Vector3.Lerp(start, end, (elapsedTime * moveSpeed) / journeyLength);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        playerTransform.position = end;
+    }
+
+    void MovePlayerToWaypoint(int waypointIndex, bool instant = false)
+    {
+        if (instant)
+        {
+            transform.position = waypoints[waypointIndex].position;
+            currentWaypointIndex = waypointIndex;
+        }
+    }
+
+    //handling tile effects
     public void HandleTileEffects()
     {
         string tile = tileNames[currentWaypointIndex];
@@ -186,30 +211,7 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log($"{gameObject.name} lépett a(z) {tile} mezőre.");
     }
 
-    IEnumerator SmoothMoveBetweenTwoWaypoints(Transform playerTransform, Vector3 start, Vector3 end)
-    {
-        float elapsedTime = 0f;
-        float journeyLength = Vector3.Distance(start, end);
-
-        while (elapsedTime < journeyLength / moveSpeed)
-        {
-            playerTransform.position = Vector3.Lerp(start, end, (elapsedTime * moveSpeed) / journeyLength);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        playerTransform.position = end;
-    }
-
-    void MovePlayerToWaypoint(int waypointIndex, bool instant = false)
-    {
-        if (instant)
-        {
-            transform.position = waypoints[waypointIndex].position;
-            currentWaypointIndex = waypointIndex;
-        }
-    }
-
+    //setting up waypoints
     void InitializeWaypoints()
     {
         waypoints = new Transform[28];

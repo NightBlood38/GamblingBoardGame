@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ShopManager : MonoBehaviour
 {
     public GameObject shopUI;
-    private GameManager gameManager;
+    public GameManager gameManager;
     public TextMeshProUGUI moneyText;
     public Button diademButton;
     public Button ringButton;
@@ -18,23 +18,10 @@ public class ShopManager : MonoBehaviour
 
     private void Start()
     {
-        shopUI.SetActive(false);
-
-        // Késleltetett keresés
-        StartCoroutine(FindGameManager());
-        
+        shopUI.SetActive(false);        
     }
 
-    private IEnumerator FindGameManager()
-    {
-        // Várunk, amíg a GameManager inicializálódik
-        while (gameManager == null)
-        {
-            gameManager = FindObjectOfType<GameManager>();
-            yield return null; // Egy frame-et várunk
-        }
-    }
-
+    //open shop UI
     public void OpenShop()
     {
         UpdateShopUI();
@@ -44,6 +31,7 @@ public class ShopManager : MonoBehaviour
         GameManager.isUIOpen = true;
     }
 
+    //close shop UI
     public void CloseShop()
     {
         shopUI.SetActive(false);
@@ -52,6 +40,7 @@ public class ShopManager : MonoBehaviour
         GameManager.isUIOpen = false;
     }
 
+    //handling purchases and adding them to player inventory
     public void BuyItem(int cost, string itemName, int index)
     {
         if (gameManager == null)
@@ -83,12 +72,14 @@ public class ShopManager : MonoBehaviour
         }
     }
 
+    //buy buttons
     public void BuyDiadem() { BuyItem(5000, "Diadem",0); }
     public void BuyRing() { BuyItem(12000, "Ring",1); }
     public void BuyDress() { BuyItem(20000, "Dress",2); }
     public void BuyShoes() { BuyItem(30000, "Shoes",3); }
     public void BuyMonocle() { BuyItem(50000, "Monocle",4); }
 
+    //updating shop UI based on player inventory
     public void UpdateShopUI()
     {
         if (GameManager.Instance != null)
@@ -96,7 +87,7 @@ public class ShopManager : MonoBehaviour
             PlayerData currentPlayer = gameManager.GetCurrentPlayer();
             if (currentPlayer != null)
             {
-                moneyText.text = $"${currentPlayer.money}"; // Kiírja a játékos pénzét
+                moneyText.text = $"${currentPlayer.money}";
             }
 
             if(currentPlayer.haveItems[0])

@@ -16,13 +16,13 @@ public class GameManager : MonoBehaviour
     public GameObject rollDiceUI;
     public GameObject playerUI;
     public GameObject notEnoughMoneyUI;
-    public TextMeshProUGUI rollDiceNumber;
+    public GameObject escMenuUI;
+    public TextMeshProUGUI rollDiceNumber, resumeButtonText, exitButtonText;
 
     private PlayerMovement[] players;
     private int currentPlayerIndex = 0;
     private PlayerData[] playerData;
     private bool isGameOver = false;
-
 
     void Awake()
     {
@@ -72,7 +72,34 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         UpdatePlayerUI();
-        
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            escMenuUI.SetActive(true);
+            playerUI.SetActive(false);
+        }
+    }
+
+    //esc menu controls
+    public void HoveringOverResumeButton()
+    {
+        resumeButtonText.color = new Color(0f,0.78f,0f,1f);
+    }
+    public void EndHoveringOverResumeButton()
+    {
+        resumeButtonText.color = new Color(0f,0.55f,0f,1f);
+    }
+    public void HoveringOverExitButton()
+    {
+        exitButtonText.color = new Color(1f,0f,0f,1f);
+    }
+    public void EndHoveringOverExitButton()
+    {
+        exitButtonText.color = new Color(0.7f,0f,0f,1f);
+    }
+    public void CloseEscMenuUI()
+    {
+        escMenuUI.SetActive(false);
+        playerUI.SetActive(true);
     }
 
     public void NotEnoughMoney()
@@ -82,6 +109,7 @@ public class GameManager : MonoBehaviour
         GameManager.isUIOpen = true;
     }
 
+    //rolling the dice
     IEnumerator changeNumbersFast(int rollAmount)
     {
         endTurnButton.interactable = false;
@@ -97,22 +125,17 @@ public class GameManager : MonoBehaviour
         canStartMoving = true;
     }
 
-
     public void RollDiceForCurrentPlayer()
     {
         rollDiceUI.SetActive(true);
         int diceRoll = Random.Range(1, 5);
-
-        // Elindítjuk a Coroutine-t, és várunk, amíg befejeződik
         StartCoroutine(HandleDiceRoll(diceRoll));
     }
 
     IEnumerator HandleDiceRoll(int rollAmount)
     {
-        // A számokat gyorsan dobáljuk
         yield return StartCoroutine(changeNumbersFast(rollAmount));
 
-        // Miután a Coroutine befejeződött, engedélyezzük a mozgást
         if (players[currentPlayerIndex] != null)
         {
             players[currentPlayerIndex].MovePlayerByDiceRoll(rollAmount);
@@ -122,12 +145,10 @@ public class GameManager : MonoBehaviour
             Debug.LogError("HIBA: currentPlayerIndex nem létező játékosra mutat!");
         }
 
-        // Visszaállítjuk a gombot
         rollDiceButton.interactable = false;
     }
 
-
-
+    //ends the turn
     public void EndTurn()
     {
         rollDiceButton.interactable = true;
@@ -136,13 +157,7 @@ public class GameManager : MonoBehaviour
         players[currentPlayerIndex].StartTurn();
     }
 
-    public PlayerData GetCurrentPlayer()
-    {
-        Debug.Log($"Current player index: {currentPlayerIndex}");
-        Debug.Log($"Current player money: {playerData[currentPlayerIndex].money}");
-        return playerData[currentPlayerIndex];
-    }
-
+    //determine winner
     public void Win(){
         for(int i = 0; i < 5; i++){
             if(playerData[currentPlayerIndex].haveItems[i])
@@ -156,6 +171,8 @@ public class GameManager : MonoBehaviour
         }
         Debug.Log(isGameOver);
     }
+
+    //updates the player UI
     public void UpdatePlayerUI()
     {
         moneyText.text = $"${playerData[currentPlayerIndex].money}";
@@ -165,28 +182,29 @@ public class GameManager : MonoBehaviour
             useGoldenTicketButton.interactable = false;
         }
     }
-    
-    public void AddMoneyToCurrentPlayer(int amount)
+
+    //operations with player currencies
+    public void AddMoneyToCurrentPlayer(int amount) //money+
     {
         playerData[currentPlayerIndex].money += amount;
     }
-    public void AddGoldenTicketToCurrentPlayer()
+    public void AddGoldenTicketToCurrentPlayer()//gt+
     {
         playerData[currentPlayerIndex].goldenTicketAmount++;
     }
-    public void SetCurrentPlayerMoney(int amount)
+    public void SetCurrentPlayerMoney(int amount)//money=
     {
         playerData[currentPlayerIndex].money = amount;
     }
-    public void RemoveGoldenTicketFromCurrentPlayer()
+    public void RemoveGoldenTicketFromCurrentPlayer()//gt-
     {
         playerData[currentPlayerIndex].goldenTicketAmount--;
     }
-    public int GetCurrentPlayerMoney()
+    public int GetCurrentPlayerMoney()//money==
     {
         return playerData[currentPlayerIndex].money;
     }
-    public bool CurrentPlayerDoesHaveGoldenTicket()
+    public bool CurrentPlayerDoesHaveGoldenTicket()//gt amount
     {
         if(playerData[currentPlayerIndex].goldenTicketAmount > 0)
         {
@@ -197,12 +215,12 @@ public class GameManager : MonoBehaviour
             return false;
         }
     }
-    public void RemoveMoneyFromCurrentPlayer(int amount)
+    public void RemoveMoneyFromCurrentPlayer(int amount)//money-
     {
         playerData[currentPlayerIndex].money -= amount;
     }
 
-    public void TriggerTileEffectWithGoldenTicket()
+    public void TriggerTileEffectWithGoldenTicket()//use golden ticket
     {
         if(playerData[currentPlayerIndex].goldenTicketAmount > 0)
         {
@@ -211,7 +229,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //Megkeresi az összes játékost a jelenetben
+    //getting players
+    public PlayerData GetCurrentPlayer()
+    {
+        Debug.Log($"Current player index: {currentPlayerIndex}");
+        Debug.Log($"Current player money: {playerData[currentPlayerIndex].money}");
+        return playerData[currentPlayerIndex];
+    }
     private PlayerMovement[] FindAllPlayers()
     {
         return FindObjectsOfType<PlayerMovement>();

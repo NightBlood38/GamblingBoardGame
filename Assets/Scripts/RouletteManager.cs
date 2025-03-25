@@ -54,7 +54,7 @@ public class RouletteManager : MonoBehaviour
         betAmount = playerBet;
     }
 
-
+    //start roulette game
     void RouletteGame(string bet)
     {
         yourBetText.text = $"Your bet: {bet}";
@@ -94,28 +94,7 @@ public class RouletteManager : MonoBehaviour
         }
     }
 
-    private IEnumerator StartRouletteBall()
-    {
-        for (float i = 0; i < UnityEngine.Random.Range(0.4f, 0.5f); i += 0.01f)
-        {
-            int currentlyWhiteNumber = UnityEngine.Random.Range(0,36);
-            currentNumberColor = rouletteNumbers[currentlyWhiteNumber].color;
-            rouletteNumbers[currentlyWhiteNumber].color = Color.white;
-            yield return new WaitForSeconds(i);
-            rouletteNumbers[currentlyWhiteNumber].color = currentNumberColor;
-        }
-        foreach(TextMeshProUGUI number in rouletteNumbers)
-        {
-            if(number.text == chosenNumber)
-            {
-                currentNumberColor = number.color;
-                number.color = Color.white;
-            }
-        }
-        winningNumberText.text = $"Winning number {chosenNumber}";
-        rouletteCloseButton.gameObject.SetActive(true);
-        rouletteCloseButton.interactable = true;
-    }
+    //close roulette UI
     public void CloseRouletteUI()
     {
         rouletteUI.SetActive(false);
@@ -134,6 +113,7 @@ public class RouletteManager : MonoBehaviour
         playerUI.SetActive(true);
     }
     
+    //checking win conditions
     public string CheckWhichHalf(string number)
     {
         int numberInt = Convert.ToInt32(number);
@@ -185,6 +165,7 @@ public class RouletteManager : MonoBehaviour
         return "red";
     }
 
+    //bet button effects
     public void PressButton0()
     {
         foreach(Button button in betButtons)
@@ -600,6 +581,27 @@ public class RouletteManager : MonoBehaviour
         RouletteGame(betNumber);
     }
 
-
-
+    //making random numbers white then back to original color
+    private IEnumerator StartRouletteBall()
+    {
+        for (float i = 0; i < UnityEngine.Random.Range(0.4f, 0.5f); i += 0.01f)
+        {
+            int currentlyWhiteNumber = UnityEngine.Random.Range(0,36);
+            currentNumberColor = rouletteNumbers[currentlyWhiteNumber].color;
+            rouletteNumbers[currentlyWhiteNumber].color = Color.white;
+            yield return new WaitForSeconds(i);
+            rouletteNumbers[currentlyWhiteNumber].color = currentNumberColor;
+        }
+        foreach(TextMeshProUGUI number in rouletteNumbers)
+        {
+            if(number.text == chosenNumber)
+            {
+                currentNumberColor = number.color;
+                number.color = Color.white;
+            }
+        }
+        winningNumberText.text = $"Winning number {chosenNumber}";
+        rouletteCloseButton.gameObject.SetActive(true);
+        rouletteCloseButton.interactable = true;
+    }
 }
