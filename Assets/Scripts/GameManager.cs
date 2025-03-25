@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public GameObject notEnoughMoneyUI;
     public GameObject escMenuUI;
     public TextMeshProUGUI rollDiceNumber, resumeButtonText, exitButtonText;
+    public GameObject[] cameras = new GameObject[4];
 
     private PlayerMovement[] players;
     private int currentPlayerIndex = 0;
@@ -44,6 +45,10 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError("NINCS EGYETLEN PLAYER SEM!");
             return;
+        }
+        for(int i = 1; i < cameras.Length; i++)
+        {
+            cameras[i].SetActive(false);
         }
 
         playerData = new PlayerData[players.Length];
@@ -153,8 +158,10 @@ public class GameManager : MonoBehaviour
     {
         rollDiceButton.interactable = true;
         players[currentPlayerIndex].EndTurn();
+        cameras[currentPlayerIndex].SetActive(false);
         currentPlayerIndex = (currentPlayerIndex + 1) % players.Length;
         players[currentPlayerIndex].StartTurn();
+        cameras[currentPlayerIndex].SetActive(true);
     }
 
     //determine winner
