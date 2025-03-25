@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public ShopManager shopManager;
     public BlackjackManager blackjackManager;
     public LuckyCardsManager luckyCardsManager;
+    public WheelOfFortuneManager wheelOfFortuneManager;
     public static int blackjackBetAmount;
     public RouletteManager rouletteManager;
     public GameManager gameManager;
@@ -203,6 +204,9 @@ public class PlayerMovement : MonoBehaviour
                     rouletteManager.StartRouletteGame(500);
                 }
                 break;
+            case "wheel of fortune":
+                wheelOfFortuneManager.StartWheelOfFortuneGame();
+                break;  
             case "shop":
                 shopManager.OpenShop();
                 break;

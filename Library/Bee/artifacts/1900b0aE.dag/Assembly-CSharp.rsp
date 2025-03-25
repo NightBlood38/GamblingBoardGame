@@ -362,6 +362,7 @@
 "Assets/Scripts/PlayerMovement.cs"
 "Assets/Scripts/RouletteManager.cs"
 "Assets/Scripts/ShopManager.cs"
+"Assets/Scripts/WheelOfFortuneManager.cs"
 -langversion:9.0
 
 /deterministic
