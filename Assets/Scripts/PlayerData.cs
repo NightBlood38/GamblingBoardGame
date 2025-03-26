@@ -8,7 +8,7 @@ public class PlayerData : MonoBehaviour
     public bool[] haveItems = {false,false,false,false,false};
     public int goldenTicketAmount = 0;
     public int previousBetSum = 0;
-    public string playerName = "PlaceHolder";
+    public string playerName = "Placeholder";
 
     public bool SpendMoney(int amount)
     {
@@ -22,6 +22,11 @@ public class PlayerData : MonoBehaviour
     }
     Debug.Log("Purchase failed! Not enough money.");
     return false;
+    }
+
+    public void ChangeName(string name)
+    {
+        playerName = name;
     }
 }
 
