@@ -22,11 +22,11 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI rollDiceNumber, resumeButtonText, exitButtonText;
     public GameObject[] cameras = new GameObject[4];
     public TextMeshProUGUI winnerText;
+    public ParticleSystem particleEffect;
 
     private PlayerMovement[] players;
     private int currentPlayerIndex = 0;
     private PlayerData[] playerData;
-    private bool isGameOver = false;
 
     void Awake()
     {
@@ -182,8 +182,8 @@ public class GameManager : MonoBehaviour
             playerUI.SetActive(false);
             winnerUI.SetActive(true);
             winnerText.text = GetCurrentPlayer().playerName + " WINS!";
+            particleEffect.Play();
         }
-        Debug.Log(isGameOver);
     }
     public void DisplayWinner(string playerName)
     {
