@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public GameObject escMenuUI;
     public GameObject shopUI;
     public GameObject winnerUI;
-    public TextMeshProUGUI rollDiceNumber, resumeButtonText, exitButtonText;
+    public TextMeshProUGUI rollDiceNumber, resumeButtonText, exitButtonText, playerNameText;
     public GameObject[] cameras = new GameObject[4];
     public TextMeshProUGUI winnerText;
     public ParticleSystem particleEffect;
@@ -200,6 +200,7 @@ public class GameManager : MonoBehaviour
         {
             useGoldenTicketButton.interactable = false;
         }
+        playerNameText.text = playerData[currentPlayerIndex].playerName;
     }
 
     //operations with player currencies
