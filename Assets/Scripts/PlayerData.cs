@@ -10,6 +10,11 @@ public class PlayerData : MonoBehaviour
     public int previousBetSum = 0;
     public string playerName = "Placeholder";
 
+    public void SetPlayerName(string name)
+    {
+        playerName = name;
+    }
+
     public bool SpendMoney(int amount)
     {
     Debug.Log($"Trying to spend {amount}. Current money: {money}");

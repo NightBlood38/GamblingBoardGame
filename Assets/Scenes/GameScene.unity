@@ -8149,7 +8149,7 @@ GameObject:
   - component: {fileID: 137792412}
   m_Layer: 5
   m_Name: UseGoldenTicketButton
-  m_TagString: Untagged
+  m_TagString: GoldenTicketButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19346,11 +19346,11 @@ GameObject:
   - component: {fileID: 211838288}
   m_Layer: 5
   m_Name: RollDiceUI
-  m_TagString: Untagged
+  m_TagString: RollDiceUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &211838288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22127,88 +22127,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 272909650}
   m_CullTransparentMesh: 1
---- !u!1001 &281938088
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 7.02
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 15.75
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -9.33
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -7511558181221131132, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -7511558181221131132, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: c70afd9c07122bf4f966fe9e81740324, type: 2}
-    - target: {fileID: -7511558181221131132, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 4874126678125670354, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-    - target: {fileID: 919132149155446097, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_Name
-      value: Player 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 611789357}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 611789355}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 611789354}
-  m_SourcePrefab: {fileID: 100100000, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
 --- !u!1 &283923034
 GameObject:
   m_ObjectHideFlags: 0
@@ -22901,7 +22819,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -34887,99 +34805,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 599402071}
   m_CullTransparentMesh: 1
---- !u!1 &611789353 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-  m_PrefabInstance: {fileID: 281938088}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &611789354
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 611789353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb0d6861b165dc344acf724f1d91af01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  money: 500000
-  haveItems: 0000000000
-  goldenTicketAmount: 10
-  previousBetSum: 0
-  playerName: Placeholder
---- !u!114 &611789355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 611789353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89f122c44543def43947d5d61bdd8877, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shopManager: {fileID: 165678452}
-  blackjackManager: {fileID: 1145029419}
-  luckyCardsManager: {fileID: 1754848988}
-  wheelOfFortuneManager: {fileID: 2031741432}
-  rouletteManager: {fileID: 1173933404}
-  gameManager: {fileID: 1876968076}
-  endTurnButton: {fileID: 899010197}
-  rollDiceUI: {fileID: 211838287}
-  goldenTicketButton: {fileID: 137792412}
-  tileNames:
-  - start
-  - money500
-  - blackjack2000
-  - lucky card
-  - wheel of fortune
-  - money1000
-  - roulette
-  - shop
-  - money1000
-  - blackjack3000
-  - lucky card
-  - wheel of fortune
-  - money2000
-  - roulette
-  - shop
-  - money2000
-  - blackjack4000
-  - lucky card
-  - wheel of fortune
-  - money3000
-  - roulette
-  - shop
-  - money3000
-  - blackjack5000
-  - lucky card
-  - wheel of fortune
-  - money5000
-  - roulette
---- !u!65 &611789357
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 611789353}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2, y: 1.0240005, z: 2}
-  m_Center: {x: 0, y: -0.48799974, z: 0}
 --- !u!1 &630599754
 GameObject:
   m_ObjectHideFlags: 0
@@ -45632,7 +45457,7 @@ GameObject:
   - component: {fileID: 899010197}
   m_Layer: 5
   m_Name: EndTurnButton
-  m_TagString: Untagged
+  m_TagString: EndTurnButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100597,88 +100422,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1595502020}
   m_CullTransparentMesh: 1
---- !u!1001 &1598632644
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 7.02
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 15.75
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -10.02
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -7511558181221131132, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -7511558181221131132, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: c70afd9c07122bf4f966fe9e81740324, type: 2}
-    - target: {fileID: -7511558181221131132, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 4874126678125670354, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-    - target: {fileID: 919132149155446097, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_Name
-      value: Player 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1895555066}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1895555071}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1895555075}
-  m_SourcePrefab: {fileID: 100100000, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
 --- !u!1 &1603695331
 GameObject:
   m_ObjectHideFlags: 0
@@ -106036,6 +105779,7 @@ MonoBehaviour:
   escMenuUI: {fileID: 343831928}
   shopUI: {fileID: 256624205}
   winnerUI: {fileID: 895819987}
+  playerPrefab: {fileID: 6216331382876082802, guid: 6eb437901546117439b4948aba076735, type: 3}
   rollDiceNumber: {fileID: 311969290}
   resumeButtonText: {fileID: 1994131667}
   exitButtonText: {fileID: 1841630981}
@@ -106576,99 +106320,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1889243546}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1895555060 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 772b24cd529f3d24594f1cc33d0fb1b0, type: 3}
-  m_PrefabInstance: {fileID: 1598632644}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &1895555066
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1895555060}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2, y: 1.0240005, z: 2}
-  m_Center: {x: 0, y: -0.48799974, z: 0}
---- !u!114 &1895555071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1895555060}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89f122c44543def43947d5d61bdd8877, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shopManager: {fileID: 165678452}
-  blackjackManager: {fileID: 1145029419}
-  luckyCardsManager: {fileID: 1754848988}
-  wheelOfFortuneManager: {fileID: 2031741432}
-  rouletteManager: {fileID: 1173933404}
-  gameManager: {fileID: 1876968076}
-  endTurnButton: {fileID: 899010197}
-  rollDiceUI: {fileID: 211838287}
-  goldenTicketButton: {fileID: 137792412}
-  tileNames:
-  - start
-  - money500
-  - blackjack2000
-  - lucky card
-  - wheel of fortune
-  - money1000
-  - roulette
-  - shop
-  - money1000
-  - blackjack3000
-  - lucky card
-  - wheel of fortune
-  - money2000
-  - roulette
-  - shop
-  - money2000
-  - blackjack4000
-  - lucky card
-  - wheel of fortune
-  - money3000
-  - roulette
-  - shop
-  - money3000
-  - blackjack5000
-  - lucky card
-  - wheel of fortune
-  - money5000
-  - roulette
---- !u!114 &1895555075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1895555060}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb0d6861b165dc344acf724f1d91af01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  money: 500000
-  haveItems: 0000000000
-  goldenTicketAmount: 10
-  previousBetSum: 0
-  playerName: Placeholder
 --- !u!1 &1896233040
 GameObject:
   m_ObjectHideFlags: 0
@@ -122892,8 +122543,6 @@ SceneRoots:
   - {fileID: 373607274}
   - {fileID: 1678543102}
   - {fileID: 179956145}
-  - {fileID: 1598632644}
-  - {fileID: 281938088}
   - {fileID: 963194228}
   - {fileID: 978588517}
   - {fileID: 1395161154}

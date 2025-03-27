@@ -35,6 +35,15 @@ public class PlayerMovement : MonoBehaviour
         playerData = GetComponent<PlayerData>();
         InitializeWaypoints();
         MovePlayerToWaypoint(0, instant: true);
+        shopManager = FindObjectOfType<ShopManager>();
+        blackjackManager = FindObjectOfType<BlackjackManager>();
+        luckyCardsManager = FindObjectOfType<LuckyCardsManager>();
+        wheelOfFortuneManager = FindObjectOfType<WheelOfFortuneManager>();
+        rouletteManager = FindObjectOfType<RouletteManager>();
+        gameManager = FindObjectOfType<GameManager>();
+        rollDiceUI = GameObject.FindGameObjectWithTag("RollDiceUI");
+        endTurnButton = GameObject.FindGameObjectWithTag("EndTurnButton").GetComponent<Button>();
+        goldenTicketButton = GameObject.FindGameObjectWithTag("GoldenTicketButton").GetComponent<Button>();
     }
 
     public void StartTurn()

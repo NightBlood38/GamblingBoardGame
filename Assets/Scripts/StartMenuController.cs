@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class StartMenuController : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class StartMenuController : MonoBehaviour
     public TMP_Dropdown playerCountDropdown;
     public GameObject nameInputPrefab;
     public Transform nameInputContainer;
+    public static string[] playerNames = new string[4];
 
     private int playerCount;
     private List<GameObject> inputFields = new List<GameObject>();
@@ -81,7 +83,16 @@ public class StartMenuController : MonoBehaviour
     }
     public void StartGame()
     {
-
+        GameManager.playerCount = playerCount;
+        for(int i = 0; i < inputFields.Count; i++)
+        {
+            playerNames[i] = inputFields[i].GetComponent<TMP_InputField>().text;
+            Debug.Log(playerNames[i]);
+        }
+        if(playerNames[inputFields.Count-1] != "")
+        {
+            SceneManager.LoadScene("GameScene");
+        }
     }
 
 }

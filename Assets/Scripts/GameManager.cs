@@ -19,10 +19,12 @@ public class GameManager : MonoBehaviour
     public GameObject escMenuUI;
     public GameObject shopUI;
     public GameObject winnerUI;
+    public GameObject playerPrefab;
     public TextMeshProUGUI rollDiceNumber, resumeButtonText, exitButtonText, playerNameText;
     public GameObject[] cameras = new GameObject[4];
     public TextMeshProUGUI winnerText;
     public ParticleSystem particleEffect;
+    public static int playerCount;
 
     private PlayerMovement[] players;
     private int currentPlayerIndex = 0;
@@ -42,6 +44,25 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        for (int i = 0; i < playerCount; i++)
+        {
+            GameObject player = Instantiate(playerPrefab);
+            switch(i)
+            {
+                case 0:
+                    player.transform.position = new Vector3(6.7f, 15.75f, -9.37f);
+                    break;
+                case 1:
+                    player.transform.position = new Vector3(7.37f, 15.75f, -9.96f);
+                    break;
+                case 2:
+                    player.transform.position = new Vector3(6.7f, 15.75f, -10.43f);
+                    break;
+                case 3:
+                    player.transform.position = new Vector3(7.37f, 15.75f, -10.82f);
+                    break;
+            }
+        }
         players = FindAllPlayers();
 
         if (players == null || players.Length == 0)
@@ -66,6 +87,7 @@ public class GameManager : MonoBehaviour
             }
 
             playerData[i] = players[i].GetComponent<PlayerData>();
+            playerData[i].SetPlayerName(StartMenuController.playerNames[i]);
 
             if (playerData[i] == null)
             {
@@ -74,7 +96,6 @@ public class GameManager : MonoBehaviour
         }
         players[0].StartTurn();
         useGoldenTicketButton.interactable = false;
-        rollDiceUI.SetActive(false);
     }
 
     void Update()
