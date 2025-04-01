@@ -94,5 +94,13 @@ public class StartMenuController : MonoBehaviour
             SceneManager.LoadScene("GameScene");
         }
     }
+    public void HoveringOverButton(TextMeshProUGUI currentButton)
+    {
+        currentButton.color = new Color(1f,0f,0f,1f);
+    }
+    public void EndHoveringOverButton(TextMeshProUGUI currentButton)
+    {
+        currentButton.color = new Color(0.7f,0f,0f,1f);
+    }
 
 }

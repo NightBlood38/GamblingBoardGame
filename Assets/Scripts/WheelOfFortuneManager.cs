@@ -6,7 +6,7 @@ using TMPro;
 
 public class WheelOfFortuneManager : MonoBehaviour
 {
-    public float radius = 150f;
+    public float radius = 1000f;
     public GameObject wheelOfFortuneUI, wheelOfFortunePanel, playerUI;
     public Button wheelOfFortuneSpinButton, wheelOfFortuneCloseButton;
     public GameManager gameManager;
