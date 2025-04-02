@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class StartMenuController : MonoBehaviour
 {
-    public Button startGameButton, exitButton, backButton, startButton;
-    public TextMeshProUGUI optionsText, playerCountText;
+    public Button startGameButton, exitButton, backButton, startButton, creditButton, backCreditButton;
+    public TextMeshProUGUI optionsText, playerCountText, creditsText, cardsText;
     public TMP_Dropdown playerCountDropdown;
     public GameObject nameInputPrefab;
     public Transform nameInputContainer;
@@ -22,9 +22,12 @@ public class StartMenuController : MonoBehaviour
     {
         startGameButton.gameObject.SetActive(true);
         exitButton.gameObject.SetActive(true);
+        creditButton.gameObject.SetActive(true);
         backButton.gameObject.SetActive(false);
         optionsText.gameObject.SetActive(false);
         startButton.gameObject.SetActive(false);
+        creditsText.gameObject.SetActive(false);
+        cardsText.gameObject.SetActive(false);
         playerCountDropdown.gameObject.SetActive(false);
         playerCountText.gameObject.SetActive(false);
         UpdatePlayerCount(0);
@@ -62,6 +65,9 @@ public class StartMenuController : MonoBehaviour
     {
         startGameButton.gameObject.SetActive(false);
         exitButton.gameObject.SetActive(false);
+        creditButton.gameObject.SetActive(false);
+        creditsText.gameObject.SetActive(false);
+        cardsText.gameObject.SetActive(false);
         backButton.gameObject.SetActive(true);
         optionsText.gameObject.SetActive(true);
         startButton.gameObject.SetActive(true);
@@ -74,6 +80,10 @@ public class StartMenuController : MonoBehaviour
     {
         startGameButton.gameObject.SetActive(true);
         exitButton.gameObject.SetActive(true);
+        creditButton.gameObject.SetActive(true);
+        creditsText.gameObject.SetActive(false);
+        backCreditButton.gameObject.SetActive(false);
+        cardsText.gameObject.SetActive(false);
         backButton.gameObject.SetActive(false);
         optionsText.gameObject.SetActive(false);
         startButton.gameObject.SetActive(false);
@@ -101,6 +111,20 @@ public class StartMenuController : MonoBehaviour
     public void EndHoveringOverButton(TextMeshProUGUI currentButton)
     {
         currentButton.color = new Color(0.7f,0f,0f,1f);
+    }
+    public void OnExitButtonPressed()
+    {
+        Application.Quit();
+    }
+    public void OnCreditsButtonPressed()
+    {
+        startGameButton.gameObject.SetActive(false);
+        exitButton.gameObject.SetActive(false);
+        backCreditButton.gameObject.SetActive(true);
+        creditButton.gameObject.SetActive(false);
+        creditsText.gameObject.SetActive(true);
+        cardsText.gameObject.SetActive(true);
+
     }
 
 }
