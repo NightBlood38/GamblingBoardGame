@@ -822,11 +822,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton0
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 58915340}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1202,11 +1202,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton32
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 61515973}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1469,11 +1469,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton33
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 67354876}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6795,11 +6795,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton2nd12
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 87585607}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -19147,11 +19147,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButtonEven
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 189812526}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -20241,11 +20241,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton15
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 236374023}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -20727,11 +20727,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton30
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 249659226}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -20860,11 +20860,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton26
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 251397583}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -22443,11 +22443,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton16
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 272909652}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -34826,11 +34826,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton8
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 529041223}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -35981,11 +35981,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton5
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 630599756}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -36248,11 +36248,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton20
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 646406228}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -36887,11 +36887,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton19to36
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 682026007}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -44499,11 +44499,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton3rd12
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 815562816}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -47806,11 +47806,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton4
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 918315831}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -49032,11 +49032,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButtonRed
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 949977627}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -60631,11 +60631,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton14
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1037324052}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -65967,11 +65967,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton9
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1057241635}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -67154,11 +67154,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton2
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1116951567}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -78340,11 +78340,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton19
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1175155801}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -84822,11 +84822,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton1to18
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1239592613}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -85536,11 +85536,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton21
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1276523563}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -91774,11 +91774,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton11
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1314814823}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -91907,11 +91907,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton18
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1320701550}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -92040,11 +92040,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton1st12
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1334984598}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -92490,11 +92490,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton31
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1354416625}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -93321,11 +93321,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButtonOdd
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1386613635}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -93969,11 +93969,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton17
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1422488502}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -94235,11 +94235,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton25
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1430361239}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -94368,11 +94368,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton12
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1430878217}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -94606,11 +94606,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton1
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1438947251}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -95382,11 +95382,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton24
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1483008302}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -95966,11 +95966,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButtonBlack
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1518824586}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -102963,11 +102963,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton36
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1603695333}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -103479,11 +103479,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton28
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1627220676}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -105108,11 +105108,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton7
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1685605983}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -105241,11 +105241,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton29
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1685646496}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -105479,11 +105479,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton6
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1692329269}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -109048,11 +109048,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton10
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1877992873}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -119590,11 +119590,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton34
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1938853450}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -119830,11 +119830,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton22
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1945719987}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -121197,11 +121197,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton3
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1974992262}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -122200,11 +122200,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton23
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 2013617216}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -123861,11 +123861,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton35
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 2061463695}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -124968,11 +124968,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton13
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 2121684180}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -125235,11 +125235,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1173933404}
         m_TargetAssemblyTypeName: RouletteManager, Assembly-CSharp
-        m_MethodName: PressButton27
-        m_Mode: 1
+        m_MethodName: PressButton
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 2127603209}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

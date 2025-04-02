@@ -11,6 +11,7 @@ public class WheelOfFortuneManager : MonoBehaviour
     public Button wheelOfFortuneSpinButton, wheelOfFortuneCloseButton;
     public GameManager gameManager;
     public TextMeshProUGUI[] textElements = new TextMeshProUGUI[12];
+    
     private Vector2 screenCenter;
 
     void Start()
