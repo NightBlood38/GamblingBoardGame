@@ -21,11 +21,18 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
     {
         string code = joinCodeInput.text;
         PhotonNetwork.JoinRoom(code);
+        if(!PhotonNetwork.JoinRoom(code))
+        {
+            Debug.Log("Wrong code");
+        }
+        else{
+            Debug.Log("Connection successful");
+        }
     }
 
     public override void OnJoinedRoom()
     {
         Debug.Log("Joined room: " + PhotonNetwork.CurrentRoom.Name);
-        PhotonNetwork.LoadLevel("GameScene"); // Betölti a játékmenetet
+        //PhotonNetwork.LoadLevel("GameScene"); // Betölti a játékmenetet
     }
 }
