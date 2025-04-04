@@ -52,6 +52,7 @@ public class RouletteManager : MonoBehaviour
         winningNumberText.text = "";
         betNumber = "";
         betAmount = playerBet;
+        gameManager.RemoveMoneyFromCurrentPlayer(playerBet);
     }
 
     //start roulette game
