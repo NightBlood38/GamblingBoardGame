@@ -14,7 +14,7 @@ public class StartMenuController : MonoBehaviour
     public TMP_InputField codeInputBox, nameInputBox;
     public GameObject nameInputPrefab, multiplayerNamePrefab;
     public Transform nameInputContainer, multiplayerNameContainer;
-    public static string[] playerNames = new string[4];
+    public static string[] playerNames = new string[6];
     public Canvas startMenu;
     public MultiplayerManager multiplayerManager;
 
@@ -44,7 +44,7 @@ public class StartMenuController : MonoBehaviour
     }
     void Update()
     {
-        UpdatePlayerList();
+        //UpdatePlayerList();
     }
 
     public void UpdatePlayerCount(int index)
@@ -124,7 +124,7 @@ public class StartMenuController : MonoBehaviour
     public void StartGame()
     {
         GameManager.playerCount = playerCount;
-        for(int i = 0; i < inputFields.Count; i++)
+        for(int i = 0; i < playerCount; i++)
         {
             playerNames[i] = inputFields[i].GetComponent<TMP_InputField>().text;
             Debug.Log(playerNames[i]);

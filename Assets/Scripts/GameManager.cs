@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public GameObject winnerUI;
     public GameObject playerPrefab;
     public TextMeshProUGUI rollDiceNumber, resumeButtonText, exitButtonText, playerNameText;
-    public GameObject[] cameras = new GameObject[4];
+    public GameObject[] cameras = new GameObject[6];
     public TextMeshProUGUI winnerText;
     public ParticleSystem particleEffect;
     public static int playerCount;
@@ -51,16 +51,22 @@ public class GameManager : MonoBehaviour
             switch(i)
             {
                 case 0:
-                    player.transform.position = new Vector3(6.7f, 15.75f, -9.37f);
+                    player.transform.position = new Vector3(6.33f, 15.75f, -9.36f);
                     break;
                 case 1:
-                    player.transform.position = new Vector3(7.37f, 15.75f, -9.96f);
+                    player.transform.position = new Vector3(6.33f, 15.75f, -10.01f);
                     break;
                 case 2:
-                    player.transform.position = new Vector3(6.7f, 15.75f, -10.43f);
+                    player.transform.position = new Vector3(6.33f, 15.75f, -10.57f);
                     break;
                 case 3:
-                    player.transform.position = new Vector3(7.37f, 15.75f, -10.82f);
+                    player.transform.position = new Vector3(7.28f, 15.75f, -9.36f);
+                    break;
+                case 4:
+                    player.transform.position = new Vector3(7.28f, 15.75f, -10.01f);
+                    break;
+                case 5:
+                    player.transform.position = new Vector3(7.28f, 15.75f, -10.57f);
                     break;
             }
         }
