@@ -4,21 +4,24 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 public class StartMenuController : MonoBehaviour
 {
-    public Button startGameButton, exitButton, backButton, startButton, creditButton, backCreditButton, multiplayerButton, backMultiplayerButton, hostGame, joinGame, joinButton;
-    public TextMeshProUGUI optionsText, playerCountText, creditsText, cardsText, multiplayerText, generatedCodeText;
+    public Button startGameButton, exitButton, backButton, startButton, creditButton, backCreditButton, multiplayerButton, backMultiplayerButton, hostGame, joinGame, joinButton, leaveButton, multiplayerStartButton;
+    public TextMeshProUGUI optionsText, playerCountText, creditsText, cardsText, multiplayerText, generatedCodeText, wrongCodeText, noNameText;
     public TMP_Dropdown playerCountDropdown;
-    public TMP_InputField codeInputBox;
-    public GameObject nameInputPrefab;
-    public Transform nameInputContainer;
+    public TMP_InputField codeInputBox, nameInputBox;
+    public GameObject nameInputPrefab, multiplayerNamePrefab;
+    public Transform nameInputContainer, multiplayerNameContainer;
     public static string[] playerNames = new string[4];
     public Canvas startMenu;
+    public MultiplayerManager multiplayerManager;
 
     private int playerCount;
     private Button[] buttons;
     private List<GameObject> inputFields = new List<GameObject>();
+    private List<GameObject> playerNamesList = new List<GameObject>();
 
 
     void Start()
@@ -38,6 +41,10 @@ public class StartMenuController : MonoBehaviour
         GenerateInputFields();
         nameInputContainer.gameObject.SetActive(false);
         buttons = FindObjectsOfType<Button>();
+    }
+    void Update()
+    {
+        UpdatePlayerList();
     }
 
     public void UpdatePlayerCount(int index)
@@ -66,7 +73,7 @@ public class StartMenuController : MonoBehaviour
     {
         return playerCount;
     }
-    public void onStartButtonPressed()
+    public void onStartGameButtonPressed()
     {
         startGameButton.gameObject.SetActive(false);
         exitButton.gameObject.SetActive(false);
@@ -104,6 +111,10 @@ public class StartMenuController : MonoBehaviour
         generatedCodeText.gameObject.SetActive(false);
         codeInputBox.gameObject.SetActive(false);
         joinButton.gameObject.SetActive(false);
+        wrongCodeText.gameObject.SetActive(false);
+        noNameText.gameObject.SetActive(false);
+        nameInputBox.gameObject.SetActive(false);
+        multiplayerNameContainer.gameObject.SetActive(false);
         
         foreach(Button btn in buttons)
         {
@@ -147,17 +158,77 @@ public class StartMenuController : MonoBehaviour
     }
     public void OnHostButtonPressed()
     {
+        if(nameInputBox.text != "")
+        {
+            SetPlayerName();
+            multiplayerNameContainer.gameObject.SetActive(true);
+            joinGame.gameObject.SetActive(false);
+            generatedCodeText.gameObject.SetActive(true);
+            hostGame.gameObject.SetActive(false);
+            nameInputBox.gameObject.SetActive(false);
+            noNameText.gameObject.SetActive(false);
+            nameInputBox.gameObject.SetActive(false);
+            multiplayerManager.CreateRoom();
+            backMultiplayerButton.gameObject.SetActive(false);
+            leaveButton.gameObject.SetActive(true);
+            multiplayerStartButton.gameObject.SetActive(true);
+            UpdatePlayerList();
+        }
+        else
+        {
+            noNameText.gameObject.SetActive(true);
+        }
+    }
+
+    public void OnSuccessfulJoin()
+    {
+        SetPlayerName();
+        multiplayerNameContainer.gameObject.SetActive(true);
         joinGame.gameObject.SetActive(false);
         generatedCodeText.gameObject.SetActive(true);
         hostGame.gameObject.SetActive(false);
-
+        nameInputBox.gameObject.SetActive(false);
+        noNameText.gameObject.SetActive(false);
+        nameInputBox.gameObject.SetActive(false);
+        backMultiplayerButton.gameObject.SetActive(false);
+        leaveButton.gameObject.SetActive(true);
+        codeInputBox.gameObject.SetActive(false);
+        joinButton.gameObject.SetActive(false);
+        UpdatePlayerList();
+    }
+    public void OnStartButtonPressed()
+    {
+        PhotonNetwork.LoadLevel("GameScene");
+    }
+    public void OnLeaveButtonPressed()
+    {
+        onBackButtonPressed();
+        Debug.Log("room left");
+        PhotonNetwork.LeaveRoom();
+        leaveButton.gameObject.SetActive(false);
     }
     public void OnJoinButtonPressed()
     {
-        codeInputBox.gameObject.SetActive(true);
-        hostGame.gameObject.SetActive(false);
-        joinGame.gameObject.SetActive(false);
-        joinButton.gameObject.SetActive(true);
+        if(nameInputBox.text != "")
+        {
+            codeInputBox.gameObject.SetActive(true);
+            hostGame.gameObject.SetActive(false);
+            joinGame.gameObject.SetActive(false);
+            joinButton.gameObject.SetActive(true);
+            nameInputBox.gameObject.SetActive(false);
+            noNameText.gameObject.SetActive(false);
+            nameInputBox.gameObject.SetActive(false);
+        }
+        else
+        {
+            noNameText.gameObject.SetActive(true);
+        }
+        
+    }
+
+    public void OnJoinFailed()
+    {
+        wrongCodeText.gameObject.SetActive(true);
     }
 
     public void OnMultiplayerButtonPressed()
@@ -170,6 +241,41 @@ public class StartMenuController : MonoBehaviour
         creditButton.gameObject.SetActive(false);
         joinGame.gameObject.SetActive(true);
         hostGame.gameObject.SetActive(true);
+        nameInputBox.gameObject.SetActive(true);
     }
+
+    public void SetPlayerName()
+    {
+        PhotonNetwork.NickName = nameInputBox.text;
+        Debug.Log($"name set to {PhotonNetwork.NickName}");
+    }
+
+    public void UpdatePlayerList()
+    {
+        Debug.Log($"PhotonNetwork.IsConnected: {PhotonNetwork.IsConnected}");
+        Debug.Log($"PhotonNetwork.InLobby: {PhotonNetwork.InLobby}");
+        Debug.Log($"PhotonNetwork.InRoom: {PhotonNetwork.InRoom}");
+        List<string> multiplayerPlayerNames= new List<string>();
+        foreach (var player in playerNamesList)
+        {
+            Destroy(player);
+        }
+        playerNamesList.Clear();
+
+        foreach (var player in PhotonNetwork.PlayerList)
+        {
+            multiplayerPlayerNames.Add(player.NickName);
+        }
+
+        for (int i = 0; i < multiplayerPlayerNames.Count; i++)
+        {
+            GameObject playerNameGO = Instantiate(multiplayerNamePrefab, multiplayerNameContainer);
+            playerNameGO.GetComponentInChildren<TextMeshProUGUI>().text = multiplayerPlayerNames[i];
+            playerNamesList.Add(playerNameGO);
+            Debug.Log(multiplayerPlayerNames[i]);
+        }
+        Debug.Log($"PhotonNetwork.PlayerList count: {PhotonNetwork.PlayerList.Length}");
+    }
+    
 
 }
