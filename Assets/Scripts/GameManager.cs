@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 public class GameManager : MonoBehaviour
 {
@@ -30,6 +31,17 @@ public class GameManager : MonoBehaviour
     private PlayerMovement[] players;
     private int currentPlayerIndex = 0;
     private PlayerData[] playerData;
+    private bool isMultiplayer = PhotonNetwork.InRoom;
+    private PhotonView photonView;
+    private Vector3[] startPositions = new Vector3[]
+    {
+        new Vector3(6.33f, 15.75f, -9.36f),  // Player 1
+        new Vector3(6.33f, 15.75f, -10.01f), // Player 2
+        new Vector3(6.33f, 15.75f, -10.57f), // Player 3
+        new Vector3(7.28f, 15.75f, -9.36f),  // Player 4
+        new Vector3(7.28f, 15.75f, -10.01f), // Player 5
+        new Vector3(7.28f, 15.75f, -10.57f)  // Player 6
+    };
 
     void Awake()
     {
@@ -45,29 +57,18 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < playerCount; i++)
+        GameObject player;
+        if(isMultiplayer)
         {
-            GameObject player = Instantiate(playerPrefab);
-            switch(i)
+            player = PhotonNetwork.Instantiate("PlayerPrefab", startPositions[PhotonNetwork.LocalPlayer.ActorNumber - 1], Quaternion.identity);
+            photonView = GetComponent<PhotonView>();
+        }
+        else
+        {
+            for (int i = 0; i < playerCount; i++)
             {
-                case 0:
-                    player.transform.position = new Vector3(6.33f, 15.75f, -9.36f);
-                    break;
-                case 1:
-                    player.transform.position = new Vector3(6.33f, 15.75f, -10.01f);
-                    break;
-                case 2:
-                    player.transform.position = new Vector3(6.33f, 15.75f, -10.57f);
-                    break;
-                case 3:
-                    player.transform.position = new Vector3(7.28f, 15.75f, -9.36f);
-                    break;
-                case 4:
-                    player.transform.position = new Vector3(7.28f, 15.75f, -10.01f);
-                    break;
-                case 5:
-                    player.transform.position = new Vector3(7.28f, 15.75f, -10.57f);
-                    break;
+                    player = Instantiate(playerPrefab);
+                    player.transform.position = startPositions[i];
             }
         }
         players = FindAllPlayers();

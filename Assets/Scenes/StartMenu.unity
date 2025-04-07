@@ -512,7 +512,7 @@ MonoBehaviour:
   codeInputBox: {fileID: 1299573340}
   nameInputBox: {fileID: 189923778}
   nameInputPrefab: {fileID: 8077195044184834845, guid: 64d4b2db07c0fea419b00218d97bd7d4, type: 3}
-  multiplayerNamePrefab: {fileID: 4052809769285559127, guid: a2fb6bdb409f4ae4e88dfd9d7892b9e6, type: 3}
+  multiplayerNamePrefab: {fileID: 4052809769285559127, guid: f8a4ae154c12e8c4ebc44efcffbd6026, type: 3}
   nameInputContainer: {fileID: 1869488248}
   multiplayerNameContainer: {fileID: 2141856247}
   startMenu: {fileID: 1137454901}

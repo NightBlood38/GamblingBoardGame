@@ -110540,7 +110540,7 @@ MonoBehaviour:
   escMenuUI: {fileID: 343831928}
   shopUI: {fileID: 256624205}
   winnerUI: {fileID: 895819987}
-  playerPrefab: {fileID: 6216331382876082802, guid: 6eb437901546117439b4948aba076735, type: 3}
+  playerPrefab: {fileID: 6216331382876082802, guid: 8e7fa78ee95435044b423e8db6f62338, type: 3}
   rollDiceNumber: {fileID: 311969290}
   resumeButtonText: {fileID: 1994131667}
   exitButtonText: {fileID: 1841630981}
