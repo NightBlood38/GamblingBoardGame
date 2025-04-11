@@ -1,13 +1,15 @@
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class MultiplayerManager : MonoBehaviourPunCallbacks
 {
     public TMP_InputField joinCodeInput;
-    public TextMeshProUGUI generatedCodeText;
+    public TextMeshProUGUI generatedCodeText, multiplayerButtonText;
     public StartMenuController startMenuController;
+    public Button multiplayerButton;
 
     private string roomCode;
 
@@ -28,9 +30,11 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
 
             roomCode = Random.Range(100000, 999999).ToString();
             PhotonNetwork.CreateRoom(roomCode);
+            //JoinRoom(roomCode);
             generatedCodeText.text = "Room Code: " + roomCode;
             Debug.Log("Room created with code: " + roomCode);
             startMenuController.UpdatePlayerList();
+            
         }
         else
         {
@@ -41,6 +45,11 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
     public void JoinRoom()
     {
         string code = joinCodeInput.text;
+        
+        JoinRoom(code);
+    }
+    public void JoinRoom(string code)
+    {        
         
         if (PhotonNetwork.IsConnected)
         {
@@ -75,23 +84,25 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+        //alapból letiltom a multiplayer gombot, alapból írja a gomb hogy connecting to server...
+        //újra engedéjezem
         Debug.Log("Successfully joined room: " + PhotonNetwork.CurrentRoom.Name);
-        startMenuController.SetPlayerName(); // Itt beállíthatod a játékos nevét
+        startMenuController.SetPlayerName(); // sets the player's name
         startMenuController.OnSuccessfulJoin();
-        //PhotonNetwork.LoadLevel("GameScene"); // Betölti a játékmenetet
     }
     public override void OnConnected()
     {
         Debug.Log("Connected to Photon Server");
     }
-    public override void OnConnectedToMaster()
+    public override void OnJoinedLobby()
     {
-        Debug.Log("Connected to Master Server. Now joining the lobby...");
-        PhotonNetwork.JoinLobby(); // Csatlakozás a lobbyhoz, hogy később csatlakozni lehessen szobákhoz
+        //Debug.Log("Connected to Master Server.");
+        //PhotonNetwork.JoinLobby();
+        multiplayerButtonText.text = "Multiplayer";
+        multiplayerButton.interactable = true;
     }
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        Debug.LogError("Failed to join room: " + message);
         startMenuController.OnJoinFailed();
     }
 }

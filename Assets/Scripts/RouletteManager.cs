@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using Photon.Pun;
 
-public class RouletteManager : MonoBehaviour
+public class RouletteManager : MonoBehaviourPun
 {
     private Button[] betButtons;
     private TextMeshProUGUI[] rouletteNumbers;
@@ -15,6 +16,8 @@ public class RouletteManager : MonoBehaviour
     private string[] blackNumbers = {"2","4","6","8","10","11","13","15","17","20","22","24","26","28","29","31","33","35"};
     private Color currentNumberColor;
     private string chosenNumber;
+    private Color prevMpColor;
+    private Color[] allNumberColors = new Color[37];
 
 
     public GameObject rouletteUI;
@@ -41,10 +44,18 @@ public class RouletteManager : MonoBehaviour
         }
 
         rouletteNumbers = texts.ToArray();
+        for(int i = 0; i < allNumberColors.Length; i++)
+        {
+            allNumberColors[i] = rouletteNumbers[i].color;
+        }
     }
 
     public void StartRouletteGame(int playerBet)
     {
+        for(int i = 0; i < allNumberColors.Length; i++)
+        {
+            rouletteNumbers[i].color = allNumberColors[i];
+        }
         rouletteUI.SetActive(true);
         playerUI.SetActive(false);
         rouletteCloseButton.gameObject.SetActive(false);
@@ -53,7 +64,12 @@ public class RouletteManager : MonoBehaviour
         betNumber = "";
         betAmount = playerBet;
         gameManager.RemoveMoneyFromCurrentPlayer(playerBet);
+        if(PhotonNetwork.InRoom)
+        {
+            this.photonView.RPC("DisableBetButtonsForClients", RpcTarget.All);
+        }
     }
+        
 
     //start roulette game
     void RouletteGame(string bet)
@@ -62,7 +78,7 @@ public class RouletteManager : MonoBehaviour
         chosenNumber = Convert.ToString(UnityEngine.Random.Range(0,37));
         Debug.Log($"RulettGame meghívása... {chosenNumber}, {chosenNumber.GetType()}, {bet}");
 
-        StartCoroutine(StartRouletteBall());
+        StartRouletteBall();
 
         if(chosenNumber == "0")
         {
@@ -97,6 +113,18 @@ public class RouletteManager : MonoBehaviour
 
     //close roulette UI
     public void CloseRouletteUI()
+    {
+        if(PhotonNetwork.InRoom)
+        {
+            this.photonView.RPC("CloseRouletteUIAction", RpcTarget.All);
+        }
+        else
+        {
+            CloseRouletteUIAction();
+        }
+    }
+    [PunRPC]
+    public void CloseRouletteUIAction()
     {
         rouletteUI.SetActive(false);
         foreach(TextMeshProUGUI number in rouletteNumbers)
@@ -176,9 +204,25 @@ public class RouletteManager : MonoBehaviour
         betNumber = pressedButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
         RouletteGame(betNumber);
     }
+    private IEnumerator Wait(int time)
+    {
+        yield return new WaitForSeconds(time);
+    }
+    public void StartRouletteBall()
+    {
+        if(PhotonNetwork.InRoom)
+        {
+            StartCoroutine(StartRouletteBallmp());
+        }
+        else
+        {
+            StartCoroutine(StartRouletteBallsp());
+            
+        }
+    }
 
     //making random numbers white then back to original color
-    private IEnumerator StartRouletteBall()
+    private IEnumerator StartRouletteBallsp()
     {
         for (float i = 0; i < UnityEngine.Random.Range(0.4f, 0.5f); i += 0.01f)
         {
@@ -200,4 +244,88 @@ public class RouletteManager : MonoBehaviour
         rouletteCloseButton.gameObject.SetActive(true);
         rouletteCloseButton.interactable = true;
     }
+    
+    private IEnumerator StartRouletteBallmp()
+    {
+        int previousWhiteNumber = -1;
+        for (float i = 0.45f; i < UnityEngine.Random.Range(0.6f, 0.7f); i += 0.01f)
+        {
+            int currentlyWhiteNumber = UnityEngine.Random.Range(0,36);
+            this.photonView.RPC("RouletteBallmpRPC", RpcTarget.All, currentlyWhiteNumber, chosenNumber, previousWhiteNumber, betNumber);
+            previousWhiteNumber = currentlyWhiteNumber;
+            yield return new WaitForSeconds(i);
+        }
+        
+        this.photonView.RPC("RouletteBallWinRPC", RpcTarget.All, chosenNumber);
+    }
+    [PunRPC]
+    private void DisableBetButtonsForClients()
+    {
+        if(PhotonNetwork.LocalPlayer.ActorNumber - 1 != gameManager.GetPlayerIndex())
+        {
+            foreach(Button button in betButtons)
+            {
+                button.interactable = false;
+            }
+        }
+        else
+        {
+            foreach(Button button in betButtons)
+            {
+                button.interactable = true;
+            }
+        }
+    }
+    [PunRPC]
+    private void RouletteBallmpRPC(int currentlyWhiteNumber, string chosenNumber, int previousWhiteNumber, string betString)
+    {
+        
+        currentNumberColor = rouletteNumbers[currentlyWhiteNumber].color;
+        rouletteNumbers[currentlyWhiteNumber].color = Color.white;
+        if(previousWhiteNumber != -1)
+        {
+            rouletteNumbers[previousWhiteNumber].color = prevMpColor;
+        }
+        prevMpColor = currentNumberColor;
+
+        if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == gameManager.GetPlayerIndex())
+        {
+            rouletteCloseButton.gameObject.SetActive(true);
+            rouletteCloseButton.interactable = true; 
+        }   
+        else{
+            rouletteCloseButton.gameObject.SetActive(true);
+            rouletteCloseButton.interactable = false;
+            yourBetText.text = $"Their bet: {betString}";
+        }
+    }
+    [PunRPC]
+    private void RouletteBallWinRPC(string chosenNumber)
+    {
+        for(int i = 0; i < allNumberColors.Length; i++)
+        {
+            rouletteNumbers[i].color = allNumberColors[i];
+        }
+        foreach(TextMeshProUGUI number in rouletteNumbers)
+        {
+            if(number.text == chosenNumber)
+            {
+                currentNumberColor = number.color;
+                number.color = Color.white;
+            }
+        }
+        
+        winningNumberText.text = $"Winning number {chosenNumber}";
+        if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == gameManager.GetPlayerIndex())
+        {
+            rouletteCloseButton.gameObject.SetActive(true);
+            rouletteCloseButton.interactable = true;            
+        }   
+        else{
+            rouletteCloseButton.gameObject.SetActive(false);
+            rouletteCloseButton.interactable = false;
+        }
+
+    }
+    
 }

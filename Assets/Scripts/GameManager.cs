@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviourPun
 {
     public static GameManager Instance;
     public static bool cannotThrowDice = false;
@@ -55,6 +55,53 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    IEnumerator StartDelayed()
+    {
+        yield return new WaitForSeconds(5);
+        playerCount = PhotonNetwork.PlayerList.Length;
+        players = FindAllPlayers();
+
+        if (players == null || players.Length == 0)
+        {
+            Debug.LogError("NINCS EGYETLEN PLAYER SEM!");
+            yield return null;
+        }
+        for(int i = 1; i < cameras.Length; i++)
+        {
+            cameras[i].SetActive(false);
+        }
+
+        playerData = new PlayerData[players.Length];
+        Debug.Log($"Játékosok száma: {players.Length}");
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (players[i] == null)
+            {
+                Debug.LogError($"A(z) {i}. játékos NINCS inicializálva!");
+                continue;
+            }
+
+            playerData[i] = players[i].GetComponent<PlayerData>();
+            playerData[i].SetPlayerName(StartMenuController.playerNames[i]);
+
+            if (playerData[i] == null)
+            {
+                Debug.LogError($"A(z) {i}. játékosnak nincs PlayerData komponense!");
+            }
+        }
+        players[0].StartTurn();
+        useGoldenTicketButton.interactable = false;
+        if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == currentPlayerIndex){
+                rollDiceButton.interactable = true;
+                endTurnButton.interactable = true;
+        }
+        else
+        {
+            endTurnButton.interactable = false;
+            rollDiceButton.interactable = false;
+        }
+    }
     void Start()
     {
         GameObject player;
@@ -62,6 +109,8 @@ public class GameManager : MonoBehaviour
         {
             player = PhotonNetwork.Instantiate("PlayerPrefab", startPositions[PhotonNetwork.LocalPlayer.ActorNumber - 1], Quaternion.identity);
             photonView = GetComponent<PhotonView>();
+            StartCoroutine(StartDelayed());
+            return;
         }
         else
         {
@@ -140,7 +189,15 @@ public class GameManager : MonoBehaviour
     }
     public void ExitButtonPressed()
     {
-        SceneManager.LoadScene("StartMenu");
+        if(isMultiplayer)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+        else
+        {
+            SceneManager.LoadScene("StartMenu");
+        }
+        
     }
 
     public void NotEnoughMoney()
@@ -151,12 +208,12 @@ public class GameManager : MonoBehaviour
     }
 
     //rolling the dice
-    IEnumerator changeNumbersFast(int rollAmount)
+    private IEnumerator changeNumbersFast(int rollAmount)
     {
         endTurnButton.interactable = false;
         rollDiceButton.interactable = false;
         useGoldenTicketButton.interactable = false;
-        for (float i = 0; i < Random.Range(0f, 1f); i += 0.01f)
+        for (float i = 0; i < 0.2f; i += 0.01f)
         {
             rollDiceNumber.text = $"{Random.Range(1, 5)}";
             yield return new WaitForSeconds(i);
@@ -170,10 +227,28 @@ public class GameManager : MonoBehaviour
     {
         rollDiceUI.SetActive(true);
         int diceRoll = Random.Range(1, 5);
-        StartCoroutine(HandleDiceRoll(diceRoll));
+        
+        if(PhotonNetwork.InRoom)
+        {
+            this.photonView.RPC("HandleDiceRoll", RpcTarget.All, diceRoll);
+        }
+        else
+        {
+            HandleDiceRoll(diceRoll);
+        }
+        
+    }
+    [PunRPC]
+    public void HandleDiceRoll(int rollAmount)
+    {
+        StartCoroutine(HandleDiceRollAction(rollAmount));
+    }
+    public int GetPlayerIndex()
+    {
+        return currentPlayerIndex;
     }
 
-    IEnumerator HandleDiceRoll(int rollAmount)
+    IEnumerator HandleDiceRollAction(int rollAmount)
     {
         yield return StartCoroutine(changeNumbersFast(rollAmount));
 
@@ -189,8 +264,20 @@ public class GameManager : MonoBehaviour
         rollDiceButton.interactable = false;
     }
 
-    //ends the turn
     public void EndTurn()
+    {
+        if(PhotonNetwork.InRoom)
+        {
+            this.photonView.RPC("EndTurnAction", RpcTarget.All);
+        }
+        else
+        {
+            EndTurnAction();
+        }
+    }
+    //ends the turn
+    [PunRPC]
+    public void EndTurnAction()
     {
         rollDiceButton.interactable = true;
         players[currentPlayerIndex].EndTurn();
@@ -198,6 +285,22 @@ public class GameManager : MonoBehaviour
         currentPlayerIndex = (currentPlayerIndex + 1) % players.Length;
         players[currentPlayerIndex].StartTurn();
         cameras[currentPlayerIndex].SetActive(true);
+        if(PhotonNetwork.InRoom)
+        {
+            Debug.Log(PhotonNetwork.LocalPlayer.ActorNumber);
+            Debug.Log(currentPlayerIndex);
+            Debug.Log(players.Length);
+            Debug.Log("==");
+            if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == currentPlayerIndex){
+                rollDiceButton.interactable = true;
+                endTurnButton.interactable = true;
+            }
+            else
+            {
+                endTurnButton.interactable = false;
+                rollDiceButton.interactable = false;
+            }
+        }
     }
 
     //determine winner
@@ -227,6 +330,10 @@ public class GameManager : MonoBehaviour
     //updates the player UI
     public void UpdatePlayerUI()
     {
+        if(playerData == null)
+        {
+            return;
+        }
         moneyText.text = $"${playerData[currentPlayerIndex].money}";
         goldenTicketText.text = $"Golden tickets: {playerData[currentPlayerIndex].goldenTicketAmount}";
         if(!CurrentPlayerDoesHaveGoldenTicket())

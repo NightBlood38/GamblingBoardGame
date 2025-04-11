@@ -42,11 +42,6 @@ public class StartMenuController : MonoBehaviour
         nameInputContainer.gameObject.SetActive(false);
         buttons = FindObjectsOfType<Button>();
     }
-    void Update()
-    {
-        //UpdatePlayerList();
-    }
-
     public void UpdatePlayerCount(int index)
     {
         playerCount = index+2;
@@ -169,6 +164,7 @@ public class StartMenuController : MonoBehaviour
             noNameText.gameObject.SetActive(false);
             nameInputBox.gameObject.SetActive(false);
             multiplayerManager.CreateRoom();
+            //multiplayerManager.JoinRoom();
             backMultiplayerButton.gameObject.SetActive(false);
             leaveButton.gameObject.SetActive(true);
             multiplayerStartButton.gameObject.SetActive(true);
@@ -211,6 +207,7 @@ public class StartMenuController : MonoBehaviour
     {
         if(nameInputBox.text != "")
         {
+            SetPlayerName();
             codeInputBox.gameObject.SetActive(true);
             hostGame.gameObject.SetActive(false);
             joinGame.gameObject.SetActive(false);

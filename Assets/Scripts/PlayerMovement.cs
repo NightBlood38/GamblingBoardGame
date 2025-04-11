@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Photon.Pun;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviourPun
 {
     private Transform[] waypoints;
     private int currentWaypointIndex = 0;
@@ -99,7 +100,22 @@ public class PlayerMovement : MonoBehaviour
         }
 
         HandleTileEffects();
-        endTurnButton.interactable = true;
+        if(PhotonNetwork.InRoom)
+        {
+            if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == gameManager.GetPlayerIndex())
+            {
+                endTurnButton.interactable = true;
+            }
+            else
+            {
+                endTurnButton.interactable = false;
+            }
+        }
+        else
+        {
+            endTurnButton.interactable = true;
+        }
+        
         if(gameManager.GetCurrentPlayer().goldenTicketAmount > 0)
         {
             goldenTicketButton.interactable = true;
@@ -135,6 +151,9 @@ public class PlayerMovement : MonoBehaviour
     {
         string tile = tileNames[currentWaypointIndex];
         
+        rouletteManager.StartRouletteGame(500);
+        return;
+
         switch (tile)
         {
             case "money500":

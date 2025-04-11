@@ -21,7 +21,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("Connected to Photon Master Server.");
-        PhotonNetwork.JoinLobby(); // Automatikusan belép egy lobbyba
+        PhotonNetwork.JoinLobby();
     }
 
     public override void OnJoinedLobby()
