@@ -151,7 +151,7 @@ public class PlayerMovement : MonoBehaviourPun
     {
         string tile = tileNames[currentWaypointIndex];
         
-        wheelOfFortuneManager.StartWheelOfFortuneGame();
+        shopManager.OpenShop();
         return;
 
         switch (tile)

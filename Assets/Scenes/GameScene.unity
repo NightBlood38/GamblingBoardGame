@@ -9107,6 +9107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 165678453}
   - component: {fileID: 165678452}
+  - component: {fileID: 165678454}
   m_Layer: 0
   m_Name: ShopManager
   m_TagString: Untagged
@@ -9134,6 +9135,7 @@ MonoBehaviour:
   shoeButton: {fileID: 2032620006}
   dressButton: {fileID: 1946012616}
   monocleButton: {fileID: 110564814}
+  closeButton: {fileID: 1429431769}
   playerUI: {fileID: 1395577369}
 --- !u!4 &165678453
 Transform:
@@ -9150,6 +9152,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &165678454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165678451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 5
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &171367528
 GameObject:
   m_ObjectHideFlags: 0
