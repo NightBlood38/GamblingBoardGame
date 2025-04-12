@@ -151,7 +151,7 @@ public class PlayerMovement : MonoBehaviourPun
     {
         string tile = tileNames[currentWaypointIndex];
         
-        rouletteManager.StartRouletteGame(500);
+        luckyCardsManager.StartLuckyCards();
         return;
 
         switch (tile)
@@ -219,7 +219,7 @@ public class PlayerMovement : MonoBehaviourPun
                 }
                 break;
             case "lucky card":
-                luckyCardsManager.DrawLuckyCard();
+                luckyCardsManager.StartLuckyCards();
                 break;
             case "roulette":
                 if(playerData.money < 500)

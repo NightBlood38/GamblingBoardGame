@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviourPun
 {
     public static GameManager Instance;
     public static bool cannotThrowDice = false;
-    public static bool isUIOpen = false;
     public static bool canStartMoving = false;
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI goldenTicketText;
@@ -57,7 +56,7 @@ public class GameManager : MonoBehaviourPun
 
     IEnumerator StartDelayed()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(0.5f);
         playerCount = PhotonNetwork.PlayerList.Length;
         players = FindAllPlayers();
 
@@ -204,7 +203,6 @@ public class GameManager : MonoBehaviourPun
     {
         notEnoughMoneyUI.SetActive(true);
         playerUI.SetActive(false);
-        GameManager.isUIOpen = true;
     }
 
     //rolling the dice

@@ -58,7 +58,6 @@ public class BlackjackManager : MonoBehaviour
     {
         notEnoughMoneyUI.SetActive(false);
         playerUI.SetActive(true);
-        GameManager.isUIOpen = false;
     }
 
     //start blackjack game
@@ -72,7 +71,6 @@ public class BlackjackManager : MonoBehaviour
         gameManager.RemoveMoneyFromCurrentPlayer(bet);
         blackjackUI.SetActive(true);
         playerUI.SetActive(false);
-        GameManager.isUIOpen = true;
         playerHand.Clear();
         dealerHand.Clear();
         gameOver = false;
@@ -151,7 +149,6 @@ public class BlackjackManager : MonoBehaviour
     //closing bj UI
     public void CloseBlackjackUI()
     {
-        GameManager.isUIOpen = false;
         blackjackUI.SetActive(false);
         playerUI.SetActive(true);
         foreach (Transform child in playerCardHolder)

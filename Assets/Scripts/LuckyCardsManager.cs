@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using Photon.Pun;
 
-public class LuckyCardsManager : MonoBehaviour
+public class LuckyCardsManager : MonoBehaviourPun
 {
     private string[] luckyCardEffects = {
     "You won the lottery! Your reward is $500",
@@ -28,6 +29,7 @@ public class LuckyCardsManager : MonoBehaviour
     public GameManager gameManager;
     public GameObject luckyCardsUI;
     public GameObject playerUI;
+    public Button closeButton, drawButton;
 
     void Start()
     {
@@ -35,28 +37,79 @@ public class LuckyCardsManager : MonoBehaviour
     }
 
     //draw a card
+    [PunRPC]
+    private void DrawLuckyCardAction()
+    {
+        
+        if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == gameManager.GetPlayerIndex())
+        {
+            currentLuckyCardIndex = Convert.ToByte(UnityEngine.Random.Range(0, luckyCardEffects.Length));
+            Debug.Log(luckyCardEffects[currentLuckyCardIndex]);
+            TriggerLuckyCardEffect(currentLuckyCardIndex);
+            closeButton.interactable = true;
+            drawButton.interactable = false;
+            UpdateLuckyCardText(currentLuckyCardIndex);  
+
+        }
+        else
+        {
+            closeButton.interactable = false;
+            drawButton.interactable = false;
+        }
+    }
+    public void StartLuckyCards()
+    {
+        luckyCardText.text = "";
+        if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == gameManager.GetPlayerIndex())
+        {
+            closeButton.interactable = false;
+            drawButton.interactable = true;
+
+        }
+        else
+        {
+            drawButton.interactable = false;
+            closeButton.interactable = false;
+        }
+        luckyCardsUI.gameObject.SetActive(true);
+        playerUI.SetActive(false);
+    }
     public void DrawLuckyCard()
     {
-        currentLuckyCardIndex = Convert.ToByte(UnityEngine.Random.Range(0, luckyCardEffects.Length));
-        UpdateLuckyCardText();
-        luckyCardsUI.SetActive(true);
-        playerUI.SetActive(false);
-        GameManager.isUIOpen = true;
-        TriggerLuckyCardEffect();
+        if(PhotonNetwork.InRoom)
+        {
+            this.photonView.RPC("DrawLuckyCardAction", RpcTarget.All);
+        }
+        else
+        {
+            DrawLuckyCardAction();
+        }
     }
 
     //close lucky card UI
-    public void CloseLuckyCardsUI()
+    [PunRPC]
+    private void CloseLuckyCardsUIAction()
     {
         luckyCardsUI.SetActive(false);
         playerUI.SetActive(true);
-        GameManager.isUIOpen = false;
+    }
+    public void CloseLuckyCardsUI()
+    {
+        if(PhotonNetwork.InRoom)
+        {
+            this.photonView.RPC("CloseLuckyCardsUIAction", RpcTarget.All);
+        }
+        else
+        {
+            CloseLuckyCardsUIAction();
+        }
     }
 
     //handling the effects of lucky cards
-    public void TriggerLuckyCardEffect()
+    public void TriggerLuckyCardEffect(byte playerLuckyCardsIndex)
     {
-        switch(currentLuckyCardIndex)
+        Debug.Log(playerLuckyCardsIndex);
+        switch(playerLuckyCardsIndex)
         {
             case 0:
                 gameManager.AddMoneyToCurrentPlayer(500);
@@ -101,9 +154,22 @@ public class LuckyCardsManager : MonoBehaviour
     }
 
     //updating lucky cards UI based on which cards is drawn
-    private void UpdateLuckyCardText()
+   
+    private void UpdateLuckyCardText(byte playerLuckyCardsIndex)
     {
-        PlayerData currentPlayer = gameManager.GetCurrentPlayer();
-        luckyCardText.text = luckyCardEffects[currentLuckyCardIndex];
+        if(PhotonNetwork.InRoom)
+        {
+            this.photonView.RPC("UpdateLuckyCardTextAction", RpcTarget.All, playerLuckyCardsIndex);
+        }
+        else
+        {
+            UpdateLuckyCardTextAction(playerLuckyCardsIndex);
+        }
+        
+    }
+     [PunRPC]
+    private void UpdateLuckyCardTextAction(byte playerLuckyCardsIndex)
+    {
+        luckyCardText.text = luckyCardEffects[playerLuckyCardsIndex];
     }
 }

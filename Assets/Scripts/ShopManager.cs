@@ -28,7 +28,6 @@ public class ShopManager : MonoBehaviour
         shopUI.SetActive(true);
         playerUI.SetActive(false);
         GameManager.cannotThrowDice = true;
-        GameManager.isUIOpen = true;
     }
 
     //close shop UI
@@ -37,7 +36,6 @@ public class ShopManager : MonoBehaviour
         shopUI.SetActive(false);
         playerUI.SetActive(true);
         GameManager.cannotThrowDice = false;
-        GameManager.isUIOpen = false;
     }
 
     //handling purchases and adding them to player inventory

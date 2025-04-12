@@ -72,7 +72,7 @@ public class RouletteManager : MonoBehaviourPun
         
 
     //start roulette game
-    void RouletteGame(string bet)
+    private void RouletteGame(string bet)
     {
         yourBetText.text = $"Your bet: {bet}";
         chosenNumber = Convert.ToString(UnityEngine.Random.Range(0,37));
@@ -217,7 +217,6 @@ public class RouletteManager : MonoBehaviourPun
         else
         {
             StartCoroutine(StartRouletteBallsp());
-            
         }
     }
 
