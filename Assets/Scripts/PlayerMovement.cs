@@ -151,7 +151,7 @@ public class PlayerMovement : MonoBehaviourPun
     {
         string tile = tileNames[currentWaypointIndex];
         
-        luckyCardsManager.StartLuckyCards();
+        wheelOfFortuneManager.StartWheelOfFortuneGame();
         return;
 
         switch (tile)
