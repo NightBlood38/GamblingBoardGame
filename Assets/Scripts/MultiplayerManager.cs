@@ -30,8 +30,6 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
 
             roomCode = Random.Range(100000, 999999).ToString();
             PhotonNetwork.CreateRoom(roomCode);
-            //JoinRoom(roomCode);
-            generatedCodeText.text = "Room Code: " + roomCode;
             Debug.Log("Room created with code: " + roomCode);
             startMenuController.UpdatePlayerList();
             
@@ -84,8 +82,6 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        //alapból letiltom a multiplayer gombot, alapból írja a gomb hogy connecting to server...
-        //újra engedéjezem
         Debug.Log("Successfully joined room: " + PhotonNetwork.CurrentRoom.Name);
         startMenuController.SetPlayerName(); // sets the player's name
         startMenuController.OnSuccessfulJoin();
@@ -96,8 +92,6 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
     }
     public override void OnJoinedLobby()
     {
-        //Debug.Log("Connected to Master Server.");
-        //PhotonNetwork.JoinLobby();
         multiplayerButtonText.text = "Multiplayer";
         multiplayerButton.interactable = true;
     }

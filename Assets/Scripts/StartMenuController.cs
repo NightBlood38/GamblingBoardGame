@@ -164,7 +164,6 @@ public class StartMenuController : MonoBehaviour
             noNameText.gameObject.SetActive(false);
             nameInputBox.gameObject.SetActive(false);
             multiplayerManager.CreateRoom();
-            //multiplayerManager.JoinRoom();
             backMultiplayerButton.gameObject.SetActive(false);
             leaveButton.gameObject.SetActive(true);
             multiplayerStartButton.gameObject.SetActive(true);
@@ -179,8 +178,10 @@ public class StartMenuController : MonoBehaviour
     public void OnSuccessfulJoin()
     {
         SetPlayerName();
+        wrongCodeText.gameObject.SetActive(false);
         multiplayerNameContainer.gameObject.SetActive(true);
         joinGame.gameObject.SetActive(false);
+        generatedCodeText.text = $"Room code: \n{PhotonNetwork.CurrentRoom.Name}";
         generatedCodeText.gameObject.SetActive(true);
         hostGame.gameObject.SetActive(false);
         nameInputBox.gameObject.SetActive(false);
@@ -226,6 +227,7 @@ public class StartMenuController : MonoBehaviour
     public void OnJoinFailed()
     {
         wrongCodeText.gameObject.SetActive(true);
+        PhotonNetwork.JoinLobby();
     }
 
     public void OnMultiplayerButtonPressed()
