@@ -328,17 +328,32 @@ public class GameManager : MonoBehaviourPun
     //updates the player UI
     public void UpdatePlayerUI()
     {
-        if(playerData == null)
+        if(PhotonNetwork.InRoom)
         {
-            return;
+            this.photonView.RPC("UpdatePlayerUIAction", RpcTarget.All);
         }
-        moneyText.text = $"${playerData[currentPlayerIndex].money}";
-        goldenTicketText.text = $"Golden tickets: {playerData[currentPlayerIndex].goldenTicketAmount}";
-        if(!CurrentPlayerDoesHaveGoldenTicket())
+        else
         {
-            useGoldenTicketButton.interactable = false;
+            UpdatePlayerUIAction();
         }
-        playerNameText.text = playerData[currentPlayerIndex].playerName;
+    }
+    [PunRPC]
+    public void UpdatePlayerUIAction()
+    {
+        if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == GetPlayerIndex())
+        {
+            if(playerData == null)
+            {
+                return;
+            }
+            moneyText.text = $"${playerData[currentPlayerIndex].money}";
+            goldenTicketText.text = $"Golden tickets: {playerData[currentPlayerIndex].goldenTicketAmount}";
+            if(!CurrentPlayerDoesHaveGoldenTicket())
+            {
+                useGoldenTicketButton.interactable = false;
+            }
+            playerNameText.text = playerData[currentPlayerIndex].playerName;
+        }
     }
 
     //operations with player currencies

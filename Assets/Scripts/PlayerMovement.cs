@@ -150,9 +150,6 @@ public class PlayerMovement : MonoBehaviourPun
     public void HandleTileEffects()
     {
         string tile = tileNames[currentWaypointIndex];
-        
-        shopManager.OpenShop();
-        return;
 
         switch (tile)
         {

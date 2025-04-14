@@ -57,6 +57,21 @@ MonoBehaviour:
   - CloseShopAction
   - OpenShopAction
   - UpdateShopUIAction
+  - UpdatePlayerUIAction
+  - CloseBlackjackUIAction
+  - DrawCardFaceDownForDealersp
+  - DrawCardForDealersp
+  - DrawCardForPlayersp
+  - DisableButtonsForClient
+  - DrawCardForDealermpRPC
+  - DrawCardForPlayermpRPC
+  - OnHitButtonPressedAction
+  - OnStandButtonPressedAction
+  - OnStandmp
+  - DrawCardForDealermp
+  - EndGame
+  - DestroyDealerCard
+  - OnHitButtonPressedmp
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

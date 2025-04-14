@@ -3,8 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using Photon.Pun;
 
-public class BlackjackManager : MonoBehaviour
+public class BlackjackManager : MonoBehaviourPun
 {
     public TextMeshProUGUI moneyText;
     public Button hitButton, standButton, closeButton;
@@ -63,8 +64,6 @@ public class BlackjackManager : MonoBehaviour
     //start blackjack game
     public IEnumerator StartNewGame(int betAmount)
     {
-        hitButton.interactable = false;
-        standButton.interactable = false;
         playerCardSum = 0;
         dealerCardSum = 0;
         bet = betAmount;
@@ -77,66 +76,187 @@ public class BlackjackManager : MonoBehaviour
         closeButton.gameObject.SetActive(false);
         resultTextLeft.gameObject.SetActive(false);
         resultTextRight.gameObject.SetActive(false);
-        UpdateMoneyUI();
         playerCardSumText.text = "0";
         dealerCardSumText.text = "0";
 
-        // Kezdő lapok húzása (véletlenszám generálással)
-        yield return new WaitForSeconds(1);
-        DrawCardForPlayer();
-        yield return new WaitForSeconds(1);
-        DrawCardForDealer();
-        yield return new WaitForSeconds(1);
-        DrawCardForPlayer();
-        yield return new WaitForSeconds(1);
-        DrawCardFaceDownForDealer();
-        hitButton.interactable = true;
-        standButton.interactable = true;
-    }
+        if(PhotonNetwork.InRoom)
+        {
+            if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == gameManager.GetPlayerIndex())
+            {
+                hitButton.interactable = false;
+                standButton.interactable = false;
+                yield return new WaitForSeconds(1);
+                DrawCardForPlayermp();
+                yield return new WaitForSeconds(1);
+                DrawCardForDealermp();
+                yield return new WaitForSeconds(1);
+                DrawCardForPlayermp();
+                yield return new WaitForSeconds(1);
+                this.photonView.RPC("DrawCardFaceDownForDealersp", RpcTarget.All);
+                hitButton.interactable = true;
+                standButton.interactable = true;
+            }
+            else
+            {
+                this.photonView.RPC("DisableButtonsForClient", RpcTarget.All);
+            }
 
+        }
+        else
+        {
+            hitButton.interactable = false;
+            standButton.interactable = false;
+            yield return new WaitForSeconds(1);
+            DrawCardForPlayersp();
+            yield return new WaitForSeconds(1);
+            DrawCardForDealersp();
+            yield return new WaitForSeconds(1);
+            DrawCardForPlayersp();
+            yield return new WaitForSeconds(1);
+            DrawCardFaceDownForDealersp();
+            hitButton.interactable = true;
+            standButton.interactable = true;
+        }
+    }
     //handling button presses in bj UI
     public void OnHitButtonPressed()
     {
-        if (gameOver) return;
-
-        DrawCardForPlayer();
-
-        if (CalculateHandValue(playerHand) > 21)
+        if(PhotonNetwork.InRoom)
         {
-            EndGame("lost");
+            this.photonView.RPC("OnHitButtonPressedmp", RpcTarget.All);
+        }
+        else
+        {
+            OnHitButtonPressedsp();
+        }
+    }
+    private void OnHitButtonPressedsp()
+    {
+        if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == gameManager.GetPlayerIndex())
+        {
+            if (gameOver) return;
+
+            DrawCardForPlayersp();
+
+            if (CalculateHandValue(playerHand) > 21)
+            {
+                EndGame("lost");
+            }
         }
     }
 
+    [PunRPC]
+    private void OnHitButtonPressedmp()
+    {
+        if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == gameManager.GetPlayerIndex())
+        {
+            if (gameOver) return;
+
+            DrawCardForPlayermp();
+
+            if (CalculateHandValue(playerHand) > 21)
+            {
+                this.photonView.RPC("EndGame",RpcTarget.All, "lost");
+            }
+        }
+    }
+    [PunRPC]
+    public void DisableButtonsForClient()
+    {
+        if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == gameManager.GetPlayerIndex())
+        {
+            closeButton.interactable = true;
+        }
+        else
+        {
+            closeButton.interactable = false;
+            hitButton.interactable = false;
+            standButton.interactable = false;
+        }
+    }
     public void OnStandButtonPressed()
     {
-        Destroy(dealerCardHolder.transform.GetChild(1).gameObject);
-        StartCoroutine(OnStand());
+        if(PhotonNetwork.InRoom)
+        {
+            StartCoroutine(OnStandmpRPC());
+        }
+        else
+        {
+            
+            StartCoroutine(OnStandsp());
+        }
     }
-
-    //IEnumerator so I can use StartCoroutine()
-    IEnumerator OnStand()
+    [PunRPC]
+    private void DestroyDealerCard()
+    {
+        Destroy(dealerCardHolder.transform.GetChild(1).gameObject);
+    }
+    private IEnumerator OnStandmpRPC()
     {
         standButton.interactable = false;
         hitButton.interactable = false;
 
         if (gameOver) yield break;
 
-        DrawCardForDealer();
+        this.photonView.RPC("DestroyDealerCard", RpcTarget.All);
+
+        playerCardSum = CalculateHandValue(playerHand);
+
+        if(dealerCardSum < 17)
+        {
+            while (dealerCardSum < 17)
+            {
+                this.photonView.RPC("DrawCardForDealermp", RpcTarget.All);
+                dealerCardSum = CalculateHandValue(dealerHand);
+                yield return new WaitForSeconds(1);
+            }
+        }
+
+        if (dealerCardSum > 21 || playerCardSum > dealerCardSum)
+        {
+            Debug.Log("Won");
+            this.photonView.RPC("EndGame", RpcTarget.All, "won");
+            yield return null;
+        }
+        else if (dealerCardSum > playerCardSum || playerCardSum > 21)
+        {
+            Debug.Log("Lost");
+            this.photonView.RPC("EndGame", RpcTarget.All, "lost");
+            yield return null;
+        }
+        else
+        {
+            Debug.Log("Push");
+            this.photonView.RPC("EndGame", RpcTarget.All, "push");
+            yield return null;
+        }
+    }
+
+    //IEnumerator so I can use WaitForSeconds()
+    private IEnumerator OnStandsp()
+    {
+        standButton.interactable = false;
+        hitButton.interactable = false;
+
+        if (gameOver) yield break;
+        Destroy(dealerCardHolder.transform.GetChild(1).gameObject);
+
+        DrawCardForDealersp();
 
         while (CalculateHandValue(dealerHand) < 17)
         {
             yield return new WaitForSeconds(1);
-            DrawCardForDealer();
+            DrawCardForDealersp();
         }
 
-        int playerScore = CalculateHandValue(playerHand);
-        int dealerScore = CalculateHandValue(dealerHand);
+        playerCardSum = CalculateHandValue(playerHand);
+        dealerCardSum = CalculateHandValue(dealerHand);
 
-        if (dealerScore > 21 || playerScore > dealerScore)
+        if (dealerCardSum > 21 || playerCardSum > dealerCardSum)
         {
             EndGame("won");
         }
-        else if (dealerScore > playerScore || playerScore > 21)
+        else if (dealerCardSum > playerCardSum || playerCardSum > 21)
         {
             EndGame("lost");
         }
@@ -148,6 +268,18 @@ public class BlackjackManager : MonoBehaviour
 
     //closing bj UI
     public void CloseBlackjackUI()
+    {
+        if(PhotonNetwork.InRoom)
+        {
+            this.photonView.RPC("CloseBlackjackUIAction", RpcTarget.All);
+        }
+        else
+        {
+            CloseBlackjackUIAction();
+        }
+    }
+    [PunRPC]
+    public void CloseBlackjackUIAction()
     {
         blackjackUI.SetActive(false);
         playerUI.SetActive(true);
@@ -161,15 +293,26 @@ public class BlackjackManager : MonoBehaviour
         }
     }
 
-    //updating money on the bj UI
-    void UpdateMoneyUI()
-    {
-        PlayerData currentPlayer = gameManager.GetCurrentPlayer();
-        moneyText.text = $"${currentPlayer.money}";
-    }
-
     //draw card for player
-    void DrawCardForPlayer()
+    private void DrawCardForPlayermp()
+    {
+        
+        int randomCard = Random.Range(0, 52); 
+        this.photonView.RPC("DrawCardForPlayermpRPC", RpcTarget.All, randomCard);
+    }
+    [PunRPC]
+    private void DrawCardForPlayermpRPC(int randomCard)
+    {
+        playerHand.Add(randomCard);
+        playerCardSum = CalculateHandValue(playerHand);
+        playerCardSumText.text = $"{playerCardSum}";
+
+        GameObject newCard = Instantiate(cardPrefab, playerCardHolder);
+        Sprite cardSprite = GetCardSprite(randomCard);
+        newCard.GetComponent<Image>().sprite = cardSprite;
+
+    }
+    private void DrawCardForPlayersp()
     {
         int randomCard = Random.Range(0, 52); 
 
@@ -183,7 +326,30 @@ public class BlackjackManager : MonoBehaviour
     }
 
     //draw card for dealer
-    void DrawCardForDealer()
+    [PunRPC]
+    private void DrawCardForDealermpRPC(int randomCard)
+    {
+        Debug.Log("Drawing card for dealer with RPC");
+        dealerHand.Add(randomCard);
+        dealerCardSum = CalculateHandValue(dealerHand);
+        dealerCardSumText.text = $"{dealerCardSum}";
+
+        GameObject newCard = Instantiate(cardPrefab, dealerCardHolder);
+        Sprite cardSprite = GetCardSprite(randomCard);
+        newCard.GetComponent<Image>().sprite = cardSprite;
+    }
+    [PunRPC]
+    private void DrawCardForDealermp()
+    {
+        if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == gameManager.GetPlayerIndex())
+        {
+            Debug.Log("DrawCardForDealermp");
+            int randomCard = Random.Range(0, 52);
+
+            this.photonView.RPC("DrawCardForDealermpRPC", RpcTarget.All, randomCard);
+        }
+    }
+    private void DrawCardForDealersp()
     {
         int randomCard = Random.Range(0, 52);
 
@@ -197,17 +363,21 @@ public class BlackjackManager : MonoBehaviour
     }
 
     //draw a face down card for dealer
-    void DrawCardFaceDownForDealer()
+    [PunRPC]
+    private void DrawCardFaceDownForDealersp()
     {
         GameObject newCard = Instantiate(cardPrefab, dealerCardHolder);
         newCard.GetComponent<Image>().sprite = cardBack;
     }
 
     //ending current bj game
-    void EndGame(string playerWon)
+    [PunRPC]
+    private void EndGame(string playerWon)
     {
         gameOver = true;
         closeButton.gameObject.SetActive(true);
+        hitButton.interactable = false;
+        standButton.interactable = false;
         int goldenTicketLuckyNumber = Random.Range(0, 100);
 
         if(playerWon == "won")
@@ -240,12 +410,10 @@ public class BlackjackManager : MonoBehaviour
         {
             gameManager.AddGoldenTicketToCurrentPlayer();
         }
-
-        UpdateMoneyUI();
     }
 
     //calculate the value of cards held in hand
-    int CalculateHandValue(List<int> hand)
+    private int CalculateHandValue(List<int> hand)
     {
         int sum = 0;
         int aceCount = 0;
