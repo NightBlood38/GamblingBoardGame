@@ -28,7 +28,7 @@ public class RouletteManager : MonoBehaviourPun
     public TextMeshProUGUI yourBetText;
     public TextMeshProUGUI winningNumberText;
 
-    void Start()
+    private void Start()
     {
         betButtons = roulettePanel.GetComponentsInChildren<Button>();
         rouletteUI.SetActive(false);
@@ -124,7 +124,7 @@ public class RouletteManager : MonoBehaviourPun
         }
     }
     [PunRPC]
-    public void CloseRouletteUIAction()
+    private void CloseRouletteUIAction()
     {
         rouletteUI.SetActive(false);
         foreach(TextMeshProUGUI number in rouletteNumbers)
@@ -203,10 +203,6 @@ public class RouletteManager : MonoBehaviourPun
         }
         betNumber = pressedButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
         RouletteGame(betNumber);
-    }
-    private IEnumerator Wait(int time)
-    {
-        yield return new WaitForSeconds(time);
     }
     public void StartRouletteBall()
     {
@@ -324,7 +320,5 @@ public class RouletteManager : MonoBehaviourPun
             rouletteCloseButton.gameObject.SetActive(false);
             rouletteCloseButton.interactable = false;
         }
-
     }
-    
 }

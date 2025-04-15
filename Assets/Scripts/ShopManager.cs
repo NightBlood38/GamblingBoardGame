@@ -63,7 +63,7 @@ public class ShopManager : MonoBehaviourPun
     }
 
     //handling purchases and adding them to player inventory
-    public void BuyItem(int cost, string itemName, int index)
+    private void BuyItem(int cost, string itemName, int index)
     {
         if (gameManager == null)
         {
@@ -114,115 +114,217 @@ public class ShopManager : MonoBehaviourPun
         }
     }
     [PunRPC]
-    public void UpdateShopUIAction()
+    private void UpdateShopUIAction()
     {
-        if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == gameManager.GetPlayerIndex())
+        if(PhotonNetwork.InRoom)
         {
-            if (GameManager.Instance != null)
+            if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == gameManager.GetPlayerIndex())
             {
-                closeButton.interactable = true;
-                PlayerData currentPlayer = gameManager.GetCurrentPlayer();
-                if (currentPlayer != null)
+                if (GameManager.Instance != null)
                 {
-                    moneyText.text = $"${currentPlayer.money}";
-                }
+                    closeButton.interactable = true;
+                    PlayerData currentPlayer = gameManager.GetCurrentPlayer();
+                    if (currentPlayer != null)
+                    {
+                        moneyText.text = $"${currentPlayer.money}";
+                    }
 
-                if(currentPlayer.haveItems[0])
-                {
-                    diademButton.interactable = false;
+                    if(currentPlayer.haveItems[0])
+                    {
+                        diademButton.interactable = false;
+                    }
+                    else
+                    {
+                        diademButton.interactable = true;
+                    }
+                    if(currentPlayer.haveItems[1])
+                    {
+                        ringButton.interactable = false;
+                    }
+                    else
+                    {
+                        ringButton.interactable = true;
+                    }
+                    if(currentPlayer.haveItems[2])
+                    {
+                        dressButton.interactable = false;
+                    }
+                    else
+                    {
+                        dressButton.interactable = true;
+                    }
+                    if(currentPlayer.haveItems[3])
+                    {
+                        shoeButton.interactable = false;
+                    }
+                    else
+                    {
+                        shoeButton.interactable = true;
+                    }
+                    if(currentPlayer.haveItems[4])
+                    {
+                        monocleButton.interactable = false;
+                    }
+                    else
+                    {
+                        monocleButton.interactable = true;
+                    }
+                    Image diademButtonImage = diademButton.GetComponent<Image>();
+                    Image ringButtonImage = ringButton.GetComponent<Image>();
+                    Image dressButtonImage = dressButton.GetComponent<Image>();
+                    Image shoeButtonImage = shoeButton.GetComponent<Image>();
+                    Image monocleButtonImage = monocleButton.GetComponent<Image>();
+                    
+                    if(currentPlayer.money < 5000 && !currentPlayer.haveItems[0])
+                    {
+                        diademButtonImage.color = Color.red;
+                    }
+                    else
+                    {
+                        diademButtonImage.color = Color.green;
+                    }
+                    if(currentPlayer.money < 12000 && !currentPlayer.haveItems[1])
+                    {
+                        ringButtonImage.color = Color.red;
+                    }
+                    else
+                    {
+                        ringButtonImage.color = Color.green;
+                    }
+                    if(currentPlayer.money < 20000 && !currentPlayer.haveItems[2])
+                    {
+                        dressButtonImage.color = Color.red;
+                    }
+                    else
+                    {
+                        dressButtonImage.color = Color.green;
+                    }
+                    if(currentPlayer.money < 30000 && !currentPlayer.haveItems[3])
+                    {
+                        shoeButtonImage.color = Color.red;
+                    }
+                    else
+                    {
+                        shoeButtonImage.color = Color.green;
+                    }
+                    if(currentPlayer.money < 50000 && !currentPlayer.haveItems[4])
+                    {
+                        monocleButtonImage.color = Color.red;
+                    }
+                    else
+                    {
+                        monocleButtonImage.color = Color.green;
+                    }
                 }
-                else
-                {
-                    diademButton.interactable = true;
-                }
-                if(currentPlayer.haveItems[1])
-                {
-                    ringButton.interactable = false;
-                }
-                else
-                {
-                    ringButton.interactable = true;
-                }
-                if(currentPlayer.haveItems[2])
-                {
-                    dressButton.interactable = false;
-                }
-                else
-                {
-                    dressButton.interactable = true;
-                }
-                if(currentPlayer.haveItems[3])
-                {
-                    shoeButton.interactable = false;
-                }
-                else
-                {
-                    shoeButton.interactable = true;
-                }
-                if(currentPlayer.haveItems[4])
-                {
-                    monocleButton.interactable = false;
-                }
-                else
-                {
-                    monocleButton.interactable = true;
-                }
-                Image diademButtonImage = diademButton.GetComponent<Image>();
-                Image ringButtonImage = ringButton.GetComponent<Image>();
-                Image dressButtonImage = dressButton.GetComponent<Image>();
-                Image shoeButtonImage = shoeButton.GetComponent<Image>();
-                Image monocleButtonImage = monocleButton.GetComponent<Image>();
-                
-                if(currentPlayer.money < 5000 && !currentPlayer.haveItems[0])
-                {
-                    diademButtonImage.color = Color.red;
-                }
-                else
-                {
-                    diademButtonImage.color = Color.green;
-                }
-                if(currentPlayer.money < 12000 && !currentPlayer.haveItems[1])
-                {
-                    ringButtonImage.color = Color.red;
-                }
-                else
-                {
-                    ringButtonImage.color = Color.green;
-                }
-                if(currentPlayer.money < 20000 && !currentPlayer.haveItems[2])
-                {
-                    dressButtonImage.color = Color.red;
-                }
-                else
-                {
-                    dressButtonImage.color = Color.green;
-                }
-                if(currentPlayer.money < 30000 && !currentPlayer.haveItems[3])
-                {
-                    shoeButtonImage.color = Color.red;
-                }
-                else
-                {
-                    shoeButtonImage.color = Color.green;
-                }
-                if(currentPlayer.money < 50000 && !currentPlayer.haveItems[4])
-                {
-                    monocleButtonImage.color = Color.red;
-                }
-                else
-                {
-                    monocleButtonImage.color = Color.green;
-                }
+            }
+            else
+            {
+                monocleButton.interactable = false;
+                diademButton.interactable = false;
+                shoeButton.interactable = false;
+                dressButton.interactable = false;
+                ringButton.interactable = false;
+                closeButton.interactable = false;
             }
         }
         else
         {
-            monocleButton.interactable = false;
-            diademButton.interactable = false;
-            shoeButton.interactable = false;
-            dressButton.interactable = false;
-            ringButton.interactable = false;
-            closeButton.interactable = false;
+            if (GameManager.Instance != null)
+                {
+                    closeButton.interactable = true;
+                    PlayerData currentPlayer = gameManager.GetCurrentPlayer();
+                    if (currentPlayer != null)
+                    {
+                        moneyText.text = $"${currentPlayer.money}";
+                    }
+
+                    if(currentPlayer.haveItems[0])
+                    {
+                        diademButton.interactable = false;
+                    }
+                    else
+                    {
+                        diademButton.interactable = true;
+                    }
+                    if(currentPlayer.haveItems[1])
+                    {
+                        ringButton.interactable = false;
+                    }
+                    else
+                    {
+                        ringButton.interactable = true;
+                    }
+                    if(currentPlayer.haveItems[2])
+                    {
+                        dressButton.interactable = false;
+                    }
+                    else
+                    {
+                        dressButton.interactable = true;
+                    }
+                    if(currentPlayer.haveItems[3])
+                    {
+                        shoeButton.interactable = false;
+                    }
+                    else
+                    {
+                        shoeButton.interactable = true;
+                    }
+                    if(currentPlayer.haveItems[4])
+                    {
+                        monocleButton.interactable = false;
+                    }
+                    else
+                    {
+                        monocleButton.interactable = true;
+                    }
+                    Image diademButtonImage = diademButton.GetComponent<Image>();
+                    Image ringButtonImage = ringButton.GetComponent<Image>();
+                    Image dressButtonImage = dressButton.GetComponent<Image>();
+                    Image shoeButtonImage = shoeButton.GetComponent<Image>();
+                    Image monocleButtonImage = monocleButton.GetComponent<Image>();
+                    
+                    if(currentPlayer.money < 5000 && !currentPlayer.haveItems[0])
+                    {
+                        diademButtonImage.color = Color.red;
+                    }
+                    else
+                    {
+                        diademButtonImage.color = Color.green;
+                    }
+                    if(currentPlayer.money < 12000 && !currentPlayer.haveItems[1])
+                    {
+                        ringButtonImage.color = Color.red;
+                    }
+                    else
+                    {
+                        ringButtonImage.color = Color.green;
+                    }
+                    if(currentPlayer.money < 20000 && !currentPlayer.haveItems[2])
+                    {
+                        dressButtonImage.color = Color.red;
+                    }
+                    else
+                    {
+                        dressButtonImage.color = Color.green;
+                    }
+                    if(currentPlayer.money < 30000 && !currentPlayer.haveItems[3])
+                    {
+                        shoeButtonImage.color = Color.red;
+                    }
+                    else
+                    {
+                        shoeButtonImage.color = Color.green;
+                    }
+                    if(currentPlayer.money < 50000 && !currentPlayer.haveItems[4])
+                    {
+                        monocleButtonImage.color = Color.red;
+                    }
+                    else
+                    {
+                        monocleButtonImage.color = Color.green;
+                    }
+                }
+            }
         }
     }
-}

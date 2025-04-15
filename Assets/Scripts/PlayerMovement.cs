@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviourPun
         "lucky card", "wheel of fortune", "money5000", "roulette"
     };
 
-    void Start()
+    private void Start()
     {
         playerData = GetComponent<PlayerData>();
         InitializeWaypoints();
@@ -72,7 +72,7 @@ public class PlayerMovement : MonoBehaviourPun
         StartCoroutine(SmoothMovePlayerThroughWaypoints(roll));
     }
 
-    IEnumerator SmoothMovePlayerThroughWaypoints(int roll)
+    private IEnumerator SmoothMovePlayerThroughWaypoints(int roll)
     {
         Transform playerTransform = transform;
         int startWaypointIndex = currentWaypointIndex;
@@ -122,7 +122,7 @@ public class PlayerMovement : MonoBehaviourPun
         }
         rollDiceUI.SetActive(false);
     }
-    IEnumerator SmoothMoveBetweenTwoWaypoints(Transform playerTransform, Vector3 start, Vector3 end)
+    private IEnumerator SmoothMoveBetweenTwoWaypoints(Transform playerTransform, Vector3 start, Vector3 end)
     {
         float elapsedTime = 0f;
         float journeyLength = Vector3.Distance(start, end);
@@ -137,7 +137,7 @@ public class PlayerMovement : MonoBehaviourPun
         playerTransform.position = end;
     }
 
-    void MovePlayerToWaypoint(int waypointIndex, bool instant = false)
+    private void MovePlayerToWaypoint(int waypointIndex, bool instant = false)
     {
         if (instant)
         {
@@ -241,7 +241,7 @@ public class PlayerMovement : MonoBehaviourPun
     }
 
     //setting up waypoints
-    void InitializeWaypoints()
+    private void InitializeWaypoints()
     {
         waypoints = new Transform[28];
         Vector3 currentPosition = transform.position;
@@ -254,7 +254,7 @@ public class PlayerMovement : MonoBehaviourPun
         }
     }
 
-    Vector3 GetWaypointPosition(int index, ref Vector3 currentPosition)
+    private Vector3 GetWaypointPosition(int index, ref Vector3 currentPosition)
     {
         if (index > 0)
         {

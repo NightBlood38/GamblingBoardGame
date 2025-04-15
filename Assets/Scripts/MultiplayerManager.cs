@@ -14,7 +14,7 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
     private string roomCode;
 
 
-    void Awake()
+    private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
     }

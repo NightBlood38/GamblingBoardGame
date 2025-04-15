@@ -7,15 +7,16 @@ using Photon.Pun;
 
 public class WheelOfFortuneManager : MonoBehaviourPun
 {
-    public float radius = 1000f;
+    
     public GameObject wheelOfFortuneUI, wheelOfFortunePanel, playerUI;
     public Button wheelOfFortuneSpinButton, wheelOfFortuneCloseButton;
     public GameManager gameManager;
     public TextMeshProUGUI[] textElements = new TextMeshProUGUI[12];
     
+    private float radius = 300f;
     private Vector2 screenCenter;
 
-    void Start()
+    private void Start()
     {
         //getting text elements of wofUIPanel
         for(int i = 0; i < textElements.Length; i++)
@@ -48,13 +49,16 @@ public class WheelOfFortuneManager : MonoBehaviourPun
         {
             textElements[i].color = Color.white;
         }
-        if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == gameManager.GetPlayerIndex())
+        if(PhotonNetwork.InRoom)
         {
-            wheelOfFortuneSpinButton.interactable = true;
-        }
-        else
-        {
-            wheelOfFortuneSpinButton.interactable = false;
+            if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == gameManager.GetPlayerIndex())
+            {
+                wheelOfFortuneSpinButton.interactable = true;
+            }
+            else
+            {
+                wheelOfFortuneSpinButton.interactable = false;
+            }
         }
     }
 
@@ -201,13 +205,6 @@ public class WheelOfFortuneManager : MonoBehaviourPun
                 gameManager.AddMoneyToCurrentPlayer(10000);
                 break;
         }
-        if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == gameManager.GetPlayerIndex())
-        {
-            wheelOfFortuneCloseButton.interactable = true;
-        }
-        else
-        {
-            wheelOfFortuneCloseButton.interactable = false;
-        }
+        wheelOfFortuneCloseButton.interactable = true;
     }
 }

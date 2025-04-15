@@ -7,7 +7,6 @@ using Photon.Pun;
 
 public class BlackjackManager : MonoBehaviourPun
 {
-    public TextMeshProUGUI moneyText;
     public Button hitButton, standButton, closeButton;
     public GameObject cardPrefab;
     public Transform playerCardHolder, dealerCardHolder;
@@ -16,8 +15,8 @@ public class BlackjackManager : MonoBehaviourPun
     public GameManager gameManager;
     public TextMeshProUGUI playerCardSumText, dealerCardSumText, resultTextLeft, resultTextRight;
     public GameObject playerUI;
-    public Sprite[] cardSprites;
     
+    private Sprite[] cardSprites;
     private Sprite cardBack;
     private List<int> playerHand = new List<int>();
     private List<int> dealerHand = new List<int>();
@@ -26,7 +25,7 @@ public class BlackjackManager : MonoBehaviourPun
     private int dealerCardSum;
     private int bet;
 
-    void Awake()
+    private void Awake()
     {
         // Betölti az összes kártya sprite-ot a mappából
         cardSprites = Resources.LoadAll<Sprite>("Standard 52 Cards/Standard Rounded Cards/Cards");
@@ -39,7 +38,7 @@ public class BlackjackManager : MonoBehaviourPun
     }
 
     //getting card images
-    public Sprite GetCardSprite(int index)
+    private Sprite GetCardSprite(int index)
     {
         if (index < 0 || index >= cardSprites.Length)
         {
@@ -49,16 +48,27 @@ public class BlackjackManager : MonoBehaviourPun
         return cardSprites[index];
     }
 
-    void Start()
+    private void Start()
     {
         blackjackUI.SetActive(false);
     }
 
     //close NEM UI
-    public void CloseNotEnoughMoneyUI()
+    private void CloseNotEnoughMoneyUIAction()
     {
         notEnoughMoneyUI.SetActive(false);
         playerUI.SetActive(true);
+    }
+    public void CloseNotEnoughMoneyUI()
+    {
+        if(PhotonNetwork.InRoom)
+        {
+            this.photonView.RPC("CloseNotEnoughMoneyUIAction", RpcTarget.All);
+        }
+        else
+        {
+            CloseNotEnoughMoneyUIAction();
+        }
     }
 
     //start blackjack game
@@ -132,16 +142,13 @@ public class BlackjackManager : MonoBehaviourPun
     }
     private void OnHitButtonPressedsp()
     {
-        if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == gameManager.GetPlayerIndex())
+        if (gameOver) return;
+
+        DrawCardForPlayersp();
+
+        if (CalculateHandValue(playerHand) > 21)
         {
-            if (gameOver) return;
-
-            DrawCardForPlayersp();
-
-            if (CalculateHandValue(playerHand) > 21)
-            {
-                EndGame("lost");
-            }
+            EndGame("lost");
         }
     }
 
@@ -161,7 +168,7 @@ public class BlackjackManager : MonoBehaviourPun
         }
     }
     [PunRPC]
-    public void DisableButtonsForClient()
+    private void DisableButtonsForClient()
     {
         if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == gameManager.GetPlayerIndex())
         {
@@ -279,7 +286,7 @@ public class BlackjackManager : MonoBehaviourPun
         }
     }
     [PunRPC]
-    public void CloseBlackjackUIAction()
+    private void CloseBlackjackUIAction()
     {
         blackjackUI.SetActive(false);
         playerUI.SetActive(true);

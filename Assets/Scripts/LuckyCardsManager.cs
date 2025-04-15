@@ -31,7 +31,7 @@ public class LuckyCardsManager : MonoBehaviourPun
     public GameObject playerUI;
     public Button closeButton, drawButton;
 
-    void Start()
+    private void Start()
     {
         luckyCardsUI.SetActive(false);
     }
@@ -40,8 +40,25 @@ public class LuckyCardsManager : MonoBehaviourPun
     [PunRPC]
     private void DrawLuckyCardAction()
     {
-        
-        if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == gameManager.GetPlayerIndex())
+        if(PhotonNetwork.InRoom)
+        {
+            if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == gameManager.GetPlayerIndex())
+            {
+                currentLuckyCardIndex = Convert.ToByte(UnityEngine.Random.Range(0, luckyCardEffects.Length));
+                Debug.Log(luckyCardEffects[currentLuckyCardIndex]);
+                TriggerLuckyCardEffect(currentLuckyCardIndex);
+                closeButton.interactable = true;
+                drawButton.interactable = false;
+                UpdateLuckyCardText(currentLuckyCardIndex);  
+
+            }
+            else
+            {
+                closeButton.interactable = false;
+                drawButton.interactable = false;
+            }
+        }
+        else
         {
             currentLuckyCardIndex = Convert.ToByte(UnityEngine.Random.Range(0, luckyCardEffects.Length));
             Debug.Log(luckyCardEffects[currentLuckyCardIndex]);
@@ -49,26 +66,29 @@ public class LuckyCardsManager : MonoBehaviourPun
             closeButton.interactable = true;
             drawButton.interactable = false;
             UpdateLuckyCardText(currentLuckyCardIndex);  
-
         }
-        else
-        {
-            closeButton.interactable = false;
-            drawButton.interactable = false;
-        }
+        
     }
     public void StartLuckyCards()
     {
         luckyCardText.text = "";
-        if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == gameManager.GetPlayerIndex())
+        if(PhotonNetwork.InRoom)
         {
-            closeButton.interactable = false;
-            drawButton.interactable = true;
+            if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == gameManager.GetPlayerIndex())
+            {
+                closeButton.interactable = false;
+                drawButton.interactable = true;
 
+            }
+            else
+            {
+                drawButton.interactable = false;
+                closeButton.interactable = false;
+            }
         }
         else
         {
-            drawButton.interactable = false;
+            drawButton.interactable = true;
             closeButton.interactable = false;
         }
         luckyCardsUI.gameObject.SetActive(true);

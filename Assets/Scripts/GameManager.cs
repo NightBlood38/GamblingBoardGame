@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviourPun
     public static bool canStartMoving = false;
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI goldenTicketText;
-    public Button rollDiceButton, useGoldenTicketButton, endTurnButton;
+    public Button rollDiceButton, useGoldenTicketButton, endTurnButton, closeNotEnoughMoneyButton;
     public GameObject rollDiceUI;
     public GameObject playerUI;
     public GameObject notEnoughMoneyUI;
@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviourPun
         new Vector3(7.28f, 15.75f, -10.57f)  // Player 6
     };
 
-    void Awake()
+    private void Awake()
     {
         if (Instance == null)
         {
@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviourPun
         }
     }
 
-    IEnumerator StartDelayed()
+    private IEnumerator StartDelayed()
     {
         yield return new WaitForSeconds(0.5f);
         playerCount = PhotonNetwork.PlayerList.Length;
@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviourPun
             rollDiceButton.interactable = false;
         }
     }
-    void Start()
+    private void Start()
     {
         GameObject player;
         if(isMultiplayer)
@@ -203,6 +203,17 @@ public class GameManager : MonoBehaviourPun
     {
         notEnoughMoneyUI.SetActive(true);
         playerUI.SetActive(false);
+        if(PhotonNetwork.InRoom)
+        {
+            if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == GetPlayerIndex())
+            {
+                closeNotEnoughMoneyButton.interactable = true;
+            }
+            else
+            {
+                closeNotEnoughMoneyButton.interactable = false;  
+            }
+        }
     }
 
     //rolling the dice
@@ -246,7 +257,7 @@ public class GameManager : MonoBehaviourPun
         return currentPlayerIndex;
     }
 
-    IEnumerator HandleDiceRollAction(int rollAmount)
+    private IEnumerator HandleDiceRollAction(int rollAmount)
     {
         yield return StartCoroutine(changeNumbersFast(rollAmount));
 
@@ -338,21 +349,38 @@ public class GameManager : MonoBehaviourPun
         }
     }
     [PunRPC]
-    public void UpdatePlayerUIAction()
+    private void UpdatePlayerUIAction()
     {
-        if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == GetPlayerIndex())
+        if(PhotonNetwork.InRoom)
+        {
+            if(PhotonNetwork.LocalPlayer.ActorNumber - 1 == GetPlayerIndex())
+            {
+                if(playerData == null)
+                {
+                    return;
+                }
+                moneyText.text = $"${playerData[currentPlayerIndex].money}";
+                goldenTicketText.text = $"Golden tickets: {playerData[currentPlayerIndex].goldenTicketAmount}";
+                if(!CurrentPlayerDoesHaveGoldenTicket())
+                {
+                    useGoldenTicketButton.interactable = false;
+                }
+                playerNameText.text = playerData[currentPlayerIndex].playerName;
+            }
+        }
+        else
         {
             if(playerData == null)
-            {
-                return;
-            }
-            moneyText.text = $"${playerData[currentPlayerIndex].money}";
-            goldenTicketText.text = $"Golden tickets: {playerData[currentPlayerIndex].goldenTicketAmount}";
-            if(!CurrentPlayerDoesHaveGoldenTicket())
-            {
-                useGoldenTicketButton.interactable = false;
-            }
-            playerNameText.text = playerData[currentPlayerIndex].playerName;
+                {
+                    return;
+                }
+                moneyText.text = $"${playerData[currentPlayerIndex].money}";
+                goldenTicketText.text = $"Golden tickets: {playerData[currentPlayerIndex].goldenTicketAmount}";
+                if(!CurrentPlayerDoesHaveGoldenTicket())
+                {
+                    useGoldenTicketButton.interactable = false;
+                }
+                playerNameText.text = playerData[currentPlayerIndex].playerName;
         }
     }
 

@@ -24,7 +24,7 @@ public class StartMenuController : MonoBehaviour
     private List<GameObject> playerNamesList = new List<GameObject>();
 
 
-    void Start()
+    private void Start()
     {
         startGameButton.gameObject.SetActive(true);
         exitButton.gameObject.SetActive(true);
@@ -42,13 +42,13 @@ public class StartMenuController : MonoBehaviour
         nameInputContainer.gameObject.SetActive(false);
         buttons = FindObjectsOfType<Button>();
     }
-    public void UpdatePlayerCount(int index)
+    private void UpdatePlayerCount(int index)
     {
         playerCount = index+2;
         Debug.Log("Játékosok száma: " + playerCount);
     }
 
-    public void GenerateInputFields()
+    private void GenerateInputFields()
     {
         foreach (var field in inputFields)
         {
@@ -200,6 +200,7 @@ public class StartMenuController : MonoBehaviour
     public void OnLeaveButtonPressed()
     {
         onBackButtonPressed();
+        multiplayerStartButton.gameObject.SetActive(false);
         Debug.Log("room left");
         PhotonNetwork.LeaveRoom();
         leaveButton.gameObject.SetActive(false);
@@ -275,6 +276,4 @@ public class StartMenuController : MonoBehaviour
         }
         Debug.Log($"PhotonNetwork.PlayerList count: {PhotonNetwork.PlayerList.Length}");
     }
-    
-
 }

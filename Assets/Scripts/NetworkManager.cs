@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
-    void Start()
+    private void Start()
     {
         ConnectToPhoton();
     }
